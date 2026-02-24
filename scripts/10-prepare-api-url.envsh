@@ -1,0 +1,19 @@
+#!/bin/sh
+if [ -n "$VITE_API_URL" ]; then
+  # Remove trailing slash
+  PROXY_API_URL=$(echo "$VITE_API_URL" | sed 's/\/$//')
+  
+  # Ensure it has https:// if no protocol is given
+  if ! echo "$PROXY_API_URL" | grep -q "^http"; then
+    PROXY_API_URL="https://$PROXY_API_URL"
+  fi
+  
+  # Extract the host for the Host header
+  PROXY_API_HOST=$(echo "$PROXY_API_URL" | sed -e 's/https:\/\///' -e 's/http:\/\///')
+  
+  export PROXY_API_URL
+  export PROXY_API_HOST
+  
+  echo "Prepared PROXY_API_URL: $PROXY_API_URL"
+  echo "Prepared PROXY_API_HOST: $PROXY_API_HOST"
+fi

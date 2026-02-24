@@ -2,7 +2,8 @@ node_modules
 dist
 .git
 .gitignore
-scripts
+scripts/*
+!scripts/10-prepare-api-url.envsh
 *.md
 *.log
 .env*
