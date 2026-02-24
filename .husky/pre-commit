@@ -1,0 +1,5 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+npm run quality:check || exit 1
+npm run agents:ack || exit 1

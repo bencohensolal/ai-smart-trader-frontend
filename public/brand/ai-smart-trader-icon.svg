@@ -1,0 +1,40 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ast-bg" x1="64" y1="40" x2="454" y2="466" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0F2E46" />
+      <stop offset="0.55" stop-color="#123C55" />
+      <stop offset="1" stop-color="#0A2235" />
+    </linearGradient>
+    <linearGradient id="ast-accent" x1="110" y1="118" x2="398" y2="390" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#21E6A2" />
+      <stop offset="1" stop-color="#0BB8FF" />
+    </linearGradient>
+    <radialGradient id="ast-glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(198 152) rotate(51.42) scale(306.255 312.043)">
+      <stop stop-color="#21E6A2" stop-opacity="0.35" />
+      <stop offset="1" stop-color="#21E6A2" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <rect x="32" y="32" width="448" height="448" rx="128" fill="url(#ast-bg)" />
+  <rect x="32" y="32" width="448" height="448" rx="128" stroke="#5DA4C9" stroke-opacity="0.24" stroke-width="2" />
+  <circle cx="208" cy="184" r="164" fill="url(#ast-glow)" />
+
+  <path d="M116 328C116 258.412 172.412 202 242 202H396" stroke="url(#ast-accent)" stroke-width="22" stroke-linecap="round" />
+  <path d="M338 144H396V202" stroke="url(#ast-accent)" stroke-width="22" stroke-linecap="round" stroke-linejoin="round" />
+
+  <g stroke="#C8F7E7" stroke-linecap="round" stroke-opacity="0.92">
+    <path d="M144 316V366" stroke-width="7" />
+    <path d="M195 275V357" stroke-width="7" />
+    <path d="M246 240V348" stroke-width="7" />
+    <path d="M297 214V339" stroke-width="7" />
+  </g>
+
+  <g fill="url(#ast-accent)">
+    <rect x="128" y="326" width="32" height="28" rx="8" />
+    <rect x="179" y="293" width="32" height="36" rx="8" />
+    <rect x="230" y="263" width="32" height="44" rx="8" />
+    <rect x="281" y="236" width="32" height="52" rx="8" />
+  </g>
+
+  <circle cx="396" cy="202" r="14" fill="#C8F7E7" />
+</svg>
