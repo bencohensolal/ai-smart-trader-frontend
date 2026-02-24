@@ -24,10 +24,7 @@ export function ProfilePage(): JSX.Element {
     let active = true;
     async function load(): Promise<void> {
       try {
-        const [profilePayload, me] = await Promise.all([
-          getUserProfile(),
-          getCurrentUser(),
-        ]);
+        const [profilePayload, me] = await Promise.all([getUserProfile(), getCurrentUser()]);
         if (!active) {
           return;
         }
@@ -51,9 +48,7 @@ export function ProfilePage(): JSX.Element {
     };
   }, [navigate]);
 
-  async function handleSubmit(
-    event: FormEvent<HTMLFormElement>,
-  ): Promise<void> {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
     if (!profile) {
       return;
@@ -77,10 +72,7 @@ export function ProfilePage(): JSX.Element {
   }
 
   return (
-    <Layout
-      title={t('page.profile.title')}
-      subtitle={t('page.profile.subtitle')}
-    >
+    <Layout title={t('page.profile.title')} subtitle={t('page.profile.subtitle')}>
       {!profile ? (
         <section className="panel">{t('settings.loading')}</section>
       ) : (

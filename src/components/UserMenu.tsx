@@ -1,11 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import {
-  UserAiUsage,
-  getLoginStatus,
-  getUserAiUsage,
-  getUserSettings,
-} from '../api';
+import { UserAiUsage, getLoginStatus, getUserAiUsage, getUserSettings } from '../api';
 import { useI18n } from '../i18n/i18n';
 import { formatAmountFromEur } from '../currency';
 
@@ -14,9 +9,7 @@ export function UserMenu(): JSX.Element {
   const [open, setOpen] = useState(false);
   const [displayName, setDisplayName] = useState(t('userMenu.defaultUser'));
   const [aiUsage, setAiUsage] = useState<UserAiUsage | null>(null);
-  const [dailyCostBudgetEur, setDailyCostBudgetEur] = useState<number | null>(
-    null,
-  );
+  const [dailyCostBudgetEur, setDailyCostBudgetEur] = useState<number | null>(null);
   const rootRef = useRef<HTMLDivElement | null>(null);
   const location = useLocation();
   const loadStatus = useCallback(async (): Promise<void> => {
@@ -31,9 +24,7 @@ export function UserMenu(): JSX.Element {
       }
       setAiUsage(usagePayload.usage);
       const budget = settingsPayload.settings.aiAdvisor.maxCostEurPerDay;
-      setDailyCostBudgetEur(
-        Number.isFinite(budget) && budget > 0 ? budget : null,
-      );
+      setDailyCostBudgetEur(Number.isFinite(budget) && budget > 0 ? budget : null);
     } catch {
       setDisplayName(t('userMenu.defaultUser'));
       setAiUsage(null);
@@ -176,10 +167,7 @@ export function UserMenu(): JSX.Element {
 
       {open ? (
         <div className="user-menu-popover" role="menu">
-          <section
-            className="user-menu-usage"
-            aria-label={t('userMenu.aiUsage.title')}
-          >
+          <section className="user-menu-usage" aria-label={t('userMenu.aiUsage.title')}>
             <strong>{t('userMenu.aiUsage.title')}</strong>
             {formattedUsage ? (
               <>
@@ -187,9 +175,7 @@ export function UserMenu(): JSX.Element {
                 <span>{formattedUsage.tokensText}</span>
                 <span>{formattedUsage.costText}</span>
                 <span>{formattedUsage.latencyText}</span>
-                {formattedUsage.modelText ? (
-                  <span>{formattedUsage.modelText}</span>
-                ) : null}
+                {formattedUsage.modelText ? <span>{formattedUsage.modelText}</span> : null}
               </>
             ) : (
               <span>{t('userMenu.aiUsage.none')}</span>

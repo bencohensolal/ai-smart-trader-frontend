@@ -39,13 +39,9 @@ export function AdvancedComparisonSection({
     <>
       <h2>Multi-strategy comparison (same period)</h2>
       <p>
-        Select 2 to 3 strategies, define one shared period, then run 2-3
-        simulations in parallel.
+        Select 2 to 3 strategies, define one shared period, then run 2-3 simulations in parallel.
       </p>
-      <form
-        className="strategy-form strategy-form--stacked"
-        onSubmit={onSubmit}
-      >
+      <form className="strategy-form strategy-form--stacked" onSubmit={onSubmit}>
         <div className="form-grid">
           <label className="field">
             <span>Period start</span>

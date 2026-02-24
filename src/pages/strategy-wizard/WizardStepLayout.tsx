@@ -30,10 +30,7 @@ export function WizardStepLayout({
           aria-valuemax={100}
           aria-label={progressAriaLabel}
         >
-          <div
-            className={styles.progressStep}
-            style={{ width: `${progressPct}%` }}
-          />
+          <div className={styles.progressStep} style={{ width: `${progressPct}%` }} />
         </div>
 
         <div className={styles.wizardContent}>

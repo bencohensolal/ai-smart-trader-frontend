@@ -1,13 +1,7 @@
 export type StrategyRiskProfile = 'defensive' | 'balanced' | 'aggressive';
 export type StrategyFeePreference = 'taker' | 'maker' | 'hybrid';
-export type StrategyDecisionMode =
-  | 'allocation_only'
-  | 'rule_based'
-  | 'ai_assisted';
-export type PromptType =
-  | 'ai_advisor_system'
-  | 'ai_advisor_user'
-  | 'simulation_explainer';
+export type StrategyDecisionMode = 'allocation_only' | 'rule_based' | 'ai_assisted';
+export type PromptType = 'ai_advisor_system' | 'ai_advisor_user' | 'simulation_explainer';
 export type OperationSideFilter = 'all' | 'buy' | 'sell';
 export type OperationOutcomeFilter = 'successful' | 'failed' | 'all';
 export type StrategySymbol =
@@ -39,11 +33,7 @@ export const STRATEGY_SYMBOLS: StrategySymbol[] = [
 export type StrategyTargetAllocation = Record<StrategySymbol, number>;
 export type UserTheme = 'ocean' | 'sunset' | 'forest' | 'slate';
 export type UserLanguage = 'fr' | 'en';
-export type DefaultLandingPage =
-  | 'dashboard'
-  | 'simulations'
-  | 'strategies'
-  | 'insights';
+export type DefaultLandingPage = 'dashboard' | 'simulations' | 'strategies' | 'insights';
 
 export type StrategyAdvancedSettings = {
   reserveCashPct: number;
@@ -358,11 +348,7 @@ export type StrategyOverrideInput = {
   targetAllocation?: Partial<StrategyTargetAllocation>;
 };
 
-export type HistoricalSimulationRunSessionStatus =
-  | 'pending'
-  | 'running'
-  | 'completed'
-  | 'failed';
+export type HistoricalSimulationRunSessionStatus = 'pending' | 'running' | 'completed' | 'failed';
 
 export type HistoricalSimulationRunProgress = {
   sessionId: string;
@@ -550,9 +536,7 @@ export type UserAiAdvisorSettingsInput = Partial<
   clearApiKey?: boolean;
 };
 
-export type UserSettingsUpdateInput = Partial<
-  Omit<UserSettings, 'aiAdvisor'>
-> & {
+export type UserSettingsUpdateInput = Partial<Omit<UserSettings, 'aiAdvisor'>> & {
   aiAdvisor?: UserAiAdvisorSettingsInput;
 };
 
@@ -633,10 +617,7 @@ export type AiAdvisorConfigurationTestResult = {
   errorMessage: string;
 };
 
-async function requestJson<T>(
-  input: RequestInfo | URL,
-  init?: RequestInit,
-): Promise<T> {
+async function requestJson<T>(input: RequestInfo | URL, init?: RequestInit): Promise<T> {
   const response = await fetch(input, init);
   const contentType = response.headers.get('content-type') ?? '';
 
@@ -662,9 +643,7 @@ async function requestJson<T>(
 }
 
 export async function getStrategies(): Promise<Strategy[]> {
-  const data = await requestJson<{ strategies?: Strategy[] }>(
-    '/api/strategies',
-  );
+  const data = await requestJson<{ strategies?: Strategy[] }>('/api/strategies');
   if (Array.isArray(data.strategies)) {
     return data.strategies.map((strategy) => normalizeStrategy(strategy));
   }
@@ -672,9 +651,7 @@ export async function getStrategies(): Promise<Strategy[]> {
 }
 
 export async function getDashboard(strategyId: string): Promise<DashboardData> {
-  return requestJson<DashboardData>(
-    '/api/dashboard?strategyId=' + encodeURIComponent(strategyId),
-  );
+  return requestJson<DashboardData>('/api/dashboard?strategyId=' + encodeURIComponent(strategyId));
 }
 
 export async function getMovement(
@@ -690,9 +667,7 @@ export async function getMovement(
 }
 
 export async function getInsights(strategyId: string): Promise<InsightsData> {
-  return requestJson<InsightsData>(
-    '/api/insights?strategyId=' + encodeURIComponent(strategyId),
-  );
+  return requestJson<InsightsData>('/api/insights?strategyId=' + encodeURIComponent(strategyId));
 }
 
 export async function getStrategyConfig(): Promise<{
@@ -705,16 +680,13 @@ export async function getStrategyConfig(): Promise<{
 export async function saveStrategyConfig(
   content: string,
 ): Promise<{ path: string; savedAt: string }> {
-  return requestJson<{ path: string; savedAt: string }>(
-    '/api/strategy-config',
-    {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ content }),
+  return requestJson<{ path: string; savedAt: string }>('/api/strategy-config', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
     },
-  );
+    body: JSON.stringify({ content }),
+  });
 }
 
 export async function createStrategy(input: {
@@ -813,12 +785,9 @@ export async function deleteStrategy(
 export async function resetDefaultStrategies(): Promise<{
   strategies: Strategy[];
 }> {
-  const payload = await requestJson<{ strategies?: Strategy[] }>(
-    '/api/strategies/reset-defaults',
-    {
-      method: 'POST',
-    },
-  );
+  const payload = await requestJson<{ strategies?: Strategy[] }>('/api/strategies/reset-defaults', {
+    method: 'POST',
+  });
   return {
     strategies: Array.isArray(payload.strategies)
       ? payload.strategies.map((strategy) => normalizeStrategy(strategy))
@@ -911,9 +880,7 @@ export async function importPublicStrategy(
   };
 }
 
-export async function listHistoricalSimulations(): Promise<
-  HistoricalSimulationSummary[]
-> {
+export async function listHistoricalSimulations(): Promise<HistoricalSimulationSummary[]> {
   const payload = await requestJson<{
     simulations?: HistoricalSimulationSummary[];
   }>('/api/simulations');
@@ -1005,16 +972,13 @@ export async function startHistoricalSimulationRunSession(input: {
   override?: StrategyOverrideInput;
   useLiveAiInSimulation?: boolean;
 }): Promise<{ session: HistoricalSimulationRunSession }> {
-  return requestJson<{ session: HistoricalSimulationRunSession }>(
-    '/api/simulations/run/sessions',
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(input),
+  return requestJson<{ session: HistoricalSimulationRunSession }>('/api/simulations/run/sessions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
     },
-  );
+    body: JSON.stringify(input),
+  });
 }
 
 export async function getHistoricalSimulationRunSession(
@@ -1068,8 +1032,7 @@ export async function getAdvancedBacktestingRunSession(
   sessionId: string,
 ): Promise<{ session: AdvancedBacktestingRunSession }> {
   return requestJson<{ session: AdvancedBacktestingRunSession }>(
-    '/api/simulations/advanced-backtest/sessions/' +
-      encodeURIComponent(sessionId),
+    '/api/simulations/advanced-backtest/sessions/' + encodeURIComponent(sessionId),
   );
 }
 
@@ -1113,9 +1076,7 @@ export async function runAdvancedBacktestingComparison(input: {
 }
 
 function normalizeStrategy(strategy: Strategy): Strategy {
-  const fallbackTargetAllocation = defaultTargetAllocationByRisk(
-    strategy.riskProfile,
-  );
+  const fallbackTargetAllocation = defaultTargetAllocationByRisk(strategy.riskProfile);
   return {
     ...strategy,
     advanced: {
@@ -1126,18 +1087,14 @@ function normalizeStrategy(strategy: Strategy): Strategy {
       takeProfitTargetPct: strategy.advanced?.takeProfitTargetPct ?? 4.8,
       stopLossPct: strategy.advanced?.stopLossPct ?? 2.6,
       allowSellAtLoss: strategy.advanced?.allowSellAtLoss ?? false,
-      forceSellAfterDowntrendDays:
-        strategy.advanced?.forceSellAfterDowntrendDays ?? 10,
-      forceSellDowntrendThresholdPct:
-        strategy.advanced?.forceSellDowntrendThresholdPct ?? 6,
+      forceSellAfterDowntrendDays: strategy.advanced?.forceSellAfterDowntrendDays ?? 10,
+      forceSellDowntrendThresholdPct: strategy.advanced?.forceSellDowntrendThresholdPct ?? 6,
       requireDipForBuy: strategy.advanced?.requireDipForBuy ?? true,
       minDipPctToBuy: strategy.advanced?.minDipPctToBuy ?? 0.5,
       maxDailyPumpPctToBuy: strategy.advanced?.maxDailyPumpPctToBuy ?? 2.6,
       decisionMode: strategy.advanced?.decisionMode ?? 'ai_assisted',
-      aiSystemPromptId:
-        strategy.advanced?.aiSystemPromptId ?? 'ai-advisor-system-default',
-      aiUserPromptId:
-        strategy.advanced?.aiUserPromptId ?? 'ai-advisor-user-default',
+      aiSystemPromptId: strategy.advanced?.aiSystemPromptId ?? 'ai-advisor-system-default',
+      aiUserPromptId: strategy.advanced?.aiUserPromptId ?? 'ai-advisor-user-default',
     },
     targetAllocation: {
       BTC: strategy.targetAllocation?.BTC ?? fallbackTargetAllocation.BTC,
@@ -1148,18 +1105,14 @@ function normalizeStrategy(strategy: Strategy): Strategy {
       XRP: strategy.targetAllocation?.XRP ?? fallbackTargetAllocation.XRP,
       DOGE: strategy.targetAllocation?.DOGE ?? fallbackTargetAllocation.DOGE,
       AVAX: strategy.targetAllocation?.AVAX ?? fallbackTargetAllocation.AVAX,
-      POLKADOT:
-        strategy.targetAllocation?.POLKADOT ??
-        fallbackTargetAllocation.POLKADOT,
+      POLKADOT: strategy.targetAllocation?.POLKADOT ?? fallbackTargetAllocation.POLKADOT,
       ARB: strategy.targetAllocation?.ARB ?? fallbackTargetAllocation.ARB,
       OP: strategy.targetAllocation?.OP ?? fallbackTargetAllocation.OP,
     },
   };
 }
 
-function defaultTargetAllocationByRisk(
-  riskProfile: StrategyRiskProfile,
-): StrategyTargetAllocation {
+function defaultTargetAllocationByRisk(riskProfile: StrategyRiskProfile): StrategyTargetAllocation {
   if (riskProfile === 'defensive') {
     return {
       BTC: 55,
@@ -1248,16 +1201,13 @@ export async function getUserProfile(): Promise<{ profile: UserProfile }> {
 export async function saveUserProfile(
   input: Partial<UserProfile>,
 ): Promise<{ profile: UserProfile; savedAt: string }> {
-  return requestJson<{ profile: UserProfile; savedAt: string }>(
-    '/api/user/profile',
-    {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(input),
+  return requestJson<{ profile: UserProfile; savedAt: string }>('/api/user/profile', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
     },
-  );
+    body: JSON.stringify(input),
+  });
 }
 
 export async function getUserSettings(): Promise<{ settings: UserSettings }> {
@@ -1277,9 +1227,7 @@ export async function getUserAiUsageCalls(limit = 100): Promise<{
   }>('/api/user/ai-usage/calls' + query);
 }
 
-export async function getUserAiUsageCall(
-  callId: string,
-): Promise<{ call: UserAiCallRecord }> {
+export async function getUserAiUsageCall(callId: string): Promise<{ call: UserAiCallRecord }> {
   return requestJson<{ call: UserAiCallRecord }>(
     '/api/user/ai-usage/calls/' + encodeURIComponent(callId),
   );
@@ -1288,40 +1236,30 @@ export async function getUserAiUsageCall(
 export async function saveUserSettings(
   input: UserSettingsUpdateInput,
 ): Promise<{ settings: UserSettings; savedAt: string }> {
-  return requestJson<{ settings: UserSettings; savedAt: string }>(
-    '/api/user/settings',
-    {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(input),
+  return requestJson<{ settings: UserSettings; savedAt: string }>('/api/user/settings', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
     },
-  );
+    body: JSON.stringify(input),
+  });
 }
 
 export async function testUserAiAdvisorConfiguration(
   input?: UserAiAdvisorSettingsInput,
 ): Promise<AiAdvisorConfigurationTestResult> {
-  return requestJson<AiAdvisorConfigurationTestResult>(
-    '/api/user/ai-advisor/test',
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(input ?? {}),
+  return requestJson<AiAdvisorConfigurationTestResult>('/api/user/ai-advisor/test', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
     },
-  );
+    body: JSON.stringify(input ?? {}),
+  });
 }
 
-export async function listPrompts(
-  type?: PromptType,
-): Promise<PromptDefinition[]> {
+export async function listPrompts(type?: PromptType): Promise<PromptDefinition[]> {
   const suffix = type ? '?type=' + encodeURIComponent(type) : '';
-  const payload = await requestJson<{ prompts?: PromptDefinition[] }>(
-    '/api/prompts' + suffix,
-  );
+  const payload = await requestJson<{ prompts?: PromptDefinition[] }>('/api/prompts' + suffix);
   return Array.isArray(payload.prompts) ? payload.prompts : [];
 }
 
@@ -1388,12 +1326,9 @@ export async function resetDefaultPrompts(type?: PromptType): Promise<{
   const endpoint = type
     ? '/api/prompts/reset-defaults/' + encodeURIComponent(type)
     : '/api/prompts/reset-defaults';
-  const payload = await requestJson<{ prompts?: PromptDefinition[] }>(
-    endpoint,
-    {
-      method: 'POST',
-    },
-  );
+  const payload = await requestJson<{ prompts?: PromptDefinition[] }>(endpoint, {
+    method: 'POST',
+  });
   return {
     prompts: Array.isArray(payload.prompts) ? payload.prompts : [],
   };
@@ -1494,22 +1429,16 @@ export async function getWizardPromptTemplates(): Promise<{
 export async function getWizardPromptTemplate(
   templateName: 'defensive' | 'balanced' | 'aggressive',
 ): Promise<{ content: string }> {
-  return requestJson(
-    '/api/strategies/wizard/prompts/' + encodeURIComponent(templateName),
-  );
+  return requestJson('/api/strategies/wizard/prompts/' + encodeURIComponent(templateName));
 }
 
 export async function getWizardDefaultSafeguards(
   riskLevel: 'defensive' | 'balanced' | 'aggressive',
 ): Promise<Safeguards> {
-  return requestJson(
-    '/api/strategies/wizard/safeguards/' + encodeURIComponent(riskLevel),
-  );
+  return requestJson('/api/strategies/wizard/safeguards/' + encodeURIComponent(riskLevel));
 }
 
-export async function validateAllocationConfig(
-  config: AllocationConfig,
-): Promise<{
+export async function validateAllocationConfig(config: AllocationConfig): Promise<{
   isValid: boolean;
   errors: string[];
   config?: AllocationConfig;
@@ -1520,9 +1449,7 @@ export async function validateAllocationConfig(
   });
 }
 
-export async function validateAiAssistedConfig(
-  config: AiAssistedConfig,
-): Promise<{
+export async function validateAiAssistedConfig(config: AiAssistedConfig): Promise<{
   isValid: boolean;
   errors: string[];
   config?: AiAssistedConfig;
@@ -1558,9 +1485,7 @@ export async function listWizardStrategies(): Promise<{
 export async function getWizardStrategy(strategyId: string): Promise<{
   strategy: StrategyProfile;
 }> {
-  return requestJson(
-    '/api/strategies/wizard/' + encodeURIComponent(strategyId),
-  );
+  return requestJson('/api/strategies/wizard/' + encodeURIComponent(strategyId));
 }
 
 export async function updateWizardStrategy(
@@ -1576,24 +1501,18 @@ export async function updateWizardStrategy(
     safeguards: Safeguards;
   }>,
 ): Promise<{ strategy: StrategyProfile }> {
-  return requestJson(
-    '/api/strategies/wizard/' + encodeURIComponent(strategyId),
-    {
-      method: 'PUT',
-      body: JSON.stringify(input),
-    },
-  );
+  return requestJson('/api/strategies/wizard/' + encodeURIComponent(strategyId), {
+    method: 'PUT',
+    body: JSON.stringify(input),
+  });
 }
 
 export async function deleteWizardStrategy(strategyId: string): Promise<{
   deleted: boolean;
 }> {
-  return requestJson(
-    '/api/strategies/wizard/' + encodeURIComponent(strategyId),
-    {
-      method: 'DELETE',
-    },
-  );
+  return requestJson('/api/strategies/wizard/' + encodeURIComponent(strategyId), {
+    method: 'DELETE',
+  });
 }
 
 export async function resetWizardDefaultStrategies(): Promise<{

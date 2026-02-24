@@ -28,13 +28,5 @@ export function formatIsoDate(value: Date): string {
 }
 
 export function shiftDateDays(value: Date, days: number): Date {
-  return new Date(
-    value.getFullYear(),
-    value.getMonth(),
-    value.getDate() + days,
-    12,
-    0,
-    0,
-    0,
-  );
+  return new Date(value.getFullYear(), value.getMonth(), value.getDate() + days, 12, 0, 0, 0);
 }

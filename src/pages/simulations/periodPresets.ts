@@ -31,9 +31,7 @@ export function computeAdvancedPeriodPreset(
   }
 
   const anchorStart =
-    parseIsoDate(currentPeriod.periodStart) ??
-    parseIsoDate(fallbackStart) ??
-    new Date();
+    parseIsoDate(currentPeriod.periodStart) ?? parseIsoDate(fallbackStart) ?? new Date();
 
   next[index] = {
     ...currentPeriod,

@@ -40,8 +40,7 @@ export function LoginPage(): JSX.Element {
           </div>
           <h1>Session active</h1>
           <p>
-            Signed in as {status.user?.displayName ?? 'User'} (
-            {status.user?.email ?? '-'})
+            Signed in as {status.user?.displayName ?? 'User'} ({status.user?.email ?? '-'})
           </p>
           <Link className="button" to="/">
             Open dashboard

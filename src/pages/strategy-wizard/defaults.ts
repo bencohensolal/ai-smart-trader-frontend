@@ -1,13 +1,6 @@
-import {
-  AiGuardrails,
-  HistoricalLevers,
-  SafeguardsDefaults,
-  StrategyRiskLevel,
-} from './types';
+import { AiGuardrails, HistoricalLevers, SafeguardsDefaults, StrategyRiskLevel } from './types';
 
-export function defaultHistoricalLeversByRisk(
-  risk: StrategyRiskLevel,
-): HistoricalLevers {
+export function defaultHistoricalLeversByRisk(risk: StrategyRiskLevel): HistoricalLevers {
   if (risk === 'defensive') {
     return {
       lookbackDays: 21,
@@ -43,9 +36,7 @@ export function defaultHistoricalLeversByRisk(
   };
 }
 
-export function defaultSafeguardsByRisk(
-  risk: StrategyRiskLevel,
-): SafeguardsDefaults {
+export function defaultSafeguardsByRisk(risk: StrategyRiskLevel): SafeguardsDefaults {
   if (risk === 'defensive') {
     return {
       monthlyBudgetEur: 300,

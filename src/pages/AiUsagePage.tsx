@@ -35,36 +35,29 @@ export function AiUsagePage(): JSX.Element {
   const navigate = useNavigate();
   const [usage, setUsage] = useState<UserAiUsage | null>(null);
   const [calls, setCalls] = useState<UserAiCallRecord[]>([]);
-  const [callsStatusFilter, setCallsStatusFilter] = useState<
-    'all' | 'success' | 'error'
-  >('all');
+  const [callsStatusFilter, setCallsStatusFilter] = useState<'all' | 'success' | 'error'>('all');
   const [callsModelFilter, setCallsModelFilter] = useState('all');
   const [callsPageSize, setCallsPageSize] = useState(50);
   const [callsPage, setCallsPage] = useState(1);
   const [settings, setSettings] = useState<UserSettings | null>(null);
   const [prompts, setPrompts] = useState<PromptDefinition[]>([]);
   const [selectedCallId, setSelectedCallId] = useState<string>('');
-  const [selectedCall, setSelectedCall] = useState<UserAiCallRecord | null>(
-    null,
-  );
+  const [selectedCall, setSelectedCall] = useState<UserAiCallRecord | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingDetail, setIsLoadingDetail] = useState(false);
   const [error, setError] = useState('');
   const [settingsSaving, setSettingsSaving] = useState(false);
   const [settingsStatus, setSettingsStatus] = useState('');
-  const [settingsStatusKind, setSettingsStatusKind] = useState<
-    'success' | 'error'
-  >('success');
+  const [settingsStatusKind, setSettingsStatusKind] = useState<'success' | 'error'>('success');
   const [isTestingAiConfig, setIsTestingAiConfig] = useState(false);
-  const [lastAiConfigTest, setLastAiConfigTest] =
-    useState<AiAdvisorConfigurationTestResult | null>(null);
+  const [lastAiConfigTest, setLastAiConfigTest] = useState<AiAdvisorConfigurationTestResult | null>(
+    null,
+  );
   const [aiApiKeyDraft, setAiApiKeyDraft] = useState('');
   const [clearAiApiKey, setClearAiApiKey] = useState(false);
   const [promptsSaving, setPromptsSaving] = useState(false);
   const [promptsStatus, setPromptsStatus] = useState('');
-  const [promptsStatusKind, setPromptsStatusKind] = useState<
-    'success' | 'error'
-  >('success');
+  const [promptsStatusKind, setPromptsStatusKind] = useState<'success' | 'error'>('success');
   const [editingPromptId, setEditingPromptId] = useState<string | null>(null);
   const [type, setType] = useState<PromptType>('ai_advisor_system');
   const [name, setName] = useState('');
@@ -117,10 +110,7 @@ export function AiUsagePage(): JSX.Element {
       if (callsStatusFilter === 'error' && call.success) {
         return false;
       }
-      if (
-        callsModelFilter !== 'all' &&
-        (call.model || '-') !== callsModelFilter
-      ) {
+      if (callsModelFilter !== 'all' && (call.model || '-') !== callsModelFilter) {
         return false;
       }
       return true;
@@ -128,8 +118,8 @@ export function AiUsagePage(): JSX.Element {
   }, [calls, callsModelFilter, callsStatusFilter]);
 
   const callModels = useMemo(() => {
-    return Array.from(new Set(calls.map((call) => call.model || '-'))).sort(
-      (left, right) => left.localeCompare(right),
+    return Array.from(new Set(calls.map((call) => call.model || '-'))).sort((left, right) =>
+      left.localeCompare(right),
     );
   }, [calls]);
 
@@ -137,10 +127,7 @@ export function AiUsagePage(): JSX.Element {
     setCallsPage(1);
   }, [callsModelFilter, callsPageSize, callsStatusFilter]);
 
-  const callsPageCount = Math.max(
-    1,
-    Math.ceil(callsByFilters.length / callsPageSize),
-  );
+  const callsPageCount = Math.max(1, Math.ceil(callsByFilters.length / callsPageSize));
   const safeCallsPage = Math.min(callsPage, callsPageCount);
   const pagedCalls = useMemo(() => {
     const start = (safeCallsPage - 1) * callsPageSize;
@@ -153,8 +140,7 @@ export function AiUsagePage(): JSX.Element {
     }
     const used = usage?.totalPromptTokens ?? 0;
     const maxTheoretical =
-      settings.aiAdvisor.maxPromptTokensPerCall *
-      Math.max(1, usage?.totalCalls ?? 1);
+      settings.aiAdvisor.maxPromptTokensPerCall * Math.max(1, usage?.totalCalls ?? 1);
     return Math.min(100, (used / maxTheoretical) * 100);
   }, [settings, usage]);
 
@@ -164,8 +150,7 @@ export function AiUsagePage(): JSX.Element {
     }
     return Math.min(
       100,
-      ((usage?.estimatedCostEur ?? 0) / settings.aiAdvisor.maxCostEurPerDay) *
-        100,
+      ((usage?.estimatedCostEur ?? 0) / settings.aiAdvisor.maxCostEurPerDay) * 100,
     );
   }, [settings, usage]);
 
@@ -196,13 +181,12 @@ export function AiUsagePage(): JSX.Element {
     setIsLoading(true);
     setError('');
     try {
-      const [usagePayload, callsPayload, settingsPayload, promptsPayload] =
-        await Promise.all([
-          getUserAiUsage(),
-          getUserAiUsageCalls(150),
-          getUserSettings(),
-          listPrompts(),
-        ]);
+      const [usagePayload, callsPayload, settingsPayload, promptsPayload] = await Promise.all([
+        getUserAiUsage(),
+        getUserAiUsageCalls(150),
+        getUserSettings(),
+        listPrompts(),
+      ]);
       setUsage(usagePayload.usage);
       setCalls(callsPayload.calls);
       setSettings(settingsPayload.settings);
@@ -237,18 +221,13 @@ export function AiUsagePage(): JSX.Element {
       return [];
     }
     const models = getProviderModels(settings.aiAdvisor.provider);
-    if (
-      settings.aiAdvisor.model &&
-      !models.includes(settings.aiAdvisor.model)
-    ) {
+    if (settings.aiAdvisor.model && !models.includes(settings.aiAdvisor.model)) {
       return [settings.aiAdvisor.model, ...models];
     }
     return models;
   }, [settings]);
 
-  function applyProviderDefaults(
-    provider: UserSettings['aiAdvisor']['provider'],
-  ): void {
+  function applyProviderDefaults(provider: UserSettings['aiAdvisor']['provider']): void {
     if (!settings) {
       return;
     }
@@ -280,9 +259,7 @@ export function AiUsagePage(): JSX.Element {
     });
   }
 
-  async function handleSaveAiSettings(
-    event: FormEvent<HTMLFormElement>,
-  ): Promise<void> {
+  async function handleSaveAiSettings(event: FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
     if (!settings) {
       return;
@@ -290,17 +267,14 @@ export function AiUsagePage(): JSX.Element {
     try {
       setSettingsSaving(true);
       setSettingsStatus('');
-      const aiAdvisorPayload: NonNullable<
-        UserSettingsUpdateInput['aiAdvisor']
-      > = {
+      const aiAdvisorPayload: NonNullable<UserSettingsUpdateInput['aiAdvisor']> = {
         provider: settings.aiAdvisor.provider,
         model: settings.aiAdvisor.model,
         baseUrl: settings.aiAdvisor.baseUrl,
         temperature: settings.aiAdvisor.temperature,
         timeoutMs: settings.aiAdvisor.timeoutMs,
         maxPromptTokensPerCall: settings.aiAdvisor.maxPromptTokensPerCall,
-        maxCompletionTokensPerCall:
-          settings.aiAdvisor.maxCompletionTokensPerCall,
+        maxCompletionTokensPerCall: settings.aiAdvisor.maxCompletionTokensPerCall,
         maxCallsPerDay: settings.aiAdvisor.maxCallsPerDay,
         maxCostEurPerDay: settings.aiAdvisor.maxCostEurPerDay,
         inputCostPer1MTokensUsd: settings.aiAdvisor.inputCostPer1MTokensUsd,
@@ -350,8 +324,7 @@ export function AiUsagePage(): JSX.Element {
         temperature: settings.aiAdvisor.temperature,
         timeoutMs: settings.aiAdvisor.timeoutMs,
         maxPromptTokensPerCall: settings.aiAdvisor.maxPromptTokensPerCall,
-        maxCompletionTokensPerCall:
-          settings.aiAdvisor.maxCompletionTokensPerCall,
+        maxCompletionTokensPerCall: settings.aiAdvisor.maxCompletionTokensPerCall,
         maxCallsPerDay: settings.aiAdvisor.maxCallsPerDay,
         maxCostEurPerDay: settings.aiAdvisor.maxCostEurPerDay,
         inputCostPer1MTokensUsd: settings.aiAdvisor.inputCostPer1MTokensUsd,
@@ -377,9 +350,7 @@ export function AiUsagePage(): JSX.Element {
       });
       setSettingsStatusKind(payload.ok ? 'success' : 'error');
       setSettingsStatus(
-        payload.ok
-          ? t('settings.aiProvider.testSuccess')
-          : t('settings.aiProvider.testError'),
+        payload.ok ? t('settings.aiProvider.testSuccess') : t('settings.aiProvider.testError'),
       );
     } catch (testError) {
       if (isUnauthorizedError(testError)) {
@@ -483,9 +454,7 @@ export function AiUsagePage(): JSX.Element {
 
   async function handleResetDefaults(typeToReset?: PromptType): Promise<void> {
     const confirmed = window.confirm(
-      typeToReset
-        ? 'Reset default prompts for this type?'
-        : 'Reset all default prompts?',
+      typeToReset ? 'Reset default prompts for this type?' : 'Reset all default prompts?',
     );
     if (!confirmed) {
       return;
@@ -527,13 +496,8 @@ export function AiUsagePage(): JSX.Element {
   }
 
   return (
-    <Layout
-      title={t('page.aiUsage.title')}
-      subtitle={t('page.aiUsage.subtitle')}
-    >
-      {isLoading ? (
-        <section className="panel">{t('aiUsage.loading')}</section>
-      ) : null}
+    <Layout title={t('page.aiUsage.title')} subtitle={t('page.aiUsage.subtitle')}>
+      {isLoading ? <section className="panel">{t('aiUsage.loading')}</section> : null}
       {!isLoading && error ? (
         <section className="panel status status-error">{error}</section>
       ) : null}
@@ -576,15 +540,12 @@ export function AiUsagePage(): JSX.Element {
 
               <div className="form-grid">
                 <label className="field">
-                  <span className="field-label">
-                    {t('settings.aiProvider.partner')}
-                  </span>
+                  <span className="field-label">{t('settings.aiProvider.partner')}</span>
                   <select
                     value={settings.aiAdvisor.provider}
                     onChange={(event) => {
                       applyProviderDefaults(
-                        event.target
-                          .value as UserSettings['aiAdvisor']['provider'],
+                        event.target.value as UserSettings['aiAdvisor']['provider'],
                       );
                     }}
                   >
@@ -595,9 +556,7 @@ export function AiUsagePage(): JSX.Element {
                 </label>
 
                 <label className="field">
-                  <span className="field-label">
-                    {t('settings.aiProvider.model')}
-                  </span>
+                  <span className="field-label">{t('settings.aiProvider.model')}</span>
                   <select
                     value={settings.aiAdvisor.model}
                     onChange={(event) => {
@@ -615,9 +574,7 @@ export function AiUsagePage(): JSX.Element {
                 </label>
 
                 <label className="field">
-                  <span className="field-label">
-                    {t('settings.aiProvider.baseUrl')}
-                  </span>
+                  <span className="field-label">{t('settings.aiProvider.baseUrl')}</span>
                   <input
                     type="text"
                     value={settings.aiAdvisor.baseUrl}
@@ -634,9 +591,7 @@ export function AiUsagePage(): JSX.Element {
                 </label>
 
                 <label className="field">
-                  <span className="field-label">
-                    {t('settings.aiProvider.timeout')}
-                  </span>
+                  <span className="field-label">{t('settings.aiProvider.timeout')}</span>
                   <input
                     type="number"
                     min={500}
@@ -659,9 +614,7 @@ export function AiUsagePage(): JSX.Element {
                 </label>
 
                 <label className="field">
-                  <span className="field-label">
-                    {t('settings.aiProvider.temperature')}
-                  </span>
+                  <span className="field-label">{t('settings.aiProvider.temperature')}</span>
                   <input
                     type="number"
                     min={0}
@@ -685,9 +638,7 @@ export function AiUsagePage(): JSX.Element {
                 </label>
 
                 <label className="field">
-                  <span className="field-label">
-                    {t('settings.aiProvider.maxPromptTokens')}
-                  </span>
+                  <span className="field-label">{t('settings.aiProvider.maxPromptTokens')}</span>
                   <input
                     type="number"
                     min={256}
@@ -735,9 +686,7 @@ export function AiUsagePage(): JSX.Element {
                 </label>
 
                 <label className="field">
-                  <span className="field-label">
-                    {t('settings.aiProvider.maxCostPerDay')}
-                  </span>
+                  <span className="field-label">{t('settings.aiProvider.maxCostPerDay')}</span>
                   <input
                     type="number"
                     min={0.1}
@@ -761,9 +710,7 @@ export function AiUsagePage(): JSX.Element {
                 </label>
 
                 <label className="field">
-                  <span className="field-label">
-                    {t('settings.aiProvider.inputTokenRate')}
-                  </span>
+                  <span className="field-label">{t('settings.aiProvider.inputTokenRate')}</span>
                   <input
                     type="number"
                     min={0}
@@ -786,9 +733,7 @@ export function AiUsagePage(): JSX.Element {
                 </label>
 
                 <label className="field">
-                  <span className="field-label">
-                    {t('settings.aiProvider.outputTokenRate')}
-                  </span>
+                  <span className="field-label">{t('settings.aiProvider.outputTokenRate')}</span>
                   <input
                     type="number"
                     min={0}
@@ -811,9 +756,7 @@ export function AiUsagePage(): JSX.Element {
                 </label>
 
                 <label className="field">
-                  <span className="field-label">
-                    {t('settings.aiProvider.usdToEurRate')}
-                  </span>
+                  <span className="field-label">{t('settings.aiProvider.usdToEurRate')}</span>
                   <input
                     type="number"
                     min={0.01}
@@ -837,9 +780,7 @@ export function AiUsagePage(): JSX.Element {
               </div>
 
               <label className="field">
-                <span className="field-label">
-                  {t('settings.aiProvider.apiKey')}
-                </span>
+                <span className="field-label">{t('settings.aiProvider.apiKey')}</span>
                 <input
                   type="password"
                   placeholder={
@@ -896,11 +837,7 @@ export function AiUsagePage(): JSX.Element {
                     ? t('settings.aiProvider.testing')
                     : t('settings.aiProvider.test')}
                 </button>
-                <button
-                  className="button"
-                  type="submit"
-                  disabled={settingsSaving}
-                >
+                <button className="button" type="submit" disabled={settingsSaving}>
                   {settingsSaving ? t('settings.saving') : t('settings.save')}
                 </button>
               </div>
@@ -910,15 +847,11 @@ export function AiUsagePage(): JSX.Element {
                 <h3>{t('settings.aiProvider.lastTest')}</h3>
                 <p>
                   {t('settings.aiProvider.lastTestStatus')}:{' '}
-                  {lastAiConfigTest.ok
-                    ? t('aiUsage.calls.success')
-                    : t('aiUsage.calls.error')}
+                  {lastAiConfigTest.ok ? t('aiUsage.calls.success') : t('aiUsage.calls.error')}
                 </p>
                 <p>
                   HTTP:{' '}
-                  {lastAiConfigTest.statusCode === null
-                    ? '-'
-                    : String(lastAiConfigTest.statusCode)}
+                  {lastAiConfigTest.statusCode === null ? '-' : String(lastAiConfigTest.statusCode)}
                 </p>
                 <p>
                   {t('settings.aiProvider.inputTokenRate')}:{' '}
@@ -929,8 +862,7 @@ export function AiUsagePage(): JSX.Element {
                   {lastAiConfigTest.pricing.outputCostPer1MTokensUsd}
                 </p>
                 <p>
-                  {t('settings.aiProvider.pricingSource')}:{' '}
-                  {lastAiConfigTest.pricing.pricingSource}
+                  {t('settings.aiProvider.pricingSource')}: {lastAiConfigTest.pricing.pricingSource}
                 </p>
                 <p>
                   {t('settings.aiProvider.pricingUpdatedAt')}:{' '}
@@ -958,10 +890,7 @@ export function AiUsagePage(): JSX.Element {
             <div className="prompts-grid">
               <article className="panel">
                 <h3>{editingPromptId ? 'Edit prompt' : 'New prompt'}</h3>
-                <p>
-                  You can create multiple prompts per type to compare algorithm
-                  behaviors.
-                </p>
+                <p>You can create multiple prompts per type to compare algorithm behaviors.</p>
                 <form
                   className="strategy-form strategy-form--stacked"
                   onSubmit={(event) => {
@@ -978,15 +907,9 @@ export function AiUsagePage(): JSX.Element {
                         }}
                         disabled={Boolean(editingPromptId)}
                       >
-                        <option value="ai_advisor_system">
-                          AI Advisor - System
-                        </option>
-                        <option value="ai_advisor_user">
-                          AI Advisor - Context
-                        </option>
-                        <option value="simulation_explainer">
-                          Simulation - Explanation
-                        </option>
+                        <option value="ai_advisor_system">AI Advisor - System</option>
+                        <option value="ai_advisor_user">AI Advisor - Context</option>
+                        <option value="simulation_explainer">Simulation - Explanation</option>
                       </select>
                     </label>
 
@@ -1029,11 +952,7 @@ export function AiUsagePage(): JSX.Element {
                   </label>
 
                   <div className="form-actions">
-                    <button
-                      className="button"
-                      type="submit"
-                      disabled={promptsSaving}
-                    >
+                    <button className="button" type="submit" disabled={promptsSaving}>
                       {editingPromptId ? 'Save' : 'Create'}
                     </button>
                     <button
@@ -1063,116 +982,104 @@ export function AiUsagePage(): JSX.Element {
                 <ul className="cards-list">
                   <li>
                     <h3>Multiple variants</h3>
-                    <p>
-                      Create multiple prompts of the same type for A/B testing.
-                    </p>
+                    <p>Create multiple prompts of the same type for A/B testing.</p>
                   </li>
                   <li>
                     <h3>Default version</h3>
-                    <p>
-                      Prompts shipped with the project remain available and can
-                      be restored.
-                    </p>
+                    <p>Prompts shipped with the project remain available and can be restored.</p>
                   </li>
                   <li>
                     <h3>Strategy setup</h3>
-                    <p>
-                      Each strategy can choose its AI prompts in the Strategies
-                      page.
-                    </p>
+                    <p>Each strategy can choose its AI prompts in the Strategies page.</p>
                   </li>
                 </ul>
               </aside>
             </div>
 
-            {(
-              [
-                'ai_advisor_system',
-                'ai_advisor_user',
-                'simulation_explainer',
-              ] as const
-            ).map((promptType) => {
-              const list = groupedPrompts[promptType];
-              return (
-                <article className="sub-panel" key={promptType}>
-                  <div className="sub-panel-head">
-                    <h3>{formatPromptType(promptType)}</h3>
-                    <button
-                      className="button button-secondary button-small"
-                      type="button"
-                      onClick={() => {
-                        void handleResetDefaults(promptType);
-                      }}
-                      disabled={promptsSaving}
-                    >
-                      Restore defaults ({formatPromptType(promptType)})
-                    </button>
-                  </div>
-                  <div className="table-scroll table-scroll-wide">
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>ID</th>
-                          <th>Name</th>
-                          <th>Description</th>
-                          <th>Default</th>
-                          <th>Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {list.map((prompt) => {
-                          return (
-                            <tr key={prompt.id}>
-                              <td>{prompt.id}</td>
-                              <td>{prompt.name}</td>
-                              <td>{prompt.description}</td>
-                              <td>{prompt.isDefault ? 'yes' : 'no'}</td>
-                              <td>
-                                <div className="table-actions">
-                                  <button
-                                    className="button button-secondary button-small"
-                                    type="button"
-                                    onClick={() => {
-                                      startEditPrompt(prompt);
-                                    }}
-                                    disabled={promptsSaving}
-                                  >
-                                    Edit
-                                  </button>
-                                  {prompt.templateKey ? (
+            {(['ai_advisor_system', 'ai_advisor_user', 'simulation_explainer'] as const).map(
+              (promptType) => {
+                const list = groupedPrompts[promptType];
+                return (
+                  <article className="sub-panel" key={promptType}>
+                    <div className="sub-panel-head">
+                      <h3>{formatPromptType(promptType)}</h3>
+                      <button
+                        className="button button-secondary button-small"
+                        type="button"
+                        onClick={() => {
+                          void handleResetDefaults(promptType);
+                        }}
+                        disabled={promptsSaving}
+                      >
+                        Restore defaults ({formatPromptType(promptType)})
+                      </button>
+                    </div>
+                    <div className="table-scroll table-scroll-wide">
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Default</th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {list.map((prompt) => {
+                            return (
+                              <tr key={prompt.id}>
+                                <td>{prompt.id}</td>
+                                <td>{prompt.name}</td>
+                                <td>{prompt.description}</td>
+                                <td>{prompt.isDefault ? 'yes' : 'no'}</td>
+                                <td>
+                                  <div className="table-actions">
                                     <button
                                       className="button button-secondary button-small"
                                       type="button"
                                       onClick={() => {
-                                        void handleResetPrompt(prompt);
+                                        startEditPrompt(prompt);
                                       }}
                                       disabled={promptsSaving}
                                     >
-                                      Reset to default
+                                      Edit
                                     </button>
-                                  ) : (
-                                    <button
-                                      className="button button-danger button-small"
-                                      type="button"
-                                      onClick={() => {
-                                        void handleDeletePrompt(prompt);
-                                      }}
-                                      disabled={promptsSaving}
-                                    >
-                                      Delete
-                                    </button>
-                                  )}
-                                </div>
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
-                  </div>
-                </article>
-              );
-            })}
+                                    {prompt.templateKey ? (
+                                      <button
+                                        className="button button-secondary button-small"
+                                        type="button"
+                                        onClick={() => {
+                                          void handleResetPrompt(prompt);
+                                        }}
+                                        disabled={promptsSaving}
+                                      >
+                                        Reset to default
+                                      </button>
+                                    ) : (
+                                      <button
+                                        className="button button-danger button-small"
+                                        type="button"
+                                        onClick={() => {
+                                          void handleDeletePrompt(prompt);
+                                        }}
+                                        disabled={promptsSaving}
+                                      >
+                                        Delete
+                                      </button>
+                                    )}
+                                  </div>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+                  </article>
+                );
+              },
+            )}
           </section>
 
           {promptsStatus ? (
@@ -1187,21 +1094,13 @@ export function AiUsagePage(): JSX.Element {
             <div className="kpis ai-usage-summary-kpis">
               <article className="kpi">
                 <span>Tokens used</span>
-                <strong>
-                  {numberFormatter.format(usage?.totalTokens ?? 0)}
-                </strong>
-                <small>
-                  {usageTokenLimitPct.toFixed(1)}% of theoretical limit
-                </small>
+                <strong>{numberFormatter.format(usage?.totalTokens ?? 0)}</strong>
+                <small>{usageTokenLimitPct.toFixed(1)}% of theoretical limit</small>
               </article>
               <article className="kpi">
                 <span>Estimated cost</span>
-                <strong>
-                  {currencyFormatter.format(usage?.estimatedCostEur ?? 0)} EUR
-                </strong>
-                <small>
-                  {usageCostGuardrailPct.toFixed(1)}% of daily limit
-                </small>
+                <strong>{currencyFormatter.format(usage?.estimatedCostEur ?? 0)} EUR</strong>
+                <small>{usageCostGuardrailPct.toFixed(1)}% of daily limit</small>
               </article>
             </div>
 
@@ -1215,11 +1114,7 @@ export function AiUsagePage(): JSX.Element {
                       value={callsStatusFilter}
                       onChange={(event) => {
                         const next = event.target.value;
-                        if (
-                          next === 'all' ||
-                          next === 'success' ||
-                          next === 'error'
-                        ) {
+                        if (next === 'all' || next === 'success' || next === 'error') {
                           setCallsStatusFilter(next);
                         }
                       }}
@@ -1265,8 +1160,7 @@ export function AiUsagePage(): JSX.Element {
                   </label>
                 </section>
                 <p>
-                  {callsByFilters.length} filtered call(s) · page{' '}
-                  {safeCallsPage}/{callsPageCount}
+                  {callsByFilters.length} filtered call(s) · page {safeCallsPage}/{callsPageCount}
                 </p>
                 {calls.length === 0 ? <p>{t('aiUsage.calls.empty')}</p> : null}
                 {calls.length > 0 ? (
@@ -1286,10 +1180,7 @@ export function AiUsagePage(): JSX.Element {
                         {pagedCalls.map((call) => {
                           const active = selectedCallId === call.id;
                           return (
-                            <tr
-                              key={call.id}
-                              className={active ? 'active' : ''}
-                            >
+                            <tr key={call.id} className={active ? 'active' : ''}>
                               <td>
                                 <button
                                   type="button"
@@ -1303,22 +1194,11 @@ export function AiUsagePage(): JSX.Element {
                                     : t('aiUsage.calls.error')}
                                 </button>
                               </td>
-                              <td>
-                                {formatDate(call.calledAt, dateFormatter)}
-                              </td>
+                              <td>{formatDate(call.calledAt, dateFormatter)}</td>
                               <td>{call.model || '-'}</td>
-                              <td>
-                                {numberFormatter.format(call.totalTokens)}
-                              </td>
-                              <td>
-                                {currencyFormatter.format(
-                                  call.estimatedCostEur,
-                                )}{' '}
-                                EUR
-                              </td>
-                              <td>
-                                {durationFormatter.format(call.durationMs)} ms
-                              </td>
+                              <td>{numberFormatter.format(call.totalTokens)}</td>
+                              <td>{currencyFormatter.format(call.estimatedCostEur)} EUR</td>
+                              <td>{durationFormatter.format(call.durationMs)} ms</td>
                             </tr>
                           );
                         })}
@@ -1350,9 +1230,7 @@ export function AiUsagePage(): JSX.Element {
                       className="button button-secondary button-small"
                       type="button"
                       onClick={() => {
-                        setCallsPage((current) =>
-                          Math.min(callsPageCount, current + 1),
-                        );
+                        setCallsPage((current) => Math.min(callsPageCount, current + 1));
                       }}
                       disabled={safeCallsPage >= callsPageCount}
                     >
@@ -1365,18 +1243,14 @@ export function AiUsagePage(): JSX.Element {
               <section className="ai-usage-detail">
                 <h2>{t('aiUsage.details.title')}</h2>
                 {isLoadingDetail ? <p>{t('aiUsage.details.loading')}</p> : null}
-                {!isLoadingDetail && !selectedCall ? (
-                  <p>{t('aiUsage.details.empty')}</p>
-                ) : null}
+                {!isLoadingDetail && !selectedCall ? <p>{t('aiUsage.details.empty')}</p> : null}
 
                 {!isLoadingDetail && selectedCall ? (
                   <>
                     <div className="ai-usage-detail-grid">
                       <div className="kpi">
                         <span>{t('aiUsage.details.id')}</span>
-                        <strong className="ai-usage-id">
-                          {selectedCall.id}
-                        </strong>
+                        <strong className="ai-usage-id">{selectedCall.id}</strong>
                       </div>
                       <div className="kpi">
                         <span>{t('aiUsage.details.status')}</span>
@@ -1388,35 +1262,25 @@ export function AiUsagePage(): JSX.Element {
                       </div>
                       <div className="kpi">
                         <span>{t('aiUsage.details.totalTokens')}</span>
-                        <strong>
-                          {numberFormatter.format(selectedCall.totalTokens)}
-                        </strong>
+                        <strong>{numberFormatter.format(selectedCall.totalTokens)}</strong>
                       </div>
                       <div className="kpi">
                         <span>{t('aiUsage.details.tokenBreakdown')}</span>
                         <strong>
                           {numberFormatter.format(selectedCall.promptTokens)} /{' '}
-                          {numberFormatter.format(
-                            selectedCall.completionTokens,
-                          )}
+                          {numberFormatter.format(selectedCall.completionTokens)}
                         </strong>
                       </div>
                       <div className="kpi">
                         <span>{t('aiUsage.details.costEur')}</span>
                         <strong>
-                          {currencyFormatter.format(
-                            selectedCall.estimatedCostEur,
-                          )}{' '}
-                          EUR
+                          {currencyFormatter.format(selectedCall.estimatedCostEur)} EUR
                         </strong>
                       </div>
                       <div className="kpi">
                         <span>{t('aiUsage.details.costUsd')}</span>
                         <strong>
-                          {currencyFormatter.format(
-                            selectedCall.estimatedCostUsd,
-                          )}{' '}
-                          USD
+                          {currencyFormatter.format(selectedCall.estimatedCostUsd)} USD
                         </strong>
                       </div>
                       <div className="kpi">
@@ -1424,9 +1288,7 @@ export function AiUsagePage(): JSX.Element {
                         <strong>
                           {currencyFormatter.format(
                             selectedCall.totalTokens > 0
-                              ? (selectedCall.estimatedCostEur /
-                                  selectedCall.totalTokens) *
-                                  1000
+                              ? (selectedCall.estimatedCostEur / selectedCall.totalTokens) * 1000
                               : 0,
                           )}{' '}
                           EUR
@@ -1434,21 +1296,15 @@ export function AiUsagePage(): JSX.Element {
                       </div>
                       <div className="kpi">
                         <span>{t('aiUsage.details.duration')}</span>
-                        <strong>
-                          {durationFormatter.format(selectedCall.durationMs)} ms
-                        </strong>
+                        <strong>{durationFormatter.format(selectedCall.durationMs)} ms</strong>
                       </div>
                       <div className="kpi">
                         <span>{t('aiUsage.details.calledAt')}</span>
-                        <strong>
-                          {formatDate(selectedCall.calledAt, dateFormatter)}
-                        </strong>
+                        <strong>{formatDate(selectedCall.calledAt, dateFormatter)}</strong>
                       </div>
                       <div className="kpi">
                         <span>{t('aiUsage.details.endpoint')}</span>
-                        <strong>
-                          {selectedCall.requestPayload.endpoint || '-'}
-                        </strong>
+                        <strong>{selectedCall.requestPayload.endpoint || '-'}</strong>
                       </div>
                       <div className="kpi">
                         <span>{t('aiUsage.details.httpStatus')}</span>
@@ -1460,29 +1316,19 @@ export function AiUsagePage(): JSX.Element {
                       </div>
                       <div className="kpi">
                         <span>{t('aiUsage.details.finishReason')}</span>
-                        <strong>
-                          {selectedCall.responsePayload.finishReason || '-'}
-                        </strong>
+                        <strong>{selectedCall.responsePayload.finishReason || '-'}</strong>
                       </div>
                     </div>
 
                     <div className="ai-usage-payload-grid">
                       <article className="panel ai-usage-code-panel">
                         <h3>{t('aiUsage.details.requestPayload')}</h3>
-                        <pre>
-                          {JSON.stringify(selectedCall.requestPayload, null, 2)}
-                        </pre>
+                        <pre>{JSON.stringify(selectedCall.requestPayload, null, 2)}</pre>
                       </article>
 
                       <article className="panel ai-usage-code-panel">
                         <h3>{t('aiUsage.details.responsePayload')}</h3>
-                        <pre>
-                          {JSON.stringify(
-                            selectedCall.responsePayload,
-                            null,
-                            2,
-                          )}
-                        </pre>
+                        <pre>{JSON.stringify(selectedCall.responsePayload, null, 2)}</pre>
                       </article>
                     </div>
                   </>

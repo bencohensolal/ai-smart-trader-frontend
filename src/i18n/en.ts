@@ -21,13 +21,11 @@ export const enMessages = {
   'userMenu.aiUsage.model': 'Model: {model}',
   'userMenu.aiUsage.none': 'No AI call recorded yet.',
   'userMenu.aiUsage.dailyBudgetTitle': 'Daily AI budget consumption',
-  'userMenu.aiUsage.dailyBudget':
-    'Daily budget used: {used} / {budget} ({pct}%)',
+  'userMenu.aiUsage.dailyBudget': 'Daily budget used: {used} / {budget} ({pct}%)',
   'userMenu.aiUsage.openDetails': 'Configure and monitor AI',
 
   'settings.title': 'Settings',
-  'settings.subtitle':
-    'Customize appearance, assistance level, and key application behaviors.',
+  'settings.subtitle': 'Customize appearance, assistance level, and key application behaviors.',
   'settings.loading': 'Loading...',
   'settings.loadError': 'Unable to load settings.',
   'settings.saveError': 'Unable to save settings.',
@@ -51,8 +49,7 @@ export const enMessages = {
   'settings.landing.simulations': 'Simulations',
   'settings.landing.strategies': 'Strategies',
   'settings.landing.insights': 'Insights',
-  'settings.aiAdvisor':
-    'Enable AI recommendations before each investment cycle',
+  'settings.aiAdvisor': 'Enable AI recommendations before each investment cycle',
   'settings.aiProvider.title': 'AI provider configuration',
   'settings.aiProvider.partner': 'AI partner',
   'settings.aiProvider.model': 'Model',
@@ -75,8 +72,7 @@ export const enMessages = {
   'settings.aiProvider.testing': 'Testing...',
   'settings.aiProvider.testSuccess':
     'Connection succeeded and pricing was loaded for this provider.',
-  'settings.aiProvider.testError':
-    'Test failed: verify API key, model, or endpoint.',
+  'settings.aiProvider.testError': 'Test failed: verify API key, model, or endpoint.',
   'settings.aiProvider.lastTest': 'Latest configuration test',
   'settings.aiProvider.lastTestStatus': 'Status',
   'settings.tooltips': 'Show educational tooltips',
@@ -108,14 +104,12 @@ export const enMessages = {
   'dashboard.kpi.winRateDrawdown': 'Win rate / Drawdown',
   'dashboard.charts.equity.title': 'Equity curve',
   'dashboard.charts.equity.value': 'Portfolio value',
-  'dashboard.charts.equity.help':
-    'Line up = portfolio improving; line down = portfolio declining.',
+  'dashboard.charts.equity.help': 'Line up = portfolio improving; line down = portfolio declining.',
   'dashboard.charts.allocation.title': 'Current allocation',
   'dashboard.charts.allocation.help':
     'Each slice is one crypto weight; hover for the exact percentage.',
   'dashboard.charts.pnl.title': 'PnL evolution',
-  'dashboard.charts.pnl.help':
-    'PnL = Profit & Loss (gain/loss). P1 is oldest, P7 is newest.',
+  'dashboard.charts.pnl.help': 'PnL = Profit & Loss (gain/loss). P1 is oldest, P7 is newest.',
   'dashboard.charts.pnl.periodHelp': 'simulation time point (oldest → newest)',
   'dashboard.charts.pnl.realized': 'Realized PnL',
   'dashboard.charts.pnl.unrealized': 'Unrealized PnL',
@@ -134,8 +128,7 @@ export const enMessages = {
   'dashboard.charts.correlation.title': 'Correlation heatmap',
   'dashboard.charts.correlation.help':
     '+1 = move together, -1 = move opposite, 0 = weak link; useful to check if assets are too similar.',
-  'dashboard.charts.correlation.empty':
-    'Not enough data to compute cross-crypto correlations.',
+  'dashboard.charts.correlation.empty': 'Not enough data to compute cross-crypto correlations.',
   'dashboard.charts.volatility.title': 'Historical volatility by crypto',
   'dashboard.charts.volatility.value': 'Volatility (30d proxy)',
   'dashboard.charts.volatility.asset': 'Asset {symbol}',
@@ -154,15 +147,13 @@ export const enMessages = {
   'dashboard.charts.monteCarlo.title': 'Monte Carlo projection (12 months)',
   'dashboard.charts.monteCarlo.help':
     'P10 conservative, P50 median, P90 optimistic; wider spread means higher uncertainty.',
-  'dashboard.charts.monteCarlo.empty':
-    'Not enough data to compute a Monte Carlo projection.',
+  'dashboard.charts.monteCarlo.empty': 'Not enough data to compute a Monte Carlo projection.',
   'dashboard.charts.monteCarlo.p10': 'Conservative scenario (P10)',
   'dashboard.charts.monteCarlo.median': 'Median scenario (P50)',
   'dashboard.charts.monteCarlo.p90': 'Optimistic scenario (P90)',
   'dashboard.charts.monteCarlo.now': 'Now',
   'dashboard.charts.monteCarlo.month': 'M+{month}',
-  'dashboard.charts.waterfall.title':
-    'Performance waterfall (capital → fees → PnL → final)',
+  'dashboard.charts.waterfall.title': 'Performance waterfall (capital → fees → PnL → final)',
   'dashboard.charts.waterfall.help':
     'Shows the path from initial capital to final value, including fees and PnL.',
   'dashboard.charts.waterfall.initial': 'Initial capital',
@@ -193,8 +184,7 @@ export const enMessages = {
   'help.how.1.body':
     'Configure one or more strategies (budget, risk, crypto allocation, operation cadence).',
   'help.how.2.title': '2. Follow the dashboard',
-  'help.how.2.body':
-    'Track invested amounts, performance, risk, and recent operations.',
+  'help.how.2.body': 'Track invested amounts, performance, risk, and recent operations.',
   'help.how.3.title': '3. Run historical simulations',
   'help.how.3.body':
     'Test a strategy on a past period without future data leakage, then compare outcomes.',
@@ -216,14 +206,12 @@ export const enMessages = {
     'In historical simulation, decisions only use data available at that simulated date, never future prices.',
   'help.best.title': 'Best practices',
   'help.best.1.title': 'Start simple',
-  'help.best.1.body':
-    'Start with a balanced profile, then adjust progressively.',
+  'help.best.1.body': 'Start with a balanced profile, then adjust progressively.',
   'help.best.2.title': 'Compare strategies',
   'help.best.2.body':
     'Do not judge on a few days: compare over several months to reduce market noise.',
   'help.best.3.title': 'Stay in simulation',
-  'help.best.3.body':
-    'As long as you are not comfortable, keep using fictional funds only.',
+  'help.best.3.body': 'As long as you are not comfortable, keep using fictional funds only.',
 
   'page.simulations.title': 'Historical Simulations',
   'page.simulations.subtitle':
@@ -237,8 +225,7 @@ export const enMessages = {
   'simulations.operations.outcome.successful': 'Successful',
   'simulations.operations.outcome.failed': 'Failed',
   'simulations.operations.outcome.all': 'All',
-  'simulations.operations.count':
-    '{visible} operation(s) shown out of {filtered} filtered.',
+  'simulations.operations.count': '{visible} operation(s) shown out of {filtered} filtered.',
   'simulations.operations.empty': 'No operation matches the current filters.',
   'simulations.archive.deleteAll.cta': 'Clear all',
   'simulations.archive.deleteAll.confirm':
@@ -269,14 +256,12 @@ export const enMessages = {
     'Configure your strategies entirely through forms, compare them easily, and keep a clear A/B testing approach.',
   'page.insights.title': 'Smart Insights',
   'page.insights.subtitle.loading': 'Loading insights...',
-  'page.insights.subtitle.loaded':
-    '{strategyName} | Score {insightScore}/100 | {generatedAt}',
+  'page.insights.subtitle.loaded': '{strategyName} | Score {insightScore}/100 | {generatedAt}',
   'page.profile.title': 'Profile',
   'page.profile.subtitle':
     'Complete your investor profile to personalize guidance and explanations.',
   'page.help.title': 'Help',
-  'page.help.subtitle':
-    'Understand the purpose of the app and how it works step by step.',
+  'page.help.subtitle': 'Understand the purpose of the app and how it works step by step.',
   'page.prompts.title': 'AI Prompts',
   'page.prompts.subtitle':
     'Customize prompts by algorithm type, create multiple variants, and easily restore defaults.',

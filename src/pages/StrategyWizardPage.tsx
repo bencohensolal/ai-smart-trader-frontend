@@ -39,9 +39,7 @@ function Tooltip({
     </span>
   );
 
-  const handleImportStrategies = async (
-    event: ChangeEvent<HTMLInputElement>,
-  ): Promise<void> => {
+  const handleImportStrategies = async (event: ChangeEvent<HTMLInputElement>): Promise<void> => {
     const file = event.target.files?.[0];
     if (!file) {
       return;
@@ -80,10 +78,8 @@ function Tooltip({
               type: strategy.type,
               allocationConfig: {
                 ...(allocationConfig.allocation ?? {}),
-                rebalancingFrequencyDays:
-                  allocationConfig.rebalancingFrequencyDays ?? 1,
-                rebalancingThresholdPct:
-                  allocationConfig.rebalancingThresholdPct ?? 5,
+                rebalancingFrequencyDays: allocationConfig.rebalancingFrequencyDays ?? 1,
+                rebalancingThresholdPct: allocationConfig.rebalancingThresholdPct ?? 5,
               },
               safeguards: strategy.safeguards,
             };
@@ -109,14 +105,11 @@ function Tooltip({
                 cryptoSymbols: historicalConfig.cryptoSymbols ?? ['BTC', 'ETH'],
                 lookbackDays: historicalConfig.lookbackDays ?? 30,
                 buyDropThresholdPct: historicalConfig.buyDropThresholdPct ?? 3,
-                sellRiseThresholdPct:
-                  historicalConfig.sellRiseThresholdPct ?? 5,
-                maxCapitalPerSignalPct:
-                  historicalConfig.maxCapitalPerSignalPct ?? 20,
+                sellRiseThresholdPct: historicalConfig.sellRiseThresholdPct ?? 5,
+                maxCapitalPerSignalPct: historicalConfig.maxCapitalPerSignalPct ?? 20,
                 trendLookbackDays: historicalConfig.trendLookbackDays ?? 30,
                 maxVolatilityPct: historicalConfig.maxVolatilityPct ?? 8,
-                minDaysBetweenTrades:
-                  historicalConfig.minDaysBetweenTrades ?? 2,
+                minDaysBetweenTrades: historicalConfig.minDaysBetweenTrades ?? 2,
               },
               safeguards: strategy.safeguards,
             };
@@ -147,10 +140,8 @@ function Tooltip({
               customPrompt: aiConfig.customPrompt,
               maxCostPerCallEur: aiConfig.aiSafeguards?.maxCostPerCallEur,
               maxCallsPerMonth: aiConfig.aiSafeguards?.maxCallsPerMonth,
-              maxSessionDurationMinutes:
-                aiConfig.aiSafeguards?.maxSessionDurationMinutes,
-              maxConcurrentPositions:
-                aiConfig.aiSafeguards?.maxConcurrentPositions,
+              maxSessionDurationMinutes: aiConfig.aiSafeguards?.maxSessionDurationMinutes,
+              maxConcurrentPositions: aiConfig.aiSafeguards?.maxConcurrentPositions,
             },
             safeguards: strategy.safeguards,
           };
@@ -161,8 +152,7 @@ function Tooltip({
       setStatus('Strategies imported successfully');
       await handleListStrategies();
     } catch (error) {
-      const message =
-        error instanceof Error ? error.message : 'Failed to import strategies';
+      const message = error instanceof Error ? error.message : 'Failed to import strategies';
       setStatusKind('error');
       setStatus(message);
       setLoading(false);
@@ -199,24 +189,16 @@ function Tooltip({
           incomingSafeguards.maxAmountPerDayEur ??
           safeguards.maxDailySpendEur,
         decisionChecksPerDay:
-          incomingSafeguards.decisionChecksPerDay ??
-          safeguards.decisionChecksPerDay,
+          incomingSafeguards.decisionChecksPerDay ?? safeguards.decisionChecksPerDay,
         minAiConfidencePctForExecution:
           incomingSafeguards.minAiConfidencePctForExecution ??
           safeguards.minAiConfidencePctForExecution,
-        maxPositionSizeEur:
-          incomingSafeguards.maxPositionSizeEur ??
-          safeguards.maxPositionSizeEur,
+        maxPositionSizeEur: incomingSafeguards.maxPositionSizeEur ?? safeguards.maxPositionSizeEur,
         maxConcurrentPositions:
-          incomingSafeguards.maxConcurrentPositions ??
-          safeguards.maxConcurrentPositions,
-        minOrderSizeEur:
-          incomingSafeguards.minOrderSizeEur ?? safeguards.minOrderSizeEur,
-        rebalancingEnabled:
-          incomingSafeguards.rebalancingEnabled ??
-          safeguards.rebalancingEnabled,
-        acceptLosses:
-          incomingSafeguards.acceptLosses ?? safeguards.acceptLosses,
+          incomingSafeguards.maxConcurrentPositions ?? safeguards.maxConcurrentPositions,
+        minOrderSizeEur: incomingSafeguards.minOrderSizeEur ?? safeguards.minOrderSizeEur,
+        rebalancingEnabled: incomingSafeguards.rebalancingEnabled ?? safeguards.rebalancingEnabled,
+        acceptLosses: incomingSafeguards.acceptLosses ?? safeguards.acceptLosses,
       });
 
       if (strategy.type === 'allocation') {
@@ -229,12 +211,8 @@ function Tooltip({
         if (nextAllocation && typeof nextAllocation === 'object') {
           setAllocation(nextAllocation);
         }
-        setAllocationRebalancingFrequencyDays(
-          config.rebalancingFrequencyDays ?? 1,
-        );
-        setAllocationRebalancingThresholdPct(
-          config.rebalancingThresholdPct ?? 5,
-        );
+        setAllocationRebalancingFrequencyDays(config.rebalancingFrequencyDays ?? 1);
+        setAllocationRebalancingThresholdPct(config.rebalancingThresholdPct ?? 5);
       } else if (strategy.type === 'ai_assisted') {
         const config = strategy.config as {
           cryptoSymbols?: string[];
@@ -254,9 +232,7 @@ function Tooltip({
         };
 
         setCryptoSymbols(
-          Array.isArray(config.cryptoSymbols)
-            ? config.cryptoSymbols
-            : ['BTC', 'ETH', 'SOL'],
+          Array.isArray(config.cryptoSymbols) ? config.cryptoSymbols : ['BTC', 'ETH', 'SOL'],
         );
         setSelectedTemplate(config.promptTemplate ?? 'balanced');
         setCustomPrompt(config.customPrompt ?? '');
@@ -264,18 +240,12 @@ function Tooltip({
         const aiSafeguards = config.aiSafeguards ?? {};
         setAiGuardrails({
           aiQueryFrequencyDays: config.aiQueryFrequencyDays ?? 2,
-          maxCostPerCallEur:
-            aiSafeguards.maxCostPerCallEur ?? config.maxCostPerCallEur ?? 2,
-          maxCallsPerMonth:
-            aiSafeguards.maxCallsPerMonth ?? config.maxCallsPerMonth ?? 30,
+          maxCostPerCallEur: aiSafeguards.maxCostPerCallEur ?? config.maxCostPerCallEur ?? 2,
+          maxCallsPerMonth: aiSafeguards.maxCallsPerMonth ?? config.maxCallsPerMonth ?? 30,
           maxSessionDurationMinutes:
-            aiSafeguards.maxSessionDurationMinutes ??
-            config.maxSessionDurationMinutes ??
-            60,
+            aiSafeguards.maxSessionDurationMinutes ?? config.maxSessionDurationMinutes ?? 60,
           maxConcurrentPositions:
-            aiSafeguards.maxConcurrentPositions ??
-            config.maxConcurrentPositions ??
-            10,
+            aiSafeguards.maxConcurrentPositions ?? config.maxConcurrentPositions ?? 10,
         });
       } else {
         const config = strategy.config as {
@@ -290,9 +260,7 @@ function Tooltip({
         };
 
         setCryptoSymbols(
-          Array.isArray(config.cryptoSymbols)
-            ? config.cryptoSymbols
-            : ['BTC', 'ETH'],
+          Array.isArray(config.cryptoSymbols) ? config.cryptoSymbols : ['BTC', 'ETH'],
         );
         setHistoricalLevers({
           lookbackDays: config.lookbackDays ?? 30,
@@ -311,9 +279,7 @@ function Tooltip({
       void handleLoadPromptTemplates();
     } catch (error) {
       const message =
-        error instanceof ApiHttpError
-          ? error.message
-          : 'Failed to load strategy for edit';
+        error instanceof ApiHttpError ? error.message : 'Failed to load strategy for edit';
       setStatusKind('error');
       setStatus(message);
       setLoading(false);
@@ -321,9 +287,7 @@ function Tooltip({
   };
 
   const handleCancel = (): void => {
-    const confirmed = window.confirm(
-      'Cancel the wizard and return to strategy list?',
-    );
+    const confirmed = window.confirm('Cancel the wizard and return to strategy list?');
     if (!confirmed) {
       return;
     }
@@ -356,10 +320,7 @@ function Tooltip({
 
   if (currentStep === 'list') {
     return (
-      <Layout
-        title={t('page.strategies.title')}
-        subtitle={t('page.strategies.subtitle')}
-      >
+      <Layout title={t('page.strategies.title')} subtitle={t('page.strategies.subtitle')}>
         <div className={styles.container}>
           <div className={styles.listHeader}>
             <h2>Your Strategies</h2>
@@ -420,10 +381,7 @@ function Tooltip({
             <div>Loading...</div>
           ) : strategies.length === 0 ? (
             <div className={styles.emptyState}>
-              <p>
-                No strategy created yet. Create your first strategy to get
-                started.
-              </p>
+              <p>No strategy created yet. Create your first strategy to get started.</p>
               <button
                 className={styles.primaryButton}
                 onClick={handleStartWizard}
@@ -567,48 +525,34 @@ function Tooltip({
         >
           <div className={styles.formGroup}>
             <label>Risk level *</label>
-            <div
-              className={styles.radioGroup}
-              role="radiogroup"
-              aria-label="Risk level"
-            >
+            <div className={styles.radioGroup} role="radiogroup" aria-label="Risk level">
               <label
                 className={
-                  riskLevel === 'defensive'
-                    ? styles.radioOptionSelected
-                    : styles.radioOption
+                  riskLevel === 'defensive' ? styles.radioOptionSelected : styles.radioOption
                 }
               >
                 <input
                   type="radio"
                   value="defensive"
                   checked={riskLevel === 'defensive'}
-                  onChange={(e) =>
-                    setRiskLevel(e.target.value as StrategyRiskLevel)
-                  }
+                  onChange={(e) => setRiskLevel(e.target.value as StrategyRiskLevel)}
                   aria-label="Defensive risk level"
                 />
                 <span>
                   <strong>Defensive</strong>
-                  <small>
-                    Lower-volatility targeting with strict downside controls.
-                  </small>
+                  <small>Lower-volatility targeting with strict downside controls.</small>
                 </span>
               </label>
               <label
                 className={
-                  riskLevel === 'balanced'
-                    ? styles.radioOptionSelected
-                    : styles.radioOption
+                  riskLevel === 'balanced' ? styles.radioOptionSelected : styles.radioOption
                 }
               >
                 <input
                   type="radio"
                   value="balanced"
                   checked={riskLevel === 'balanced'}
-                  onChange={(e) =>
-                    setRiskLevel(e.target.value as StrategyRiskLevel)
-                  }
+                  onChange={(e) => setRiskLevel(e.target.value as StrategyRiskLevel)}
                   aria-label="Balanced risk level"
                 />
                 <span>
@@ -618,25 +562,19 @@ function Tooltip({
               </label>
               <label
                 className={
-                  riskLevel === 'aggressive'
-                    ? styles.radioOptionSelected
-                    : styles.radioOption
+                  riskLevel === 'aggressive' ? styles.radioOptionSelected : styles.radioOption
                 }
               >
                 <input
                   type="radio"
                   value="aggressive"
                   checked={riskLevel === 'aggressive'}
-                  onChange={(e) =>
-                    setRiskLevel(e.target.value as StrategyRiskLevel)
-                  }
+                  onChange={(e) => setRiskLevel(e.target.value as StrategyRiskLevel)}
                   aria-label="Aggressive risk level"
                 />
                 <span>
                   <strong>Aggressive</strong>
-                  <small>
-                    Higher return target with higher tolerated losses.
-                  </small>
+                  <small>Higher return target with higher tolerated losses.</small>
                 </span>
               </label>
             </div>
@@ -644,25 +582,17 @@ function Tooltip({
 
           <div className={styles.formGroup}>
             <label>Strategy type *</label>
-            <div
-              className={styles.radioGroup}
-              role="radiogroup"
-              aria-label="Strategy type"
-            >
+            <div className={styles.radioGroup} role="radiogroup" aria-label="Strategy type">
               <label
                 className={
-                  strategyType === 'allocation'
-                    ? styles.radioOptionSelected
-                    : styles.radioOption
+                  strategyType === 'allocation' ? styles.radioOptionSelected : styles.radioOption
                 }
               >
                 <input
                   type="radio"
                   value="allocation"
                   checked={strategyType === 'allocation'}
-                  onChange={(e) =>
-                    setStrategyType(e.target.value as StrategyType)
-                  }
+                  onChange={(e) => setStrategyType(e.target.value as StrategyType)}
                   aria-label="Type allocation"
                 />
                 <span>
@@ -672,25 +602,19 @@ function Tooltip({
               </label>
               <label
                 className={
-                  strategyType === 'ai_assisted'
-                    ? styles.radioOptionSelected
-                    : styles.radioOption
+                  strategyType === 'ai_assisted' ? styles.radioOptionSelected : styles.radioOption
                 }
               >
                 <input
                   type="radio"
                   value="ai_assisted"
                   checked={strategyType === 'ai_assisted'}
-                  onChange={(e) =>
-                    setStrategyType(e.target.value as StrategyType)
-                  }
+                  onChange={(e) => setStrategyType(e.target.value as StrategyType)}
                   aria-label="AI-assisted type"
                 />
                 <span>
                   <strong>AI-assisted</strong>
-                  <small>
-                    Dynamic recommendations with guardrails and spending limits.
-                  </small>
+                  <small>Dynamic recommendations with guardrails and spending limits.</small>
                 </span>
               </label>
               <label
@@ -704,16 +628,12 @@ function Tooltip({
                   type="radio"
                   value="historical_signals"
                   checked={strategyType === 'historical_signals'}
-                  onChange={(e) =>
-                    setStrategyType(e.target.value as StrategyType)
-                  }
+                  onChange={(e) => setStrategyType(e.target.value as StrategyType)}
                   aria-label="Historical signals type"
                 />
                 <span>
                   <strong>Historical signals</strong>
-                  <small>
-                    Buy/sell triggers based on historical price changes.
-                  </small>
+                  <small>Buy/sell triggers based on historical price changes.</small>
                 </span>
               </label>
             </div>
@@ -802,10 +722,7 @@ function Tooltip({
                   aria-label="Rebalancing frequency in days"
                   onChange={(event) =>
                     setAllocationRebalancingFrequencyDays(
-                      Math.max(
-                        1,
-                        Math.min(7, parseInt(event.target.value || '1', 10)),
-                      ),
+                      Math.max(1, Math.min(7, parseInt(event.target.value || '1', 10))),
                     )
                   }
                 />
@@ -821,10 +738,7 @@ function Tooltip({
                   aria-label="Rebalancing threshold in percentage"
                   onChange={(event) =>
                     setAllocationRebalancingThresholdPct(
-                      Math.max(
-                        0.5,
-                        Math.min(20, parseFloat(event.target.value || '5')),
-                      ),
+                      Math.max(0.5, Math.min(20, parseFloat(event.target.value || '5'))),
                     )
                   }
                 />
@@ -833,9 +747,7 @@ function Tooltip({
 
             <div
               className={`${styles.allocationTotal} ${
-                Math.abs(
-                  Object.values(allocation).reduce((s, v) => s + v, 0) - 100,
-                ) < 0.01
+                Math.abs(Object.values(allocation).reduce((s, v) => s + v, 0) - 100) < 0.01
                   ? styles.allocationValid
                   : styles.allocationInvalid
               }`}
@@ -847,9 +759,7 @@ function Tooltip({
                 .reduce((s, v) => s + v, 0)
                 .toFixed(2)}
               %
-              {Math.abs(
-                Object.values(allocation).reduce((s, v) => s + v, 0) - 100,
-              ) < 0.01 ? (
+              {Math.abs(Object.values(allocation).reduce((s, v) => s + v, 0) - 100) < 0.01 ? (
                 <span className={styles.allocationIcon}> ✓</span>
               ) : (
                 <span className={styles.allocationIcon}> ✗</span>
@@ -914,9 +824,7 @@ function Tooltip({
                   return (
                     <div
                       key={asset.symbol}
-                      className={
-                        selected ? styles.cryptoCardSelected : styles.cryptoCard
-                      }
+                      className={selected ? styles.cryptoCardSelected : styles.cryptoCard}
                       tabIndex={0}
                       role="button"
                       aria-pressed={selected}
@@ -924,9 +832,7 @@ function Tooltip({
                         if (!selected) {
                           setCryptoSymbols([...cryptoSymbols, asset.symbol]);
                         } else {
-                          setCryptoSymbols(
-                            cryptoSymbols.filter((s) => s !== asset.symbol),
-                          );
+                          setCryptoSymbols(cryptoSymbols.filter((s) => s !== asset.symbol));
                         }
                       }}
                       onKeyDown={(e) => {
@@ -935,9 +841,7 @@ function Tooltip({
                           if (!selected) {
                             setCryptoSymbols([...cryptoSymbols, asset.symbol]);
                           } else {
-                            setCryptoSymbols(
-                              cryptoSymbols.filter((s) => s !== asset.symbol),
-                            );
+                            setCryptoSymbols(cryptoSymbols.filter((s) => s !== asset.symbol));
                           }
                         }
                       }}
@@ -994,9 +898,7 @@ function Tooltip({
                         : styles.templateChip
                     }
                     onClick={() => {
-                      setSelectedTemplate(
-                        template.id as 'defensive' | 'balanced' | 'aggressive',
-                      );
+                      setSelectedTemplate(template.id as 'defensive' | 'balanced' | 'aggressive');
                       setSelectedPromptContent(template.preview);
                     }}
                   >
@@ -1127,9 +1029,7 @@ function Tooltip({
                           if (e.target.checked) {
                             setCryptoSymbols([...cryptoSymbols, asset.symbol]);
                           } else {
-                            setCryptoSymbols(
-                              cryptoSymbols.filter((s) => s !== asset.symbol),
-                            );
+                            setCryptoSymbols(cryptoSymbols.filter((s) => s !== asset.symbol));
                           }
                         }}
                       />
@@ -1167,8 +1067,7 @@ function Tooltip({
                   onChange={(event) =>
                     setHistoricalLevers({
                       ...historicalLevers,
-                      lookbackDays:
-                        parseInt(event.target.value || '30', 10) || 30,
+                      lookbackDays: parseInt(event.target.value || '30', 10) || 30,
                     })
                   }
                 />
@@ -1193,8 +1092,7 @@ function Tooltip({
                   onChange={(event) =>
                     setHistoricalLevers({
                       ...historicalLevers,
-                      buyDropThresholdPct:
-                        parseFloat(event.target.value || '3') || 3,
+                      buyDropThresholdPct: parseFloat(event.target.value || '3') || 3,
                     })
                   }
                 />
@@ -1219,8 +1117,7 @@ function Tooltip({
                   onChange={(event) =>
                     setHistoricalLevers({
                       ...historicalLevers,
-                      sellRiseThresholdPct:
-                        parseFloat(event.target.value || '5') || 5,
+                      sellRiseThresholdPct: parseFloat(event.target.value || '5') || 5,
                     })
                   }
                 />
@@ -1245,8 +1142,7 @@ function Tooltip({
                   onChange={(event) =>
                     setHistoricalLevers({
                       ...historicalLevers,
-                      maxCapitalPerSignalPct:
-                        parseInt(event.target.value || '20', 10) || 20,
+                      maxCapitalPerSignalPct: parseInt(event.target.value || '20', 10) || 20,
                     })
                   }
                 />
@@ -1271,8 +1167,7 @@ function Tooltip({
                   onChange={(event) =>
                     setHistoricalLevers({
                       ...historicalLevers,
-                      trendLookbackDays:
-                        parseInt(event.target.value || '30', 10) || 30,
+                      trendLookbackDays: parseInt(event.target.value || '30', 10) || 30,
                     })
                   }
                 />
@@ -1297,8 +1192,7 @@ function Tooltip({
                   onChange={(event) =>
                     setHistoricalLevers({
                       ...historicalLevers,
-                      maxVolatilityPct:
-                        parseFloat(event.target.value || '8') || 8,
+                      maxVolatilityPct: parseFloat(event.target.value || '8') || 8,
                     })
                   }
                 />
@@ -1323,8 +1217,7 @@ function Tooltip({
                   onChange={(event) =>
                     setHistoricalLevers({
                       ...historicalLevers,
-                      minDaysBetweenTrades:
-                        parseInt(event.target.value || '2', 10) || 0,
+                      minDaysBetweenTrades: parseInt(event.target.value || '2', 10) || 0,
                     })
                   }
                 />
@@ -1405,8 +1298,7 @@ function Tooltip({
                     setSafeguards({
                       ...safeguards,
                       monthlyBudgetEur:
-                        parseFloat(event.target.value) ||
-                        safeguards.monthlyBudgetEur,
+                        parseFloat(event.target.value) || safeguards.monthlyBudgetEur,
                     })
                   }
                 />
@@ -1428,8 +1320,7 @@ function Tooltip({
                     setSafeguards({
                       ...safeguards,
                       maxDailySpendEur:
-                        parseFloat(event.target.value) ||
-                        safeguards.maxDailySpendEur,
+                        parseFloat(event.target.value) || safeguards.maxDailySpendEur,
                     })
                   }
                 />
@@ -1451,8 +1342,7 @@ function Tooltip({
                     setSafeguards({
                       ...safeguards,
                       maxPositionSizeEur:
-                        parseFloat(event.target.value) ||
-                        safeguards.maxPositionSizeEur,
+                        parseFloat(event.target.value) || safeguards.maxPositionSizeEur,
                     })
                   }
                 />
@@ -1475,8 +1365,7 @@ function Tooltip({
                     setSafeguards({
                       ...safeguards,
                       maxConcurrentPositions:
-                        parseInt(event.target.value, 10) ||
-                        safeguards.maxConcurrentPositions,
+                        parseInt(event.target.value, 10) || safeguards.maxConcurrentPositions,
                     })
                   }
                 />
@@ -1497,9 +1386,7 @@ function Tooltip({
                   onChange={(event) =>
                     setSafeguards({
                       ...safeguards,
-                      minOrderSizeEur:
-                        parseFloat(event.target.value) ||
-                        safeguards.minOrderSizeEur,
+                      minOrderSizeEur: parseFloat(event.target.value) || safeguards.minOrderSizeEur,
                     })
                   }
                 />
@@ -1594,8 +1481,7 @@ function Tooltip({
                       onChange={(event) =>
                         setAiGuardrails({
                           ...aiGuardrails,
-                          aiQueryFrequencyDays:
-                            parseInt(event.target.value || '1', 10) || 1,
+                          aiQueryFrequencyDays: parseInt(event.target.value || '1', 10) || 1,
                         })
                       }
                     />
@@ -1617,8 +1503,7 @@ function Tooltip({
                         setAiGuardrails({
                           ...aiGuardrails,
                           maxCostPerCallEur:
-                            parseFloat(event.target.value || '0') ||
-                            aiGuardrails.maxCostPerCallEur,
+                            parseFloat(event.target.value || '0') || aiGuardrails.maxCostPerCallEur,
                         })
                       }
                     />
@@ -1639,8 +1524,7 @@ function Tooltip({
                       onChange={(event) =>
                         setAiGuardrails({
                           ...aiGuardrails,
-                          maxCallsPerMonth:
-                            parseInt(event.target.value || '1', 10) || 1,
+                          maxCallsPerMonth: parseInt(event.target.value || '1', 10) || 1,
                         })
                       }
                     />
@@ -1650,9 +1534,7 @@ function Tooltip({
                       enabled={tooltipsEnabled}
                       content="Maximum duration for AI to maintain conversation context. Longer sessions = better continuity but higher costs. Optimal: 30-120 minutes."
                     >
-                      <label>
-                        Maximum AI context session duration (minutes)
-                      </label>
+                      <label>Maximum AI context session duration (minutes)</label>
                     </Tooltip>
                     <input
                       type="number"
@@ -1663,8 +1545,7 @@ function Tooltip({
                       onChange={(event) =>
                         setAiGuardrails({
                           ...aiGuardrails,
-                          maxSessionDurationMinutes:
-                            parseInt(event.target.value || '5', 10) || 5,
+                          maxSessionDurationMinutes: parseInt(event.target.value || '5', 10) || 5,
                         })
                       }
                     />
@@ -1686,8 +1567,7 @@ function Tooltip({
                       onChange={(event) =>
                         setAiGuardrails({
                           ...aiGuardrails,
-                          maxConcurrentPositions:
-                            parseInt(event.target.value || '1', 10) || 1,
+                          maxConcurrentPositions: parseInt(event.target.value || '1', 10) || 1,
                         })
                       }
                     />
@@ -1695,11 +1575,7 @@ function Tooltip({
                 </div>
                 <small>
                   Estimated monthly AI cost cap:{' '}
-                  {(
-                    aiGuardrails.maxCostPerCallEur *
-                    aiGuardrails.maxCallsPerMonth
-                  ).toFixed(2)}{' '}
-                  EUR
+                  {(aiGuardrails.maxCostPerCallEur * aiGuardrails.maxCallsPerMonth).toFixed(2)} EUR
                 </small>
               </div>
             ) : null}
@@ -1770,25 +1646,21 @@ function Tooltip({
           <strong>Daily maximum:</strong> {safeguards.maxDailySpendEur} EUR
         </div>
         <div className={styles.reviewItem}>
-          <strong>Decision checks/day:</strong>{' '}
-          {safeguards.decisionChecksPerDay}
+          <strong>Decision checks/day:</strong> {safeguards.decisionChecksPerDay}
         </div>
         {strategyType === 'ai_assisted' ? (
           <div className={styles.reviewItem}>
-            <strong>Minimum AI confidence:</strong>{' '}
-            {safeguards.minAiConfidencePctForExecution}%
+            <strong>Minimum AI confidence:</strong> {safeguards.minAiConfidencePctForExecution}%
           </div>
         ) : null}
         <div className={styles.reviewItem}>
-          <strong>Max position size:</strong> {safeguards.maxPositionSizeEur}{' '}
-          EUR
+          <strong>Max position size:</strong> {safeguards.maxPositionSizeEur} EUR
         </div>
         <div className={styles.reviewItem}>
           <strong>Minimum order:</strong> {safeguards.minOrderSizeEur} EUR
         </div>
         <div className={styles.reviewItem}>
-          <strong>Sell at loss allowed:</strong>{' '}
-          {safeguards.acceptLosses ? 'Yes' : 'No'}
+          <strong>Sell at loss allowed:</strong> {safeguards.acceptLosses ? 'Yes' : 'No'}
         </div>
         {strategyType !== 'allocation' ? (
           <div className={styles.reviewItem}>
@@ -1798,52 +1670,41 @@ function Tooltip({
         {strategyType === 'ai_assisted' ? (
           <>
             <div className={styles.reviewItem}>
-              <strong>AI query frequency:</strong>{' '}
-              {aiGuardrails.aiQueryFrequencyDays} day(s)
+              <strong>AI query frequency:</strong> {aiGuardrails.aiQueryFrequencyDays} day(s)
             </div>
             <div className={styles.reviewItem}>
-              <strong>AI cost cap:</strong> {aiGuardrails.maxCostPerCallEur} EUR
-              / call
+              <strong>AI cost cap:</strong> {aiGuardrails.maxCostPerCallEur} EUR / call
             </div>
             <div className={styles.reviewItem}>
-              <strong>AI call limit:</strong> {aiGuardrails.maxCallsPerMonth} /
-              month
+              <strong>AI call limit:</strong> {aiGuardrails.maxCallsPerMonth} / month
             </div>
             <div className={styles.reviewItem}>
-              <strong>AI session limit:</strong>{' '}
-              {aiGuardrails.maxSessionDurationMinutes} minutes
+              <strong>AI session limit:</strong> {aiGuardrails.maxSessionDurationMinutes} minutes
             </div>
           </>
         ) : null}
         {strategyType === 'historical_signals' ? (
           <>
             <div className={styles.reviewItem}>
-              <strong>Analysis window:</strong> {historicalLevers.lookbackDays}{' '}
-              days
+              <strong>Analysis window:</strong> {historicalLevers.lookbackDays} days
             </div>
             <div className={styles.reviewItem}>
-              <strong>Buy trigger (drop):</strong>{' '}
-              {historicalLevers.buyDropThresholdPct}%
+              <strong>Buy trigger (drop):</strong> {historicalLevers.buyDropThresholdPct}%
             </div>
             <div className={styles.reviewItem}>
-              <strong>Sell trigger (rise):</strong>{' '}
-              {historicalLevers.sellRiseThresholdPct}%
+              <strong>Sell trigger (rise):</strong> {historicalLevers.sellRiseThresholdPct}%
             </div>
             <div className={styles.reviewItem}>
-              <strong>Max capital / signal:</strong>{' '}
-              {historicalLevers.maxCapitalPerSignalPct}%
+              <strong>Max capital / signal:</strong> {historicalLevers.maxCapitalPerSignalPct}%
             </div>
             <div className={styles.reviewItem}>
-              <strong>Trend lookback:</strong>{' '}
-              {historicalLevers.trendLookbackDays} days
+              <strong>Trend lookback:</strong> {historicalLevers.trendLookbackDays} days
             </div>
             <div className={styles.reviewItem}>
-              <strong>Max volatility:</strong>{' '}
-              {historicalLevers.maxVolatilityPct}% / day
+              <strong>Max volatility:</strong> {historicalLevers.maxVolatilityPct}% / day
             </div>
             <div className={styles.reviewItem}>
-              <strong>Trade cooldown:</strong>{' '}
-              {historicalLevers.minDaysBetweenTrades} day(s)
+              <strong>Trade cooldown:</strong> {historicalLevers.minDaysBetweenTrades} day(s)
             </div>
           </>
         ) : null}
@@ -1852,21 +1713,15 @@ function Tooltip({
           <div className={styles.previewSimulationPanel}>
             <h4>Monthly simulation preview</h4>
             <p>
-              Estimated orders / month:{' '}
-              <strong>{strategyPreview.estimatedOrdersPerMonth}</strong>
+              Estimated orders / month: <strong>{strategyPreview.estimatedOrdersPerMonth}</strong>
             </p>
             <p>
               Estimated capital / order:{' '}
-              <strong>
-                {strategyPreview.estimatedCapitalPerOrderEur.toFixed(2)} EUR
-              </strong>
+              <strong>{strategyPreview.estimatedCapitalPerOrderEur.toFixed(2)} EUR</strong>
             </p>
             <div className={styles.previewAllocationList}>
               {strategyPreview.projectedAllocation.map((entry) => (
-                <div
-                  key={entry.symbol}
-                  className={styles.previewAllocationItem}
-                >
+                <div key={entry.symbol} className={styles.previewAllocationItem}>
                   <span>{entry.symbol}</span>
                   <span>{entry.targetPct.toFixed(2)}%</span>
                   <span>{entry.projectedAmountEur.toFixed(2)} EUR</span>
@@ -1880,9 +1735,7 @@ function Tooltip({
                 ))}
               </ul>
             ) : (
-              <p className={styles.previewOk}>
-                No blocking warning detected for this simulation.
-              </p>
+              <p className={styles.previewOk}>No blocking warning detected for this simulation.</p>
             )}
           </div>
         ) : null}
@@ -1927,9 +1780,7 @@ function Tooltip({
               void handleCreateStrategy();
             }}
             disabled={loading}
-            aria-label={
-              editingStrategyId ? 'Save strategy changes' : 'Create strategy'
-            }
+            aria-label={editingStrategyId ? 'Save strategy changes' : 'Create strategy'}
           >
             {loading
               ? editingStrategyId

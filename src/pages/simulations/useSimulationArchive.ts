@@ -25,11 +25,8 @@ type SimulationArchiveState = {
   pagedRuns: HistoricalSimulationSummary[];
 };
 
-export function useSimulationArchive(
-  runs: HistoricalSimulationSummary[],
-): SimulationArchiveState {
-  const [archiveStatusFilter, setArchiveStatusFilter] =
-    useState<ArchiveStatusFilter>('all');
+export function useSimulationArchive(runs: HistoricalSimulationSummary[]): SimulationArchiveState {
+  const [archiveStatusFilter, setArchiveStatusFilter] = useState<ArchiveStatusFilter>('all');
   const [archiveStrategyFilter, setArchiveStrategyFilter] = useState('all');
   const [archivePageSize, setArchivePageSize] = useState(50);
   const [archivePage, setArchivePage] = useState(1);

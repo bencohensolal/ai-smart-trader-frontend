@@ -142,9 +142,7 @@ export function PromptsPage(): JSX.Element {
 
   async function handleResetDefaults(typeToReset?: PromptType): Promise<void> {
     const confirmed = window.confirm(
-      typeToReset
-        ? 'Reset default prompts for this type?'
-        : 'Reset all default prompts?',
+      typeToReset ? 'Reset default prompts for this type?' : 'Reset all default prompts?',
     );
     if (!confirmed) {
       return;
@@ -183,17 +181,11 @@ export function PromptsPage(): JSX.Element {
   }
 
   return (
-    <Layout
-      title={t('page.prompts.title')}
-      subtitle={t('page.prompts.subtitle')}
-    >
+    <Layout title={t('page.prompts.title')} subtitle={t('page.prompts.subtitle')}>
       <section className="prompts-grid">
         <article className="panel">
           <h2>{editingPromptId ? 'Edit prompt' : 'New prompt'}</h2>
-          <p>
-            You can create multiple prompts per type to compare algorithm
-            behaviors.
-          </p>
+          <p>You can create multiple prompts per type to compare algorithm behaviors.</p>
           <form
             className="strategy-form strategy-form--stacked"
             onSubmit={(event) => void handleSave(event)}
@@ -216,9 +208,7 @@ export function PromptsPage(): JSX.Element {
                 >
                   <option value="ai_advisor_system">AI Advisor - System</option>
                   <option value="ai_advisor_user">AI Advisor - Context</option>
-                  <option value="simulation_explainer">
-                    Simulation - Explanation
-                  </option>
+                  <option value="simulation_explainer">Simulation - Explanation</option>
                 </select>
               </label>
 
@@ -270,11 +260,7 @@ export function PromptsPage(): JSX.Element {
               <button className="button" type="submit">
                 {editingPromptId ? 'Save' : 'Create'}
               </button>
-              <button
-                className="button button-secondary"
-                type="button"
-                onClick={resetForm}
-              >
+              <button className="button button-secondary" type="button" onClick={resetForm}>
                 Reset form
               </button>
               <button
@@ -299,16 +285,11 @@ export function PromptsPage(): JSX.Element {
             </li>
             <li>
               <h3>Default version</h3>
-              <p>
-                Prompts shipped with the project remain available and can be
-                restored.
-              </p>
+              <p>Prompts shipped with the project remain available and can be restored.</p>
             </li>
             <li>
               <h3>Strategy setup</h3>
-              <p>
-                Each strategy can choose its AI prompts in the Strategies page.
-              </p>
+              <p>Each strategy can choose its AI prompts in the Strategies page.</p>
             </li>
           </ul>
         </aside>
@@ -318,90 +299,86 @@ export function PromptsPage(): JSX.Element {
         <h2>Prompt library</h2>
         {loading ? <p>Loading...</p> : null}
 
-        {(
-          [
-            'ai_advisor_system',
-            'ai_advisor_user',
-            'simulation_explainer',
-          ] as const
-        ).map((promptType) => {
-          const list = grouped[promptType];
-          return (
-            <article className="sub-panel" key={promptType}>
-              <div className="sub-panel-head">
-                <h3>{formatPromptType(promptType)}</h3>
-                <button
-                  className="button button-secondary button-small"
-                  type="button"
-                  onClick={() => {
-                    void handleResetDefaults(promptType);
-                  }}
-                >
-                  Restore defaults ({formatPromptType(promptType)})
-                </button>
-              </div>
-              <div className="table-scroll table-scroll-wide">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Name</th>
-                      <th>Description</th>
-                      <th>Default</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {list.map((prompt) => {
-                      return (
-                        <tr key={prompt.id}>
-                          <td>{prompt.id}</td>
-                          <td>{prompt.name}</td>
-                          <td>{prompt.description}</td>
-                          <td>{prompt.isDefault ? 'yes' : 'no'}</td>
-                          <td>
-                            <div className="table-actions">
-                              <button
-                                className="button button-secondary button-small"
-                                type="button"
-                                onClick={() => {
-                                  startEdit(prompt);
-                                }}
-                              >
-                                Edit
-                              </button>
-                              {prompt.templateKey ? (
+        {(['ai_advisor_system', 'ai_advisor_user', 'simulation_explainer'] as const).map(
+          (promptType) => {
+            const list = grouped[promptType];
+            return (
+              <article className="sub-panel" key={promptType}>
+                <div className="sub-panel-head">
+                  <h3>{formatPromptType(promptType)}</h3>
+                  <button
+                    className="button button-secondary button-small"
+                    type="button"
+                    onClick={() => {
+                      void handleResetDefaults(promptType);
+                    }}
+                  >
+                    Restore defaults ({formatPromptType(promptType)})
+                  </button>
+                </div>
+                <div className="table-scroll table-scroll-wide">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Default</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {list.map((prompt) => {
+                        return (
+                          <tr key={prompt.id}>
+                            <td>{prompt.id}</td>
+                            <td>{prompt.name}</td>
+                            <td>{prompt.description}</td>
+                            <td>{prompt.isDefault ? 'yes' : 'no'}</td>
+                            <td>
+                              <div className="table-actions">
                                 <button
                                   className="button button-secondary button-small"
                                   type="button"
                                   onClick={() => {
-                                    void handleResetPrompt(prompt);
+                                    startEdit(prompt);
                                   }}
                                 >
-                                  Reset to default
+                                  Edit
                                 </button>
-                              ) : (
-                                <button
-                                  className="button button-danger button-small"
-                                  type="button"
-                                  onClick={() => {
-                                    void handleDelete(prompt);
-                                  }}
-                                >
-                                  Delete
-                                </button>
-                              )}
-                            </div>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            </article>
-          );
-        })}
+                                {prompt.templateKey ? (
+                                  <button
+                                    className="button button-secondary button-small"
+                                    type="button"
+                                    onClick={() => {
+                                      void handleResetPrompt(prompt);
+                                    }}
+                                  >
+                                    Reset to default
+                                  </button>
+                                ) : (
+                                  <button
+                                    className="button button-danger button-small"
+                                    type="button"
+                                    onClick={() => {
+                                      void handleDelete(prompt);
+                                    }}
+                                  >
+                                    Delete
+                                  </button>
+                                )}
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </article>
+            );
+          },
+        )}
       </section>
 
       {status ? (

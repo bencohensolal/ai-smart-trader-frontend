@@ -53,8 +53,7 @@ export function SimulationsPage(): ReactElement {
   const [periodStart, setPeriodStart] = useState(resolveDefaultPeriodStart());
   const [periodEnd, setPeriodEnd] = useState(resolveDefaultPeriodEnd());
   const [overrideEnabled, setOverrideEnabled] = useState(false);
-  const [overrideRiskProfile, setOverrideRiskProfile] =
-    useState<StrategyRiskProfile>('balanced');
+  const [overrideRiskProfile, setOverrideRiskProfile] = useState<StrategyRiskProfile>('balanced');
   const [overrideMonthlyBudget, setOverrideMonthlyBudget] = useState(300);
   const [overrideRebalancingPerDay, setOverrideRebalancingPerDay] = useState(2);
   const [overrideMaxPositionPct, setOverrideMaxPositionPct] = useState(45);
@@ -63,56 +62,35 @@ export function SimulationsPage(): ReactElement {
   const [loadingRuns, setLoadingRuns] = useState(true);
   const [status, setStatus] = useState('');
   const [statusKind, setStatusKind] = useState<'success' | 'error'>('success');
-  const [runSession, setRunSession] =
-    useState<HistoricalSimulationRunSession | null>(null);
+  const [runSession, setRunSession] = useState<HistoricalSimulationRunSession | null>(null);
   const [showRunProgressModal, setShowRunProgressModal] = useState(false);
-  const [advancedPeriods, setAdvancedPeriods] = useState<AdvancedPeriodDraft[]>(
-    () => buildDefaultAdvancedPeriods(),
+  const [advancedPeriods, setAdvancedPeriods] = useState<AdvancedPeriodDraft[]>(() =>
+    buildDefaultAdvancedPeriods(),
   );
-  const [advancedMonteCarloIterations, setAdvancedMonteCarloIterations] =
-    useState(400);
-  const [advancedMonteCarloHorizonMonths, setAdvancedMonteCarloHorizonMonths] =
-    useState(12);
-  const [advancedBacktestStrategyId, setAdvancedBacktestStrategyId] =
-    useState('');
+  const [advancedMonteCarloIterations, setAdvancedMonteCarloIterations] = useState(400);
+  const [advancedMonteCarloHorizonMonths, setAdvancedMonteCarloHorizonMonths] = useState(12);
+  const [advancedBacktestStrategyId, setAdvancedBacktestStrategyId] = useState('');
   const [advancedBacktestResult, setAdvancedBacktestResult] =
     useState<AdvancedBacktestingResult | null>(null);
   const [advancedBacktestRunning, setAdvancedBacktestRunning] = useState(false);
-  const [abComparisonStrategyIds, setAbComparisonStrategyIds] = useState<
-    string[]
-  >([]);
+  const [abComparisonStrategyIds, setAbComparisonStrategyIds] = useState<string[]>([]);
   const [abComparisonPeriodStart, setAbComparisonPeriodStart] = useState(
     resolveDefaultPeriodStart(),
   );
-  const [abComparisonPeriodEnd, setAbComparisonPeriodEnd] = useState(
-    resolveDefaultPeriodEnd(),
-  );
-  const [
-    abComparisonUseLiveAiInSimulation,
-    setAbComparisonUseLiveAiInSimulation,
-  ] = useState(false);
-  const [
-    advancedBacktestComparisonResult,
-    setAdvancedBacktestComparisonResult,
-  ] = useState<AdvancedBacktestingComparisonResult | null>(null);
-  const [
-    advancedBacktestComparisonRunning,
-    setAdvancedBacktestComparisonRunning,
-  ] = useState(false);
-  const [showAdvancedProgressModal, setShowAdvancedProgressModal] =
-    useState(false);
+  const [abComparisonPeriodEnd, setAbComparisonPeriodEnd] = useState(resolveDefaultPeriodEnd());
+  const [abComparisonUseLiveAiInSimulation, setAbComparisonUseLiveAiInSimulation] = useState(false);
+  const [advancedBacktestComparisonResult, setAdvancedBacktestComparisonResult] =
+    useState<AdvancedBacktestingComparisonResult | null>(null);
+  const [advancedBacktestComparisonRunning, setAdvancedBacktestComparisonRunning] = useState(false);
+  const [showAdvancedProgressModal, setShowAdvancedProgressModal] = useState(false);
   const [advancedRunSession, setAdvancedRunSession] =
     useState<AdvancedBacktestingRunSession | null>(null);
-  const [advancedProgressScope, setAdvancedProgressScope] = useState<
-    'strategy' | 'period'
-  >('period');
-  const [advancedProgressLabels, setAdvancedProgressLabels] = useState<
-    string[]
-  >([]);
-  const [advancedProgressSelectedIndex, setAdvancedProgressSelectedIndex] =
-    useState(0);
-  const [advancedProgressLiveAiRequested, setAdvancedProgressLiveAiRequested] =
-    useState(false);
+  const [advancedProgressScope, setAdvancedProgressScope] = useState<'strategy' | 'period'>(
+    'period',
+  );
+  const [advancedProgressLabels, setAdvancedProgressLabels] = useState<string[]>([]);
+  const [advancedProgressSelectedIndex, setAdvancedProgressSelectedIndex] = useState(0);
+  const [advancedProgressLiveAiRequested, setAdvancedProgressLiveAiRequested] = useState(false);
 
   const {
     archiveStatusFilter,
@@ -159,9 +137,7 @@ export function SimulationsPage(): ReactElement {
         setStrategies(strategyList);
         setSelectedStrategyId(strategyList[0]?.id ?? '');
         setAdvancedBacktestStrategyId(strategyList[0]?.id ?? '');
-        setAbComparisonStrategyIds(
-          strategyList.slice(0, 3).map((strategy) => strategy.id),
-        );
+        setAbComparisonStrategyIds(strategyList.slice(0, 3).map((strategy) => strategy.id));
         setRuns(simulations);
         setStatus('');
         setLoadingRuns(false);
@@ -185,9 +161,7 @@ export function SimulationsPage(): ReactElement {
     };
   }, [navigate]);
 
-  async function handleRunSimulation(
-    event: FormEvent<HTMLFormElement>,
-  ): Promise<void> {
+  async function handleRunSimulation(event: FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
     if (!selectedStrategyId) {
       setStatusKind('error');
@@ -223,17 +197,13 @@ export function SimulationsPage(): ReactElement {
       }
       setStatusKind('error');
       setStatus(
-        error instanceof Error
-          ? `Simulation failed: ${error.message}`
-          : 'Simulation failed.',
+        error instanceof Error ? `Simulation failed: ${error.message}` : 'Simulation failed.',
       );
       setRunning(false);
     }
   }
 
-  async function handleRunAdvancedBacktest(
-    event: FormEvent<HTMLFormElement>,
-  ): Promise<void> {
+  async function handleRunAdvancedBacktest(event: FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
     if (!advancedBacktestStrategyId) {
       setStatusKind('error');
@@ -302,10 +272,7 @@ export function SimulationsPage(): ReactElement {
     event: FormEvent<HTMLFormElement>,
   ): Promise<void> {
     event.preventDefault();
-    if (
-      abComparisonStrategyIds.length < 2 ||
-      abComparisonStrategyIds.length > 3
-    ) {
+    if (abComparisonStrategyIds.length < 2 || abComparisonStrategyIds.length > 3) {
       setStatusKind('error');
       setStatus('Select between 2 and 3 strategies for A/B testing.');
       return;
@@ -324,10 +291,7 @@ export function SimulationsPage(): ReactElement {
       setStatus('');
       setAdvancedBacktestComparisonResult(null);
       const strategyLabelById = new Map(
-        strategies.map((strategy) => [
-          strategy.id,
-          `${strategy.name} (${strategy.riskProfile})`,
-        ]),
+        strategies.map((strategy) => [strategy.id, `${strategy.name} (${strategy.riskProfile})`]),
       );
       setAdvancedProgressScope('strategy');
       setAdvancedProgressLabels(
@@ -362,9 +326,7 @@ export function SimulationsPage(): ReactElement {
       }
       setStatusKind('error');
       setStatus(
-        error instanceof Error
-          ? `A/B testing failed: ${error.message}`
-          : 'A/B testing failed.',
+        error instanceof Error ? `A/B testing failed: ${error.message}` : 'A/B testing failed.',
       );
       setAdvancedBacktestComparisonRunning(false);
     }
@@ -422,9 +384,7 @@ export function SimulationsPage(): ReactElement {
     navigate(`/simulations/${encodeURIComponent(run.id)}`);
   }
 
-  async function handleDeleteRun(
-    run: HistoricalSimulationSummary,
-  ): Promise<void> {
+  async function handleDeleteRun(run: HistoricalSimulationSummary): Promise<void> {
     const confirmed = window.confirm(
       `Delete simulation ${run.id} (${run.periodStart} -> ${run.periodEnd})? This action is irreversible.`,
     );
@@ -450,9 +410,7 @@ export function SimulationsPage(): ReactElement {
   }
 
   async function handleDeleteAllRuns(): Promise<void> {
-    const confirmed = window.confirm(
-      t('simulations.archive.deleteAll.confirm'),
-    );
+    const confirmed = window.confirm(t('simulations.archive.deleteAll.confirm'));
     if (!confirmed) {
       return;
     }
@@ -479,8 +437,7 @@ export function SimulationsPage(): ReactElement {
   const runProgress = runSession?.progress ?? null;
   const advancedProgress = advancedRunSession?.progress ?? null;
   const advancedProgressRunningNow =
-    advancedProgress?.status === 'pending' ||
-    advancedProgress?.status === 'running';
+    advancedProgress?.status === 'pending' || advancedProgress?.status === 'running';
 
   function closeAdvancedProgressModal(): void {
     if (advancedProgressRunningNow) {
@@ -492,10 +449,7 @@ export function SimulationsPage(): ReactElement {
     setAdvancedProgressSelectedIndex(0);
   }
   return (
-    <Layout
-      title={t('page.simulations.title')}
-      subtitle={t('page.simulations.subtitle')}
-    >
+    <Layout title={t('page.simulations.title')} subtitle={t('page.simulations.subtitle')}>
       <section className="strategies-grid">
         <article className="panel strategy-form-panel">
           <h2>New simulation</h2>
@@ -509,10 +463,7 @@ export function SimulationsPage(): ReactElement {
               <label className="field">
                 <span className="field-label">
                   Strategy
-                  <InfoTip
-                    label="Strategy"
-                    text="Base strategy used for this simulation."
-                  />
+                  <InfoTip label="Strategy" text="Base strategy used for this simulation." />
                 </span>
                 <select
                   value={selectedStrategyId}
@@ -536,10 +487,7 @@ export function SimulationsPage(): ReactElement {
               <label className="field">
                 <span className="field-label">
                   Start
-                  <InfoTip
-                    label="Start date"
-                    text="Backtest start date (inclusive)."
-                  />
+                  <InfoTip label="Start date" text="Backtest start date (inclusive)." />
                 </span>
                 <DatePickerInput
                   value={periodStart}
@@ -554,10 +502,7 @@ export function SimulationsPage(): ReactElement {
               <label className="field">
                 <span className="field-label">
                   End
-                  <InfoTip
-                    label="End date"
-                    text="Backtest end date (inclusive)."
-                  />
+                  <InfoTip label="End date" text="Backtest end date (inclusive)." />
                 </span>
                 <DatePickerInput
                   value={periodEnd}
@@ -570,10 +515,7 @@ export function SimulationsPage(): ReactElement {
               </label>
             </div>
 
-            <div
-              className="date-range-presets"
-              aria-label="Date interval presets"
-            >
+            <div className="date-range-presets" aria-label="Date interval presets">
               {[10, 30, 90, 180, 365].map((days) => {
                 return (
                   <button
@@ -636,9 +578,7 @@ export function SimulationsPage(): ReactElement {
                     <select
                       value={overrideRiskProfile}
                       onChange={(event) => {
-                        setOverrideRiskProfile(
-                          event.target.value as StrategyRiskProfile,
-                        );
+                        setOverrideRiskProfile(event.target.value as StrategyRiskProfile);
                       }}
                     >
                       <option value="defensive">defensive</option>
@@ -666,9 +606,7 @@ export function SimulationsPage(): ReactElement {
                       max={4}
                       value={overrideRebalancingPerDay}
                       onChange={(event) => {
-                        setOverrideRebalancingPerDay(
-                          Number(event.target.value),
-                        );
+                        setOverrideRebalancingPerDay(Number(event.target.value));
                       }}
                     />
                   </label>
@@ -717,17 +655,11 @@ export function SimulationsPage(): ReactElement {
             </li>
             <li>
               <h3>Monthly contributions</h3>
-              <p>
-                The strategy monthly budget is added at the start of each
-                following month.
-              </p>
+              <p>The strategy monthly budget is added at the start of each following month.</p>
             </li>
             <li>
               <h3>No look-ahead bias</h3>
-              <p>
-                On each date, decisions use only historical data available up to
-                that date.
-              </p>
+              <p>On each date, decisions use only historical data available up to that date.</p>
             </li>
           </ul>
         </aside>
@@ -781,9 +713,7 @@ export function SimulationsPage(): ReactElement {
                 max={36}
                 value={advancedMonteCarloHorizonMonths}
                 onChange={(event) => {
-                  setAdvancedMonteCarloHorizonMonths(
-                    Number(event.target.value),
-                  );
+                  setAdvancedMonteCarloHorizonMonths(Number(event.target.value));
                 }}
               />
             </label>
@@ -864,11 +794,7 @@ export function SimulationsPage(): ReactElement {
           </div>
 
           <div className="form-actions">
-            <button
-              className="button"
-              type="submit"
-              disabled={advancedBacktestRunning}
-            >
+            <button className="button" type="submit" disabled={advancedBacktestRunning}>
               {advancedBacktestRunning
                 ? 'Advanced backtesting running...'
                 : 'Run advanced backtesting'}
@@ -881,30 +807,22 @@ export function SimulationsPage(): ReactElement {
             <section className="kpis">
               <article className="kpi">
                 <span>Average return</span>
-                <strong>
-                  {advancedBacktestResult.aggregate.averageReturnPct}%
-                </strong>
+                <strong>{advancedBacktestResult.aggregate.averageReturnPct}%</strong>
               </article>
               <article className="kpi">
                 <span>Positive period rate</span>
-                <strong>
-                  {advancedBacktestResult.aggregate.positiveRatePct}%
-                </strong>
+                <strong>{advancedBacktestResult.aggregate.positiveRatePct}%</strong>
               </article>
               <article className="kpi">
                 <span>Average final value</span>
                 <strong>
-                  {formatAmountFromEur(
-                    advancedBacktestResult.aggregate.averageFinalValueEur,
-                  )}
+                  {formatAmountFromEur(advancedBacktestResult.aggregate.averageFinalValueEur)}
                 </strong>
               </article>
               <article className="kpi">
                 <span>Median projection (P50)</span>
                 <strong>
-                  {formatAmountFromEur(
-                    advancedBacktestResult.monteCarlo.p50FinalValueEur,
-                  )}
+                  {formatAmountFromEur(advancedBacktestResult.monteCarlo.p50FinalValueEur)}
                 </strong>
               </article>
             </section>
@@ -929,9 +847,7 @@ export function SimulationsPage(): ReactElement {
                           {period.periodStart} → {period.periodEnd}
                         </td>
                         <td>{period.summary.returnPct.toFixed(2)}%</td>
-                        <td>
-                          {formatAmountFromEur(period.summary.finalValueEur)}
-                        </td>
+                        <td>{formatAmountFromEur(period.summary.finalValueEur)}</td>
                         <td>{period.summary.winRatePct.toFixed(2)}%</td>
                         <td>{period.summary.operationsCount}</td>
                       </tr>

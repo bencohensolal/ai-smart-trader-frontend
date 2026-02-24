@@ -24,27 +24,19 @@ export function RunProgressModal({
   return (
     <div className="simulation-progress-modal-backdrop">
       <section className="panel simulation-progress-modal">
-        <h2>
-          {progress.status === 'failed'
-            ? 'Simulation stopped'
-            : 'Simulation running'}
-        </h2>
+        <h2>{progress.status === 'failed' ? 'Simulation stopped' : 'Simulation running'}</h2>
         <p>
           {progress.status === 'failed'
             ? 'Simulation failed. Check the message below.'
             : 'Backtest running. AI metrics update automatically.'}
         </p>
         <div className="simulation-progress-track">
-          <div
-            className="simulation-progress-fill"
-            style={{ width: `${runProgressPct}%` }}
-          />
+          <div className="simulation-progress-fill" style={{ width: `${runProgressPct}%` }} />
         </div>
         <div className="simulation-progress-meta">
           <span>{runProgressPct.toFixed(1)}%</span>
           <span>
-            {integer.format(progress.processedSteps)} /{' '}
-            {integer.format(progress.totalSteps)} steps
+            {integer.format(progress.processedSteps)} / {integer.format(progress.totalSteps)} steps
           </span>
         </div>
         <div className="simulation-progress-kpis">
@@ -97,9 +89,7 @@ export function RunProgressModal({
                       </span>
                     </div>
                     <div>
-                      <strong>
-                        {formatAmountFromEur(operation.amountEur)}
-                      </strong>
+                      <strong>{formatAmountFromEur(operation.amountEur)}</strong>
                       <span>{operation.rationale}</span>
                     </div>
                   </li>
@@ -115,11 +105,7 @@ export function RunProgressModal({
         ) : null}
         {progress.status === 'failed' ? (
           <div className="form-actions">
-            <button
-              className="button button-secondary"
-              type="button"
-              onClick={onClose}
-            >
+            <button className="button button-secondary" type="button" onClick={onClose}>
               Close
             </button>
           </div>

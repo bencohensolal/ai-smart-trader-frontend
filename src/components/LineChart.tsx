@@ -35,8 +35,7 @@ export function LineChart({
   const minValue = Math.min(...points.map((point) => point.value));
   const maxValue = Math.max(...points.map((point) => point.value));
   const range = Math.max(1, maxValue - minValue);
-  const xStep =
-    points.length > 1 ? (width - padding * 2) / (points.length - 1) : 0;
+  const xStep = points.length > 1 ? (width - padding * 2) / (points.length - 1) : 0;
 
   const coordinates = points.map((point, index) => {
     const x = padding + xStep * index;
@@ -45,9 +44,7 @@ export function LineChart({
     return { x, y };
   });
   const polyline = coordinates
-    .map(
-      (coordinate) => `${coordinate.x.toFixed(2)},${coordinate.y.toFixed(2)}`,
-    )
+    .map((coordinate) => `${coordinate.x.toFixed(2)},${coordinate.y.toFixed(2)}`)
     .join(' ');
 
   const firstPoint = points[0];
@@ -70,12 +67,7 @@ export function LineChart({
           </span>
         </div>
       </div>
-      <svg
-        className="line-chart"
-        viewBox={`0 0 ${width} ${height}`}
-        role="img"
-        aria-label={title}
-      >
+      <svg className="line-chart" viewBox={`0 0 ${width} ${height}`} role="img" aria-label={title}>
         <polyline
           fill="none"
           stroke={stroke}

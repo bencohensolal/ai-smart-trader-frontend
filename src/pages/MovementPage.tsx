@@ -44,11 +44,7 @@ export function MovementPage(): JSX.Element {
   return (
     <Layout
       title={t('page.movement.title')}
-      subtitle={
-        movement
-          ? `${movement.id} | ${movement.timestamp}`
-          : t('settings.loading')
-      }
+      subtitle={movement ? `${movement.id} | ${movement.timestamp}` : t('settings.loading')}
     >
       {error ? <section className="panel status">{error}</section> : null}
       {movement ? (
@@ -56,14 +52,12 @@ export function MovementPage(): JSX.Element {
           <article>
             <h2>Execution</h2>
             <p>
-              {movement.side} {movement.symbol} |{' '}
-              {formatAmountFromEur(movement.amountEur)} |{' '}
+              {movement.side} {movement.symbol} | {formatAmountFromEur(movement.amountEur)} |{' '}
               {formatAmountFromEur(movement.priceEur)} | {movement.status}
             </p>
             <p>
-              Fees: {formatAmountFromEur(movement.feeEur)} (
-              {movement.feeRatePct.toFixed(2)}%) | Net:{' '}
-              {formatAmountFromEur(movement.netAmountEur)} | Market source:{' '}
+              Fees: {formatAmountFromEur(movement.feeEur)} ({movement.feeRatePct.toFixed(2)}%) |
+              Net: {formatAmountFromEur(movement.netAmountEur)} | Market source:{' '}
               {movement.marketSource}
             </p>
           </article>

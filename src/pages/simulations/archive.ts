@@ -12,16 +12,13 @@ type ArchiveTranslate = (
   params?: Record<string, string | number>,
 ) => string;
 
-export function formatSimulationBatch(
-  run: HistoricalSimulationSummary,
-): string {
+export function formatSimulationBatch(run: HistoricalSimulationSummary): string {
   if (!run.groupId || !run.groupType) {
     return 'Single run';
   }
 
   const shortId = run.groupId.replace('sim-group-', '');
-  const prefix =
-    run.groupType === 'multi_strategy' ? 'Strategy batch' : 'Period batch';
+  const prefix = run.groupType === 'multi_strategy' ? 'Strategy batch' : 'Period batch';
   return `${prefix}: ${shortId}`;
 }
 
@@ -60,11 +57,9 @@ export function filterArchiveRuns(
   });
 }
 
-export function deriveArchiveStrategies(
-  runs: HistoricalSimulationSummary[],
-): string[] {
-  return Array.from(new Set(runs.map((run) => run.strategyName))).sort(
-    (left, right) => left.localeCompare(right),
+export function deriveArchiveStrategies(runs: HistoricalSimulationSummary[]): string[] {
+  return Array.from(new Set(runs.map((run) => run.strategyName))).sort((left, right) =>
+    left.localeCompare(right),
   );
 }
 

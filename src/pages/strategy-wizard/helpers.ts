@@ -7,9 +7,7 @@ import {
   StrategyType,
 } from './types';
 
-export function validateCustomPromptContent(
-  prompt: string,
-): PromptValidationResult {
+export function validateCustomPromptContent(prompt: string): PromptValidationResult {
   if (!prompt.trim()) {
     return { isValid: true, warnings: [] };
   }
@@ -22,9 +20,7 @@ export function validateCustomPromptContent(
     !lowerPrompt.includes('holdings') &&
     !lowerPrompt.includes('positions')
   ) {
-    warnings.push(
-      'Consider mentioning portfolio/holdings for context awareness',
-    );
+    warnings.push('Consider mentioning portfolio/holdings for context awareness');
   }
 
   if (
@@ -41,9 +37,7 @@ export function validateCustomPromptContent(
     !lowerPrompt.includes('format') &&
     !lowerPrompt.includes('structure')
   ) {
-    warnings.push(
-      'Note: JSON output format will be enforced automatically by the system',
-    );
+    warnings.push('Note: JSON output format will be enforced automatically by the system');
   }
 
   return {
@@ -75,14 +69,9 @@ export function buildStrategyPreview(input: {
   let estimatedOrdersPerMonth = 4;
 
   if (strategyType === 'allocation') {
-    estimatedOrdersPerMonth = Math.max(
-      1,
-      Math.ceil(30 / allocationRebalancingFrequencyDays),
-    );
+    estimatedOrdersPerMonth = Math.max(1, Math.ceil(30 / allocationRebalancingFrequencyDays));
   } else if (strategyType === 'ai_assisted') {
-    const estimatedByFrequency = Math.ceil(
-      30 / aiGuardrails.aiQueryFrequencyDays,
-    );
+    const estimatedByFrequency = Math.ceil(30 / aiGuardrails.aiQueryFrequencyDays);
     estimatedOrdersPerMonth = Math.max(
       1,
       Math.min(aiGuardrails.maxCallsPerMonth, estimatedByFrequency),
@@ -90,9 +79,7 @@ export function buildStrategyPreview(input: {
   } else {
     estimatedOrdersPerMonth = Math.max(
       1,
-      Math.ceil(
-        30 / Math.max(1, Math.floor(historicalLevers.lookbackDays / 2)),
-      ),
+      Math.ceil(30 / Math.max(1, Math.floor(historicalLevers.lookbackDays / 2))),
     );
   }
 
@@ -108,8 +95,7 @@ export function buildStrategyPreview(input: {
         projectedAmountEur: (monthlyBudget * percent) / 100,
       }));
   } else {
-    const perAssetPct =
-      cryptoSymbols.length > 0 ? 100 / cryptoSymbols.length : 0;
+    const perAssetPct = cryptoSymbols.length > 0 ? 100 / cryptoSymbols.length : 0;
     projectedAllocation = cryptoSymbols.map((symbol) => ({
       symbol,
       targetPct: perAssetPct,

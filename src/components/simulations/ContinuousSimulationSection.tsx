@@ -46,9 +46,7 @@ export function ContinuousSimulationSection({
               }
             }}
           >
-            {enabled
-              ? t('simulations.continuous.enabled')
-              : t('simulations.continuous.disabled')}
+            {enabled ? t('simulations.continuous.enabled') : t('simulations.continuous.disabled')}
           </div>
         </div>
         <label className="field">
@@ -68,9 +66,7 @@ export function ContinuousSimulationSection({
         </label>
       </section>
 
-      {enabled && loading && !snapshot ? (
-        <p>{t('simulations.continuous.loading')}</p>
-      ) : null}
+      {enabled && loading && !snapshot ? <p>{t('simulations.continuous.loading')}</p> : null}
       {enabled && error ? <p className="status-error">{error}</p> : null}
 
       {enabled && snapshot ? (

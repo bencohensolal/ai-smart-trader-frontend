@@ -7,7 +7,7 @@ export default defineConfig({
     environment: 'jsdom',
     coverage: {
       reporter: ['text', 'html'],
-      100: true
-    }
-  }
+      100: true,
+    },
+  },
 });

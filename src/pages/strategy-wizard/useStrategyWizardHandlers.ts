@@ -142,10 +142,8 @@ export function useStrategyWizardHandlers(state: StrategyWizardState) {
           state.strategyType === 'allocation'
             ? {
                 allocation: state.allocation,
-                rebalancingFrequencyDays:
-                  state.allocationRebalancingFrequencyDays,
-                rebalancingThresholdPct:
-                  state.allocationRebalancingThresholdPct,
+                rebalancingFrequencyDays: state.allocationRebalancingFrequencyDays,
+                rebalancingThresholdPct: state.allocationRebalancingThresholdPct,
               }
             : undefined,
         aiConfig:
@@ -157,10 +155,8 @@ export function useStrategyWizardHandlers(state: StrategyWizardState) {
                 customPrompt: state.customPrompt,
                 maxCostPerCallEur: state.aiGuardrails.maxCostPerCallEur,
                 maxCallsPerMonth: state.aiGuardrails.maxCallsPerMonth,
-                maxSessionDurationMinutes:
-                  state.aiGuardrails.maxSessionDurationMinutes,
-                maxConcurrentPositions:
-                  state.aiGuardrails.maxConcurrentPositions,
+                maxSessionDurationMinutes: state.aiGuardrails.maxSessionDurationMinutes,
+                maxConcurrentPositions: state.aiGuardrails.maxConcurrentPositions,
               }
             : undefined,
         historicalConfig:
@@ -169,14 +165,11 @@ export function useStrategyWizardHandlers(state: StrategyWizardState) {
                 cryptoSymbols: state.cryptoSymbols,
                 lookbackDays: state.historicalLevers.lookbackDays,
                 buyDropThresholdPct: state.historicalLevers.buyDropThresholdPct,
-                sellRiseThresholdPct:
-                  state.historicalLevers.sellRiseThresholdPct,
-                maxCapitalPerSignalPct:
-                  state.historicalLevers.maxCapitalPerSignalPct,
+                sellRiseThresholdPct: state.historicalLevers.sellRiseThresholdPct,
+                maxCapitalPerSignalPct: state.historicalLevers.maxCapitalPerSignalPct,
                 trendLookbackDays: state.historicalLevers.trendLookbackDays,
                 maxVolatilityPct: state.historicalLevers.maxVolatilityPct,
-                minDaysBetweenTrades:
-                  state.historicalLevers.minDaysBetweenTrades,
+                minDaysBetweenTrades: state.historicalLevers.minDaysBetweenTrades,
               }
             : undefined,
       };
@@ -188,16 +181,11 @@ export function useStrategyWizardHandlers(state: StrategyWizardState) {
       setLoading(false);
       setStatusKind('success');
       setStatus(
-        state.editingStrategyId
-          ? 'Strategy updated successfully'
-          : 'Strategy created successfully',
+        state.editingStrategyId ? 'Strategy updated successfully' : 'Strategy created successfully',
       );
       await handleListStrategies();
     } catch (error) {
-      const message =
-        error instanceof ApiHttpError
-          ? error.message
-          : 'Failed to create strategy';
+      const message = error instanceof ApiHttpError ? error.message : 'Failed to create strategy';
       setStatusKind('error');
       setStatus(message);
       setLoading(false);
@@ -225,9 +213,7 @@ export function useStrategyWizardHandlers(state: StrategyWizardState) {
 
   const handleDeleteStrategy = useCallback(
     async (strategyId: string) => {
-      const confirmed = window.confirm(
-        'Are you sure you want to delete this strategy?',
-      );
+      const confirmed = window.confirm('Are you sure you want to delete this strategy?');
       if (!confirmed) return;
       setLoading(true);
       try {
@@ -259,9 +245,7 @@ export function useStrategyWizardHandlers(state: StrategyWizardState) {
       setLoading(false);
     } catch (error) {
       const message =
-        error instanceof ApiHttpError
-          ? error.message
-          : 'Failed to restore default strategies';
+        error instanceof ApiHttpError ? error.message : 'Failed to restore default strategies';
       setStatusKind('error');
       setStatus(message);
       setLoading(false);
@@ -285,10 +269,7 @@ export function useStrategyWizardHandlers(state: StrategyWizardState) {
       setStatus('Strategies exported successfully');
       setLoading(false);
     } catch (error) {
-      const message =
-        error instanceof ApiHttpError
-          ? error.message
-          : 'Failed to export strategies';
+      const message = error instanceof ApiHttpError ? error.message : 'Failed to export strategies';
       setStatusKind('error');
       setStatus(message);
       setLoading(false);

@@ -1,11 +1,4 @@
-import {
-  ReactNode,
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from 'react';
+import { ReactNode, createContext, useCallback, useContext, useMemo, useState } from 'react';
 import { Locale, TranslationKey, messages } from './messages';
 
 const LANGUAGE_STORAGE_KEY = 'ai-smart-trader.language';
@@ -20,11 +13,7 @@ type I18nContextValue = {
 
 const I18nContext = createContext<I18nContextValue | null>(null);
 
-export function I18nProvider({
-  children,
-}: {
-  children: ReactNode;
-}): JSX.Element {
+export function I18nProvider({ children }: { children: ReactNode }): JSX.Element {
   const [locale, setLocaleState] = useState<Locale>(() => {
     return getStoredLanguage();
   });
@@ -56,9 +45,7 @@ export function I18nProvider({
     };
   }, [locale, setLocale, t]);
 
-  return (
-    <I18nContext.Provider value={context}>{children}</I18nContext.Provider>
-  );
+  return <I18nContext.Provider value={context}>{children}</I18nContext.Provider>;
 }
 
 export function useI18n(): I18nContextValue {

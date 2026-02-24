@@ -60,11 +60,7 @@ function computeReturns(values: number[]): number[] {
   for (let index = 1; index < values.length; index += 1) {
     const previous = values[index - 1];
     const current = values[index];
-    if (
-      previous <= 0 ||
-      !Number.isFinite(previous) ||
-      !Number.isFinite(current)
-    ) {
+    if (previous <= 0 || !Number.isFinite(previous) || !Number.isFinite(current)) {
       continue;
     }
     returns.push((current - previous) / previous);
@@ -78,8 +74,7 @@ function computeStdDev(values: number[]): number {
   }
 
   const mean = values.reduce((sum, value) => sum + value, 0) / values.length;
-  const variance =
-    values.reduce((sum, value) => sum + (value - mean) ** 2, 0) / values.length;
+  const variance = values.reduce((sum, value) => sum + (value - mean) ** 2, 0) / values.length;
   return Math.sqrt(variance);
 }
 
@@ -130,13 +125,7 @@ function createNormalGenerator(seed: number): () => number {
   };
 }
 
-function ChartTitleWithHelp({
-  title,
-  help,
-}: {
-  title: string;
-  help: string;
-}): JSX.Element {
+function ChartTitleWithHelp({ title, help }: { title: string; help: string }): JSX.Element {
   return (
     <div className="chart-title-row">
       <h2>{title}</h2>
@@ -159,8 +148,7 @@ export function DashboardPage(): JSX.Element {
   const [dashboard, setDashboard] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [operationSideFilter, setOperationSideFilter] =
-    useState<OperationSideFilter>('all');
+  const [operationSideFilter, setOperationSideFilter] = useState<OperationSideFilter>('all');
   const [operationOutcomeFilter, setOperationOutcomeFilter] =
     useState<OperationOutcomeFilter>('successful');
   const [operationsPageSize, setOperationsPageSize] = useState(50);
@@ -249,10 +237,7 @@ export function DashboardPage(): JSX.Element {
     setOperationsPage(1);
   }, [operationOutcomeFilter, operationSideFilter, operationsPageSize]);
 
-  const operationsPageCount = Math.max(
-    1,
-    Math.ceil(lastOperations.length / operationsPageSize),
-  );
+  const operationsPageCount = Math.max(1, Math.ceil(lastOperations.length / operationsPageSize));
   const safeOperationsPage = Math.min(operationsPage, operationsPageCount);
   const pagedOperations = useMemo(() => {
     const start = (safeOperationsPage - 1) * operationsPageSize;
@@ -263,10 +248,7 @@ export function DashboardPage(): JSX.Element {
     if (!dashboard) {
       return null;
     }
-    return (
-      strategies.find((strategy) => strategy.id === dashboard.strategyId) ??
-      null
-    );
+    return strategies.find((strategy) => strategy.id === dashboard.strategyId) ?? null;
   }, [dashboard, strategies]);
 
   const riskReturnData = useMemo(() => {
@@ -297,12 +279,10 @@ export function DashboardPage(): JSX.Element {
     }
 
     const totalPnl = dashboard.realizedPnlEur + dashboard.unrealizedPnlEur;
-    const realizedWeight =
-      totalPnl === 0 ? 0.5 : dashboard.realizedPnlEur / totalPnl;
+    const realizedWeight = totalPnl === 0 ? 0.5 : dashboard.realizedPnlEur / totalPnl;
 
     return dashboard.equityCurve.map((point, index) => {
-      const investedEur =
-        dashboard.totalInvestedEur * ((index + 1) / pointCount);
+      const investedEur = dashboard.totalInvestedEur * ((index + 1) / pointCount);
       const totalPnlEur = point.value - investedEur;
       const realizedPnlEur = totalPnlEur * realizedWeight;
       const unrealizedPnlEur = totalPnlEur - realizedPnlEur;
@@ -336,10 +316,7 @@ export function DashboardPage(): JSX.Element {
   }, [dashboard, selectedStrategy]);
 
   const operationPricesBySymbol = useMemo(() => {
-    const bySymbol = new Map<
-      string,
-      Array<{ timestamp: number; priceEur: number }>
-    >();
+    const bySymbol = new Map<string, Array<{ timestamp: number; priceEur: number }>>();
 
     for (const operation of dashboard?.lastOperations ?? []) {
       const timestamp = Date.parse(operation.timestamp);
@@ -370,9 +347,7 @@ export function DashboardPage(): JSX.Element {
     return Array.from(symbols)
       .sort((left, right) => left.localeCompare(right))
       .map((symbol) => {
-        const prices = (operationPricesBySymbol.get(symbol) ?? []).map(
-          (point) => point.priceEur,
-        );
+        const prices = (operationPricesBySymbol.get(symbol) ?? []).map((point) => point.priceEur);
         const returns = computeReturns(prices);
         const volatilityPct = computeStdDev(returns) * Math.sqrt(30) * 100;
 
@@ -393,15 +368,11 @@ export function DashboardPage(): JSX.Element {
       symbols.add(symbol);
     }
 
-    const orderedSymbols = Array.from(symbols).sort((left, right) =>
-      left.localeCompare(right),
-    );
+    const orderedSymbols = Array.from(symbols).sort((left, right) => left.localeCompare(right));
 
     const returnsBySymbol = new Map<string, number[]>();
     for (const symbol of orderedSymbols) {
-      const prices = (operationPricesBySymbol.get(symbol) ?? []).map(
-        (point) => point.priceEur,
-      );
+      const prices = (operationPricesBySymbol.get(symbol) ?? []).map((point) => point.priceEur);
       returnsBySymbol.set(symbol, computeReturns(prices));
     }
 
@@ -431,15 +402,11 @@ export function DashboardPage(): JSX.Element {
 
   const eventTimelineData = useMemo(() => {
     return [...(dashboard?.lastOperations ?? [])]
-      .sort(
-        (left, right) =>
-          Date.parse(left.timestamp) - Date.parse(right.timestamp),
-      )
+      .sort((left, right) => Date.parse(left.timestamp) - Date.parse(right.timestamp))
       .slice(-12)
       .map((operation) => {
         const isLargeOperation =
-          dashboard !== null &&
-          operation.amountEur >= dashboard.monthlyBudgetEur * 0.5;
+          dashboard !== null && operation.amountEur >= dashboard.monthlyBudgetEur * 0.5;
         const eventType = isLargeOperation
           ? t('dashboard.charts.timeline.rebalance')
           : operation.side === 'BUY'
@@ -469,8 +436,7 @@ export function DashboardPage(): JSX.Element {
       return [] as MonteCarloPoint[];
     }
 
-    const mean =
-      returns.reduce((sum, value) => sum + value, 0) / returns.length;
+    const mean = returns.reduce((sum, value) => sum + value, 0) / returns.length;
     const volatility = computeStdDev(returns);
     const steps = 12;
     const scenarios = 120;
@@ -490,9 +456,7 @@ export function DashboardPage(): JSX.Element {
     });
 
     return Array.from({ length: steps + 1 }, (_, step) => {
-      const slice = paths
-        .map((path) => path[step])
-        .sort((left, right) => left - right);
+      const slice = paths.map((path) => path[step]).sort((left, right) => left - right);
       const p10 = slice[Math.floor(slice.length * 0.1)] ?? lastValue;
       const median = slice[Math.floor(slice.length * 0.5)] ?? lastValue;
       const p90 = slice[Math.floor(slice.length * 0.9)] ?? lastValue;
@@ -526,8 +490,7 @@ export function DashboardPage(): JSX.Element {
       },
       {
         label: t('dashboard.charts.waterfall.pnl'),
-        targetValue:
-          dashboard.totalInvestedEur - dashboard.totalFeesEur + totalPnlEur,
+        targetValue: dashboard.totalInvestedEur - dashboard.totalFeesEur + totalPnlEur,
       },
       {
         label: t('dashboard.charts.waterfall.final'),
@@ -538,10 +501,8 @@ export function DashboardPage(): JSX.Element {
     let previous = 0;
     return steps.map((step) => {
       const lower = Math.min(previous, step.targetValue);
-      const rise =
-        step.targetValue > previous ? step.targetValue - previous : 0;
-      const fall =
-        step.targetValue < previous ? previous - step.targetValue : 0;
+      const rise = step.targetValue > previous ? step.targetValue - previous : 0;
+      const fall = step.targetValue < previous ? previous - step.targetValue : 0;
       previous = step.targetValue;
 
       return {
@@ -604,9 +565,7 @@ export function DashboardPage(): JSX.Element {
             </article>
             <article className="kpi">
               <span>{t('dashboard.kpi.portfolioValue')}</span>
-              <strong>
-                {formatAmountFromEur(dashboard.portfolioValueEur)}
-              </strong>
+              <strong>{formatAmountFromEur(dashboard.portfolioValueEur)}</strong>
             </article>
             <article className="kpi">
               <span>{t('dashboard.kpi.realizedPnl')}</span>
@@ -623,8 +582,7 @@ export function DashboardPage(): JSX.Element {
             <article className="kpi">
               <span>{t('dashboard.kpi.winRateDrawdown')}</span>
               <strong>
-                {dashboard.winRatePct.toFixed(1)}% /{' '}
-                {dashboard.maxDrawdownPct.toFixed(1)}%
+                {dashboard.winRatePct.toFixed(1)}% / {dashboard.maxDrawdownPct.toFixed(1)}%
               </strong>
             </article>
           </section>
@@ -642,9 +600,7 @@ export function DashboardPage(): JSX.Element {
                     <XAxis dataKey="label" stroke="var(--muted)" />
                     <YAxis
                       stroke="var(--muted)"
-                      tickFormatter={(value: number) =>
-                        `${Math.round(value)} €`
-                      }
+                      tickFormatter={(value: number) => `${Math.round(value)} €`}
                     />
                     <Tooltip
                       formatter={(value: number) => formatAmountFromEur(value)}
@@ -700,10 +656,7 @@ export function DashboardPage(): JSX.Element {
                       formatter={(value: number | string) => {
                         const numeric = Number(value);
                         if (!Number.isFinite(numeric)) {
-                          return [
-                            '—',
-                            t('dashboard.charts.targetVsActual.actual'),
-                          ];
+                          return ['—', t('dashboard.charts.targetVsActual.actual')];
                         }
                         return [
                           percentage.format(numeric / 100),
@@ -738,9 +691,7 @@ export function DashboardPage(): JSX.Element {
                     <XAxis dataKey="label" stroke="var(--muted)" />
                     <YAxis
                       stroke="var(--muted)"
-                      tickFormatter={(value: number) =>
-                        `${Math.round(value)} €`
-                      }
+                      tickFormatter={(value: number) => `${Math.round(value)} €`}
                     />
                     <Tooltip
                       formatter={(value: number) => formatAmountFromEur(value)}
@@ -802,16 +753,14 @@ export function DashboardPage(): JSX.Element {
                     <Tooltip
                       cursor={{ strokeDasharray: '3 3' }}
                       labelFormatter={(_label, payload) => {
-                        const strategyName =
-                          payload?.[0]?.payload?.strategyName;
+                        const strategyName = payload?.[0]?.payload?.strategyName;
                         return strategyName
                           ? String(strategyName)
                           : t('dashboard.charts.riskReturn.strategies');
                       }}
                       formatter={(value: number | string, name: string) => {
                         const numeric = Number(value);
-                        const metricLabel =
-                          riskReturnMetricLabelByKey[name] ?? name;
+                        const metricLabel = riskReturnMetricLabelByKey[name] ?? name;
                         if (!Number.isFinite(numeric)) {
                           return ['—', metricLabel];
                         }
@@ -883,10 +832,7 @@ export function DashboardPage(): JSX.Element {
                 <p>{t('dashboard.charts.correlation.empty')}</p>
               ) : (
                 <div className="correlation-heatmap" role="table">
-                  <div
-                    className="correlation-row correlation-row-head"
-                    role="row"
-                  >
+                  <div className="correlation-row correlation-row-head" role="row">
                     <span className="correlation-corner" aria-hidden="true" />
                     {correlationCells.symbols.map((symbol) => (
                       <span key={`head-${symbol}`} className="correlation-head">
@@ -895,22 +841,15 @@ export function DashboardPage(): JSX.Element {
                     ))}
                   </div>
                   {correlationCells.symbols.map((rowSymbol) => (
-                    <div
-                      key={`row-${rowSymbol}`}
-                      className="correlation-row"
-                      role="row"
-                    >
+                    <div key={`row-${rowSymbol}`} className="correlation-row" role="row">
                       <span className="correlation-head">{rowSymbol}</span>
                       {correlationCells.symbols.map((colSymbol) => {
                         const cell = correlationCells.matrix.find(
-                          (item) =>
-                            item.rowSymbol === rowSymbol &&
-                            item.colSymbol === colSymbol,
+                          (item) => item.rowSymbol === rowSymbol && item.colSymbol === colSymbol,
                         );
                         const value = cell?.value ?? 0;
                         const intensity = Math.min(1, Math.abs(value));
-                        const mixToken =
-                          value >= 0 ? 'var(--accent)' : 'var(--muted)';
+                        const mixToken = value >= 0 ? 'var(--accent)' : 'var(--muted)';
                         return (
                           <span
                             key={`${rowSymbol}-${colSymbol}`}
@@ -947,11 +886,7 @@ export function DashboardPage(): JSX.Element {
                       tickFormatter={(value: number) => `${value.toFixed(1)}%`}
                     />
                     <Tooltip
-                      formatter={(
-                        value: number | string,
-                        _name: string,
-                        item,
-                      ) => {
+                      formatter={(value: number | string, _name: string, item) => {
                         const numeric = Number(value);
                         const samples = Number(item?.payload?.samples ?? 0);
                         if (samples < 2 || !Number.isFinite(numeric)) {
@@ -961,10 +896,9 @@ export function DashboardPage(): JSX.Element {
                           ];
                         }
                         return [
-                          `${numeric.toFixed(2)}% · ${t(
-                            'dashboard.charts.tooltip.samples',
-                            { count: samples },
-                          )}`,
+                          `${numeric.toFixed(2)}% · ${t('dashboard.charts.tooltip.samples', {
+                            count: samples,
+                          })}`,
                           t('dashboard.charts.volatility.value'),
                         ];
                       }}
@@ -998,18 +932,13 @@ export function DashboardPage(): JSX.Element {
                   <p>{t('dashboard.charts.timeline.empty')}</p>
                 ) : (
                   eventTimelineData.map((eventItem) => (
-                    <article
-                      key={eventItem.id}
-                      className="timeline-item"
-                      role="listitem"
-                    >
+                    <article key={eventItem.id} className="timeline-item" role="listitem">
                       <header>
                         <strong>{eventItem.eventType}</strong>
                         <span>{eventItem.symbol}</span>
                       </header>
                       <p>
-                        {eventItem.timestamp} ·{' '}
-                        {formatAmountFromEur(eventItem.amountEur)} ·{' '}
+                        {eventItem.timestamp} · {formatAmountFromEur(eventItem.amountEur)} ·{' '}
                         {eventItem.status}
                       </p>
                     </article>
@@ -1029,21 +958,14 @@ export function DashboardPage(): JSX.Element {
                 <div className="chart-wrap">
                   <ResponsiveContainer width="100%" height={260}>
                     <LineChart data={monteCarloData}>
-                      <CartesianGrid
-                        stroke="var(--line)"
-                        strokeDasharray="3 3"
-                      />
+                      <CartesianGrid stroke="var(--line)" strokeDasharray="3 3" />
                       <XAxis dataKey="label" stroke="var(--muted)" />
                       <YAxis
                         stroke="var(--muted)"
-                        tickFormatter={(value: number) =>
-                          `${Math.round(value)} €`
-                        }
+                        tickFormatter={(value: number) => `${Math.round(value)} €`}
                       />
                       <Tooltip
-                        formatter={(value: number) =>
-                          formatAmountFromEur(value)
-                        }
+                        formatter={(value: number) => formatAmountFromEur(value)}
                         contentStyle={{
                           background: 'var(--panel)',
                           border: '1px solid var(--line)',
@@ -1092,9 +1014,7 @@ export function DashboardPage(): JSX.Element {
                     <XAxis dataKey="label" stroke="var(--muted)" />
                     <YAxis
                       stroke="var(--muted)"
-                      tickFormatter={(value: number) =>
-                        `${Math.round(value)} €`
-                      }
+                      tickFormatter={(value: number) => `${Math.round(value)} €`}
                     />
                     <Tooltip
                       formatter={(value: number, name: string) => {
@@ -1109,12 +1029,7 @@ export function DashboardPage(): JSX.Element {
                       }}
                     />
                     <Legend />
-                    <Bar
-                      dataKey="base"
-                      stackId="wf"
-                      fill="transparent"
-                      name=""
-                    />
+                    <Bar dataKey="base" stackId="wf" fill="transparent" name="" />
                     <Bar
                       dataKey="rise"
                       stackId="wf"
@@ -1157,10 +1072,7 @@ export function DashboardPage(): JSX.Element {
                   {dashboard.strategyComparison.map((row) => {
                     const isActive = row.strategyId === dashboard.strategyId;
                     return (
-                      <tr
-                        key={row.strategyId}
-                        className={isActive ? 'active-row' : ''}
-                      >
+                      <tr key={row.strategyId} className={isActive ? 'active-row' : ''}>
                         <td>{row.strategyName}</td>
                         <td>{row.riskProfile}</td>
                         <td>{row.estimatedMonthlyReturnPct.toFixed(2)}%</td>
@@ -1182,20 +1094,12 @@ export function DashboardPage(): JSX.Element {
                 <select
                   value={operationSideFilter}
                   onChange={(event) => {
-                    setOperationSideFilter(
-                      normalizeOperationSideFilter(event.target.value),
-                    );
+                    setOperationSideFilter(normalizeOperationSideFilter(event.target.value));
                   }}
                 >
-                  <option value="all">
-                    {t('dashboard.operations.side.all')}
-                  </option>
-                  <option value="buy">
-                    {t('dashboard.operations.side.buy')}
-                  </option>
-                  <option value="sell">
-                    {t('dashboard.operations.side.sell')}
-                  </option>
+                  <option value="all">{t('dashboard.operations.side.all')}</option>
+                  <option value="buy">{t('dashboard.operations.side.buy')}</option>
+                  <option value="sell">{t('dashboard.operations.side.sell')}</option>
                 </select>
               </label>
               <label className="field">
@@ -1203,20 +1107,12 @@ export function DashboardPage(): JSX.Element {
                 <select
                   value={operationOutcomeFilter}
                   onChange={(event) => {
-                    setOperationOutcomeFilter(
-                      normalizeOperationOutcomeFilter(event.target.value),
-                    );
+                    setOperationOutcomeFilter(normalizeOperationOutcomeFilter(event.target.value));
                   }}
                 >
-                  <option value="successful">
-                    {t('dashboard.operations.outcome.successful')}
-                  </option>
-                  <option value="failed">
-                    {t('dashboard.operations.outcome.failed')}
-                  </option>
-                  <option value="all">
-                    {t('dashboard.operations.outcome.all')}
-                  </option>
+                  <option value="successful">{t('dashboard.operations.outcome.successful')}</option>
+                  <option value="failed">{t('dashboard.operations.outcome.failed')}</option>
+                  <option value="all">{t('dashboard.operations.outcome.all')}</option>
                 </select>
               </label>
               <label className="field">
@@ -1305,9 +1201,7 @@ export function DashboardPage(): JSX.Element {
                 className="button button-secondary button-small"
                 type="button"
                 onClick={() => {
-                  setOperationsPage((current) =>
-                    Math.min(operationsPageCount, current + 1),
-                  );
+                  setOperationsPage((current) => Math.min(operationsPageCount, current + 1));
                 }}
                 disabled={safeOperationsPage >= operationsPageCount}
               >

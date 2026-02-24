@@ -30,8 +30,7 @@ export function matchesOperationFilters(
     outcome: OperationOutcomeFilter;
   },
 ): boolean {
-  const matchesSide =
-    filters.side === 'all' || operation.side === filters.side.toUpperCase();
+  const matchesSide = filters.side === 'all' || operation.side === filters.side.toUpperCase();
   if (!matchesSide) {
     return false;
   }

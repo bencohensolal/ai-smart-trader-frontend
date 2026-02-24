@@ -5,10 +5,7 @@ type BrandLogoProps = {
   compact?: boolean;
 };
 
-export function BrandLogo({
-  subtitle,
-  compact = false,
-}: BrandLogoProps): JSX.Element {
+export function BrandLogo({ subtitle, compact = false }: BrandLogoProps): JSX.Element {
   return (
     <Link className="brand-logo-link" to="/" aria-label="AI Smart Trader">
       <span className="brand-logo-mark" aria-hidden="true">

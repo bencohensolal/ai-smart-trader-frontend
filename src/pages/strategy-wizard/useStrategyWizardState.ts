@@ -31,23 +31,18 @@ export function useStrategyWizardState() {
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState('');
   const [statusKind, setStatusKind] = useState<'success' | 'error'>('success');
-  const [editingStrategyId, setEditingStrategyId] = useState<string | null>(
-    null,
-  );
-  const [strategyPreview, setStrategyPreview] =
-    useState<StrategyPreviewResult | null>(null);
+  const [editingStrategyId, setEditingStrategyId] = useState<string | null>(null);
+  const [strategyPreview, setStrategyPreview] = useState<StrategyPreviewResult | null>(null);
 
   // Wizard state
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [riskLevel, setRiskLevel] = useState<StrategyRiskLevel>('balanced');
   const [strategyType, setStrategyType] = useState<StrategyType>('ai_assisted');
-  const [promptTemplates, setPromptTemplates] = useState<ApiPromptTemplate[]>(
-    [],
+  const [promptTemplates, setPromptTemplates] = useState<ApiPromptTemplate[]>([]);
+  const [selectedTemplate, setSelectedTemplate] = useState<'defensive' | 'balanced' | 'aggressive'>(
+    'balanced',
   );
-  const [selectedTemplate, setSelectedTemplate] = useState<
-    'defensive' | 'balanced' | 'aggressive'
-  >('balanced');
   const [selectedPromptContent, setSelectedPromptContent] = useState('');
   const [customPrompt, setCustomPrompt] = useState('');
   const [showPromptPreview, setShowPromptPreview] = useState(false);
@@ -58,26 +53,14 @@ export function useStrategyWizardState() {
   const [safeguards, setSafeguards] = useState<SafeguardsDefaults>(
     defaultSafeguardsByRisk('balanced'),
   );
-  const [
-    allocationRebalancingFrequencyDays,
-    setAllocationRebalancingFrequencyDays,
-  ] = useState(1);
-  const [
-    allocationRebalancingThresholdPct,
-    setAllocationRebalancingThresholdPct,
-  ] = useState(5);
-  const [aiGuardrails, setAiGuardrails] = useState<AiGuardrails>(
-    defaultAiGuardrails(),
-  );
+  const [allocationRebalancingFrequencyDays, setAllocationRebalancingFrequencyDays] = useState(1);
+  const [allocationRebalancingThresholdPct, setAllocationRebalancingThresholdPct] = useState(5);
+  const [aiGuardrails, setAiGuardrails] = useState<AiGuardrails>(defaultAiGuardrails());
   const [historicalLevers, setHistoricalLevers] = useState<HistoricalLevers>({
     ...defaultHistoricalLeversByRisk('balanced'),
   });
-  const [cryptoSymbols, setCryptoSymbols] = useState<string[]>(
-    getDefaultCryptoSymbols(),
-  );
-  const [allocation, setAllocation] = useState<Record<string, number>>(
-    getDefaultAllocation(),
-  );
+  const [cryptoSymbols, setCryptoSymbols] = useState<string[]>(getDefaultCryptoSymbols());
+  const [allocation, setAllocation] = useState<Record<string, number>>(getDefaultAllocation());
 
   useEffect(() => {
     void handleListStrategies();
@@ -92,10 +75,7 @@ export function useStrategyWizardState() {
       setStatus('');
       setLoading(false);
     } catch (error) {
-      const message =
-        error instanceof ApiHttpError
-          ? error.message
-          : 'Failed to load strategies';
+      const message = error instanceof ApiHttpError ? error.message : 'Failed to load strategies';
       setStatusKind('error');
       setStatus(message);
       setLoading(false);

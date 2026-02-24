@@ -23,10 +23,7 @@ export function applyDisplayCurrency(currency: DisplayCurrency): void {
   localStorage.setItem(DISPLAY_CURRENCY_STORAGE_KEY, currency);
 }
 
-export function convertEurToDisplayCurrency(
-  amountEur: number,
-  currency: DisplayCurrency,
-): number {
+export function convertEurToDisplayCurrency(amountEur: number, currency: DisplayCurrency): number {
   return amountEur * EUR_CONVERSION_RATES[currency];
 }
 

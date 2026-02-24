@@ -3,22 +3,19 @@ import { CryptoCatalogAsset } from './types';
 export const CRYPTO_CATALOG: CryptoCatalogAsset[] = [
   {
     symbol: 'BTC',
-    thesis:
-      'Bitcoin - Most liquid reference asset, often used as a portfolio anchor.',
+    thesis: 'Bitcoin - Most liquid reference asset, often used as a portfolio anchor.',
     risk: 'Low',
     fees: 'Low',
   },
   {
     symbol: 'ETH',
-    thesis:
-      'Ethereum - Smart-contract leader with a broad ecosystem and strong liquidity.',
+    thesis: 'Ethereum - Smart-contract leader with a broad ecosystem and strong liquidity.',
     risk: 'Medium',
     fees: 'Low',
   },
   {
     symbol: 'SOL',
-    thesis:
-      'Solana - High-performance blockchain with strong momentum and larger swings.',
+    thesis: 'Solana - High-performance blockchain with strong momentum and larger swings.',
     risk: 'High',
     fees: 'Low',
   },
@@ -30,8 +27,7 @@ export const CRYPTO_CATALOG: CryptoCatalogAsset[] = [
   },
   {
     symbol: 'USDC',
-    thesis:
-      'USD Coin - Stablecoin used to keep a stable cash reserve and reduce volatility.',
+    thesis: 'USD Coin - Stablecoin used to keep a stable cash reserve and reduce volatility.',
     risk: 'Low',
     fees: 'Low',
   },
@@ -44,15 +40,13 @@ export const CRYPTO_CATALOG: CryptoCatalogAsset[] = [
   },
   {
     symbol: 'DOGE',
-    thesis:
-      'Dogecoin - Speculative asset driven by retail liquidity and fast price moves.',
+    thesis: 'Dogecoin - Speculative asset driven by retail liquidity and fast price moves.',
     risk: 'High',
     fees: 'Low',
   },
   {
     symbol: 'AVAX',
-    thesis:
-      'Avalanche - Performance-oriented ecosystem and DeFi apps, sensitive to momentum.',
+    thesis: 'Avalanche - Performance-oriented ecosystem and DeFi apps, sensitive to momentum.',
     risk: 'High',
     fees: 'Low',
   },

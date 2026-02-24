@@ -19,8 +19,7 @@ export function useContinuousSimulation(
 ): ContinuousSimulationState {
   const [continuousModeEnabled, setContinuousModeEnabled] = useState(false);
   const [continuousIntervalMs, setContinuousIntervalMs] = useState(15000);
-  const [continuousSnapshot, setContinuousSnapshot] =
-    useState<DashboardData | null>(null);
+  const [continuousSnapshot, setContinuousSnapshot] = useState<DashboardData | null>(null);
   const [continuousLoading, setContinuousLoading] = useState(false);
   const [continuousError, setContinuousError] = useState('');
   const [continuousUpdatedAt, setContinuousUpdatedAt] = useState('');
@@ -71,12 +70,7 @@ export function useContinuousSimulation(
       cancelled = true;
       window.clearInterval(timer);
     };
-  }, [
-    continuousIntervalMs,
-    continuousModeEnabled,
-    onUnauthorized,
-    selectedStrategyId,
-  ]);
+  }, [continuousIntervalMs, continuousModeEnabled, onUnauthorized, selectedStrategyId]);
 
   const handleContinuousEnabledChange = (enabled: boolean): void => {
     setContinuousModeEnabled(enabled);

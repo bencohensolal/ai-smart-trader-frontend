@@ -1,11 +1,6 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  UserSettings,
-  getUserSettings,
-  isUnauthorizedError,
-  saveUserSettings,
-} from '../api';
+import { UserSettings, getUserSettings, isUnauthorizedError, saveUserSettings } from '../api';
 import { normalizeLanguage, useI18n } from '../i18n/i18n';
 import { Layout } from '../components/Layout';
 import {
@@ -16,11 +11,7 @@ import {
   applyVisualPreferences,
   getStoredColorMode,
 } from '../theme';
-import {
-  DisplayCurrency,
-  applyDisplayCurrency,
-  getStoredDisplayCurrency,
-} from '../currency';
+import { DisplayCurrency, applyDisplayCurrency, getStoredDisplayCurrency } from '../currency';
 
 export function SettingsPage(): JSX.Element {
   const { t, setLocale } = useI18n();
@@ -29,9 +20,7 @@ export function SettingsPage(): JSX.Element {
   const [status, setStatus] = useState('');
   const [statusKind, setStatusKind] = useState<'success' | 'error'>('success');
   const [saving, setSaving] = useState(false);
-  const [colorMode, setColorMode] = useState<ColorMode>(
-    getStoredColorMode() ?? 'dark',
-  );
+  const [colorMode, setColorMode] = useState<ColorMode>(getStoredColorMode() ?? 'dark');
   const [displayCurrency, setDisplayCurrency] = useState<DisplayCurrency>(
     getStoredDisplayCurrency(),
   );
@@ -67,9 +56,7 @@ export function SettingsPage(): JSX.Element {
     };
   }, [navigate, setLocale]);
 
-  async function handleSubmit(
-    event: FormEvent<HTMLFormElement>,
-  ): Promise<void> {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
     if (!settings) {
       return;
@@ -116,8 +103,7 @@ export function SettingsPage(): JSX.Element {
                 <select
                   value={settings.theme}
                   onChange={(event) => {
-                    const nextTheme = event.target
-                      .value as UserSettings['theme'];
+                    const nextTheme = event.target.value as UserSettings['theme'];
                     setSettings({
                       ...settings,
                       theme: nextTheme,
@@ -169,9 +155,7 @@ export function SettingsPage(): JSX.Element {
               </label>
 
               <label className="field">
-                <span className="field-label">
-                  {t('settings.displayCurrency')}
-                </span>
+                <span className="field-label">{t('settings.displayCurrency')}</span>
                 <select
                   value={displayCurrency}
                   onChange={(event) => {
@@ -180,47 +164,28 @@ export function SettingsPage(): JSX.Element {
                     applyDisplayCurrency(nextCurrency);
                   }}
                 >
-                  <option value="EUR">
-                    {t('settings.displayCurrency.eur')}
-                  </option>
-                  <option value="USD">
-                    {t('settings.displayCurrency.usd')}
-                  </option>
-                  <option value="GBP">
-                    {t('settings.displayCurrency.gbp')}
-                  </option>
-                  <option value="CHF">
-                    {t('settings.displayCurrency.chf')}
-                  </option>
+                  <option value="EUR">{t('settings.displayCurrency.eur')}</option>
+                  <option value="USD">{t('settings.displayCurrency.usd')}</option>
+                  <option value="GBP">{t('settings.displayCurrency.gbp')}</option>
+                  <option value="CHF">{t('settings.displayCurrency.chf')}</option>
                 </select>
               </label>
 
               <label className="field">
-                <span className="field-label">
-                  {t('settings.defaultLandingPage')}
-                </span>
+                <span className="field-label">{t('settings.defaultLandingPage')}</span>
                 <select
                   value={settings.defaultLandingPage}
                   onChange={(event) => {
                     setSettings({
                       ...settings,
-                      defaultLandingPage: event.target
-                        .value as UserSettings['defaultLandingPage'],
+                      defaultLandingPage: event.target.value as UserSettings['defaultLandingPage'],
                     });
                   }}
                 >
-                  <option value="dashboard">
-                    {t('settings.landing.dashboard')}
-                  </option>
-                  <option value="simulations">
-                    {t('settings.landing.simulations')}
-                  </option>
-                  <option value="strategies">
-                    {t('settings.landing.strategies')}
-                  </option>
-                  <option value="insights">
-                    {t('settings.landing.insights')}
-                  </option>
+                  <option value="dashboard">{t('settings.landing.dashboard')}</option>
+                  <option value="simulations">{t('settings.landing.simulations')}</option>
+                  <option value="strategies">{t('settings.landing.strategies')}</option>
+                  <option value="insights">{t('settings.landing.insights')}</option>
                 </select>
               </label>
             </div>

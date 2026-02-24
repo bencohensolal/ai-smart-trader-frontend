@@ -77,11 +77,7 @@ export function SimulationArchiveSection({
                 value={archiveStatusFilter}
                 onChange={(event) => {
                   const next = event.target.value;
-                  if (
-                    next === 'all' ||
-                    next === 'completed' ||
-                    next === 'failed'
-                  ) {
+                  if (next === 'all' || next === 'completed' || next === 'failed') {
                     onArchiveStatusFilterChange(next);
                   }
                 }}
@@ -128,8 +124,7 @@ export function SimulationArchiveSection({
           </section>
 
           <p>
-            {filteredRunsCount} filtered simulation(s) · page {safeArchivePage}/
-            {archivePageCount}
+            {filteredRunsCount} filtered simulation(s) · page {safeArchivePage}/{archivePageCount}
           </p>
 
           <div className="table-scroll">

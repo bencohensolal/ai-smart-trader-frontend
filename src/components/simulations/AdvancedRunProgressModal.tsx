@@ -1,8 +1,5 @@
 import { ReactElement } from 'react';
-import {
-  AdvancedBacktestingRunProgress,
-  AdvancedBacktestingRunScope,
-} from '../../api';
+import { AdvancedBacktestingRunProgress, AdvancedBacktestingRunScope } from '../../api';
 
 type AdvancedRunProgressModalProps = {
   open: boolean;
@@ -33,17 +30,11 @@ export function AdvancedRunProgressModal({
 
   const progressPct = Math.max(0, Math.min(100, progress?.progressPct ?? 0));
   const tabCount = Math.max(labels.length, 1);
-  const activeIndex = Math.min(
-    tabCount - 1,
-    Math.max(0, (progress?.processedItems ?? 1) - 1),
-  );
+  const activeIndex = Math.min(tabCount - 1, Math.max(0, (progress?.processedItems ?? 1) - 1));
   const completedCount =
-    progress?.status === 'completed'
-      ? tabCount
-      : Math.min(progress?.processedItems ?? 0, tabCount);
+    progress?.status === 'completed' ? tabCount : Math.min(progress?.processedItems ?? 0, tabCount);
   const selectedSafeIndex = Math.min(Math.max(selectedIndex, 0), tabCount - 1);
-  const isRunning =
-    progress?.status === 'pending' || progress?.status === 'running';
+  const isRunning = progress?.status === 'pending' || progress?.status === 'running';
 
   const statusText =
     progress?.status === 'failed'
@@ -65,15 +56,10 @@ export function AdvancedRunProgressModal({
             : 'Multi-period simulation in progress'}
         </h2>
         <p>
-          {scope === 'strategy'
-            ? 'One tab per selected strategy.'
-            : 'One tab per selected period.'}
+          {scope === 'strategy' ? 'One tab per selected strategy.' : 'One tab per selected period.'}
         </p>
         <div className="simulation-progress-track">
-          <div
-            className="simulation-progress-fill"
-            style={{ width: `${progressPct}%` }}
-          />
+          <div className="simulation-progress-fill" style={{ width: `${progressPct}%` }} />
         </div>
         <div className="simulation-progress-meta">
           <span>{progressPct.toFixed(1)}%</span>
@@ -82,20 +68,12 @@ export function AdvancedRunProgressModal({
             {integer.format(tabCount)}
           </span>
         </div>
-        <section
-          className="simulation-progress-tabs"
-          aria-label="Progress tabs"
-        >
+        <section className="simulation-progress-tabs" aria-label="Progress tabs">
           {labels.map((label, index) => {
             const isCompleted = index < completedCount;
-            const isActive =
-              !isCompleted && index === activeIndex && progressPct < 100;
+            const isActive = !isCompleted && index === activeIndex && progressPct < 100;
             const isSelected = index === selectedSafeIndex;
-            const stateClass = isCompleted
-              ? 'is-completed'
-              : isActive
-                ? 'is-active'
-                : 'is-pending';
+            const stateClass = isCompleted ? 'is-completed' : isActive ? 'is-active' : 'is-pending';
             return (
               <button
                 key={`advanced-progress-tab-${index}-${label}`}
@@ -107,9 +85,7 @@ export function AdvancedRunProgressModal({
                 title={label}
               >
                 <span>
-                  {scope === 'strategy'
-                    ? `Strategy ${index + 1}`
-                    : `Period ${index + 1}`}
+                  {scope === 'strategy' ? `Strategy ${index + 1}` : `Period ${index + 1}`}
                 </span>
                 <strong>{label}</strong>
               </button>
@@ -127,11 +103,7 @@ export function AdvancedRunProgressModal({
           {liveAiRequested ? (
             <p>
               Live AI calls:{' '}
-              <strong>
-                {integer.format(
-                  progress?.aiCallsByLabel[selectedSafeIndex] ?? 0,
-                )}
-              </strong>
+              <strong>{integer.format(progress?.aiCallsByLabel[selectedSafeIndex] ?? 0)}</strong>
             </p>
           ) : (
             <p>Live AI was not requested for this run.</p>

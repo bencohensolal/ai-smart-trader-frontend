@@ -16,19 +16,13 @@ type StatusKind = 'success' | 'error';
 
 type UseSimulationSessionTrackingParams = {
   runSession: HistoricalSimulationRunSession | null;
-  setRunSession: Dispatch<
-    SetStateAction<HistoricalSimulationRunSession | null>
-  >;
+  setRunSession: Dispatch<SetStateAction<HistoricalSimulationRunSession | null>>;
   setRuns: Dispatch<SetStateAction<HistoricalSimulationSummary[]>>;
   setRunning: Dispatch<SetStateAction<boolean>>;
   setShowRunProgressModal: Dispatch<SetStateAction<boolean>>;
   advancedRunSession: AdvancedBacktestingRunSession | null;
-  setAdvancedRunSession: Dispatch<
-    SetStateAction<AdvancedBacktestingRunSession | null>
-  >;
-  setAdvancedBacktestResult: Dispatch<
-    SetStateAction<AdvancedBacktestingResult | null>
-  >;
+  setAdvancedRunSession: Dispatch<SetStateAction<AdvancedBacktestingRunSession | null>>;
+  setAdvancedBacktestResult: Dispatch<SetStateAction<AdvancedBacktestingResult | null>>;
   setAdvancedBacktestComparisonResult: Dispatch<
     SetStateAction<AdvancedBacktestingComparisonResult | null>
   >;
@@ -56,11 +50,7 @@ export function useSimulationSessionTracking({
   useEffect(() => {
     const sessionId = advancedRunSession?.progress.sessionId ?? '';
     const sessionStatus = advancedRunSession?.progress.status;
-    if (
-      !sessionId ||
-      sessionStatus === 'completed' ||
-      sessionStatus === 'failed'
-    ) {
+    if (!sessionId || sessionStatus === 'completed' || sessionStatus === 'failed') {
       return;
     }
 
@@ -133,8 +123,7 @@ export function useSimulationSessionTracking({
             progress: {
               ...current.progress,
               status: 'failed',
-              errorMessage:
-                error instanceof Error ? error.message : 'tracking-failed',
+              errorMessage: error instanceof Error ? error.message : 'tracking-failed',
             },
           };
         });
@@ -165,11 +154,7 @@ export function useSimulationSessionTracking({
   useEffect(() => {
     const sessionId = runSession?.progress.sessionId ?? '';
     const sessionStatus = runSession?.progress.status;
-    if (
-      !sessionId ||
-      sessionStatus === 'completed' ||
-      sessionStatus === 'failed'
-    ) {
+    if (!sessionId || sessionStatus === 'completed' || sessionStatus === 'failed') {
       return;
     }
 
@@ -235,8 +220,7 @@ export function useSimulationSessionTracking({
             progress: {
               ...current.progress,
               status: 'failed',
-              errorMessage:
-                error instanceof Error ? error.message : 'tracking-failed',
+              errorMessage: error instanceof Error ? error.message : 'tracking-failed',
             },
           };
         });

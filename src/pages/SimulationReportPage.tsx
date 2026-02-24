@@ -54,11 +54,7 @@ type AiRecommendationEvolutionPoint = {
   fallbackRecommendations: number;
 };
 
-type OperationMarkerKind =
-  | 'BUY_FILLED'
-  | 'SELL_FILLED'
-  | 'BUY_REJECTED'
-  | 'SELL_REJECTED';
+type OperationMarkerKind = 'BUY_FILLED' | 'SELL_FILLED' | 'BUY_REJECTED' | 'SELL_REJECTED';
 
 type AssetPriceCurvePoint = {
   timestamp: string;
@@ -130,21 +126,17 @@ function buildAssetPriceCurve(report: HistoricalSimulationReport | null): {
     ),
   ).sort((left, right) => left.localeCompare(right));
 
-  const lastPriceBySymbol = symbols.reduce<Record<string, number>>(
-    (accumulator, symbol) => {
-      accumulator[symbol] = 0;
-      return accumulator;
-    },
-    {},
-  );
+  const lastPriceBySymbol = symbols.reduce<Record<string, number>>((accumulator, symbol) => {
+    accumulator[symbol] = 0;
+    return accumulator;
+  }, {});
 
   const points: AssetPriceCurvePoint[] = [];
 
   for (const operation of operations) {
     const symbol = operation.symbol;
     const rawPrice = Number(operation.priceEur);
-    const referencePrice =
-      Number.isFinite(rawPrice) && rawPrice > 0 ? rawPrice : 0;
+    const referencePrice = Number.isFinite(rawPrice) && rawPrice > 0 ? rawPrice : 0;
     if (referencePrice > 0) {
       lastPriceBySymbol[symbol] = referencePrice;
     }
@@ -179,14 +171,14 @@ export function SimulationReportPage(): JSX.Element {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const [operationSideFilter, setOperationSideFilter] =
-    useState<OperationSideFilter>(() => {
-      return normalizeOperationSideFilter(searchParams.get('side'));
-    });
-  const [operationOutcomeFilter, setOperationOutcomeFilter] =
-    useState<OperationOutcomeFilter>(() => {
+  const [operationSideFilter, setOperationSideFilter] = useState<OperationSideFilter>(() => {
+    return normalizeOperationSideFilter(searchParams.get('side'));
+  });
+  const [operationOutcomeFilter, setOperationOutcomeFilter] = useState<OperationOutcomeFilter>(
+    () => {
       return normalizeOperationOutcomeFilter(searchParams.get('outcome'));
-    });
+    },
+  );
   const [operationSymbolFilter, setOperationSymbolFilter] = useState('all');
   const [operationsPageSize, setOperationsPageSize] = useState(50);
   const [operationsPage, setOperationsPage] = useState(1);
@@ -243,8 +235,7 @@ export function SimulationReportPage(): JSX.Element {
     return orderedRuns.findIndex((item) => item.id === simulationId);
   }, [orderedRuns, simulationId]);
 
-  const previousRunId =
-    runIndex >= 0 ? (orderedRuns[runIndex + 1]?.id ?? '') : '';
+  const previousRunId = runIndex >= 0 ? (orderedRuns[runIndex + 1]?.id ?? '') : '';
   const nextRunId = runIndex > 0 ? (orderedRuns[runIndex - 1]?.id ?? '') : '';
 
   const equityChartData = useMemo(() => {
@@ -252,9 +243,7 @@ export function SimulationReportPage(): JSX.Element {
       date: point.date,
       investedEur: point.investedEur,
       portfolioValueEur: point.portfolioValueEur,
-      gainLossEur: Number(
-        (point.portfolioValueEur - point.investedEur).toFixed(2),
-      ),
+      gainLossEur: Number((point.portfolioValueEur - point.investedEur).toFixed(2)),
     }));
   }, [report]);
 
@@ -358,15 +347,10 @@ export function SimulationReportPage(): JSX.Element {
   }, [report]);
 
   const assetLineColorBySymbol = useMemo(() => {
-    return assetPriceCurve.symbols.reduce<Record<string, string>>(
-      (accumulator, symbol, index) => {
-        accumulator[symbol] =
-          ASSET_LINE_COLORS[index % ASSET_LINE_COLORS.length] ??
-          'var(--accent)';
-        return accumulator;
-      },
-      {},
-    );
+    return assetPriceCurve.symbols.reduce<Record<string, string>>((accumulator, symbol, index) => {
+      accumulator[symbol] = ASSET_LINE_COLORS[index % ASSET_LINE_COLORS.length] ?? 'var(--accent)';
+      return accumulator;
+    }, {});
   }, [assetPriceCurve.symbols]);
 
   const symbolOptions = useMemo(() => {
@@ -379,10 +363,7 @@ export function SimulationReportPage(): JSX.Element {
 
   const filteredOperations = useMemo(() => {
     return (report?.operations ?? []).filter((operation) => {
-      if (
-        operationSymbolFilter !== 'all' &&
-        operation.symbol !== operationSymbolFilter
-      ) {
+      if (operationSymbolFilter !== 'all' && operation.symbol !== operationSymbolFilter) {
         return false;
       }
       return matchesOperationFilters(operation, {
@@ -390,21 +371,11 @@ export function SimulationReportPage(): JSX.Element {
         outcome: operationOutcomeFilter,
       });
     });
-  }, [
-    operationOutcomeFilter,
-    operationSideFilter,
-    operationSymbolFilter,
-    report,
-  ]);
+  }, [operationOutcomeFilter, operationSideFilter, operationSymbolFilter, report]);
 
   useEffect(() => {
     setOperationsPage(1);
-  }, [
-    operationOutcomeFilter,
-    operationSideFilter,
-    operationSymbolFilter,
-    operationsPageSize,
-  ]);
+  }, [operationOutcomeFilter, operationSideFilter, operationSymbolFilter, operationsPageSize]);
 
   const operationsPageCount = Math.max(
     1,
@@ -434,11 +405,7 @@ export function SimulationReportPage(): JSX.Element {
   return (
     <Layout
       title="Simulation report"
-      subtitle={
-        run
-          ? `${run.strategyName} · ${run.periodStart} → ${run.periodEnd}`
-          : 'Loading...'
-      }
+      subtitle={run ? `${run.strategyName} · ${run.periodStart} → ${run.periodEnd}` : 'Loading...'}
     >
       <section className="panel">
         <div className="form-actions">
@@ -475,24 +442,18 @@ export function SimulationReportPage(): JSX.Element {
       </section>
 
       {loading ? <section className="panel">Loading...</section> : null}
-      {!loading && error ? (
-        <section className="panel status status-error">{error}</section>
-      ) : null}
+      {!loading && error ? <section className="panel status status-error">{error}</section> : null}
 
       {!loading && !error && run && report ? (
         <>
           <section className="kpis">
             <article className="kpi">
               <span>Total invested</span>
-              <strong>
-                {formatAmountFromEur(report.totals.totalInvestedEur)}
-              </strong>
+              <strong>{formatAmountFromEur(report.totals.totalInvestedEur)}</strong>
             </article>
             <article className="kpi">
               <span>Final value</span>
-              <strong>
-                {formatAmountFromEur(report.totals.finalValueEur)}
-              </strong>
+              <strong>{formatAmountFromEur(report.totals.finalValueEur)}</strong>
             </article>
             <article className="kpi">
               <span>Net gain/loss</span>
@@ -528,9 +489,7 @@ export function SimulationReportPage(): JSX.Element {
             </article>
             <article className="kpi">
               <span>AI cost</span>
-              <strong>
-                {formatAmountFromEur(aiUsageTotals.estimatedCostEur)}
-              </strong>
+              <strong>{formatAmountFromEur(aiUsageTotals.estimatedCostEur)}</strong>
             </article>
           </section>
 
@@ -538,35 +497,27 @@ export function SimulationReportPage(): JSX.Element {
             <article className="panel chart-panel chart-panel-wide">
               <h2>Asset price curves by crypto</h2>
               <p className="chart-help">
-                Real crypto price evolution over time (not holdings quantity or
-                owned amount). One chart per crypto.
+                Real crypto price evolution over time (not holdings quantity or owned amount). One
+                chart per crypto.
               </p>
               {assetPriceCurve.points.length > 0 ? (
                 assetPriceCurve.symbols.map((symbol) => {
                   const priceKey = assetPriceKey(symbol);
                   const eventKey = assetEventKey(symbol);
-                  const lineColor =
-                    assetLineColorBySymbol[symbol] ?? 'var(--accent)';
+                  const lineColor = assetLineColorBySymbol[symbol] ?? 'var(--accent)';
                   return (
                     <div className="chart-wrap" key={`asset-price-${symbol}`}>
                       <h3>{symbol}</h3>
                       <ResponsiveContainer width="100%" height={260}>
                         <LineChart data={assetPriceCurve.points}>
-                          <CartesianGrid
-                            stroke="var(--line)"
-                            strokeDasharray="3 3"
-                          />
+                          <CartesianGrid stroke="var(--line)" strokeDasharray="3 3" />
                           <XAxis dataKey="label" stroke="var(--muted)" />
                           <YAxis
                             stroke="var(--muted)"
-                            tickFormatter={(value: number) =>
-                              `${Math.round(value)} €`
-                            }
+                            tickFormatter={(value: number) => `${Math.round(value)} €`}
                           />
                           <Tooltip
-                            formatter={(value: number) =>
-                              formatAmountFromEur(value)
-                            }
+                            formatter={(value: number) => formatAmountFromEur(value)}
                             contentStyle={{
                               background: 'var(--panel)',
                               border: '1px solid var(--line)',
@@ -596,13 +547,7 @@ export function SimulationReportPage(): JSX.Element {
                                 return <circle cx={0} cy={0} r={0} />;
                               }
                               if (!marker) {
-                                return (
-                                  <circle
-                                    cx={dotProps.cx}
-                                    cy={dotProps.cy}
-                                    r={0}
-                                  />
-                                );
+                                return <circle cx={dotProps.cx} cy={dotProps.cy} r={0} />;
                               }
                               return (
                                 <circle
@@ -638,9 +583,7 @@ export function SimulationReportPage(): JSX.Element {
                   Buy rejected
                 </span>
                 <span>
-                  <i
-                    style={{ background: EVENT_MARKER_COLORS.SELL_REJECTED }}
-                  />
+                  <i style={{ background: EVENT_MARKER_COLORS.SELL_REJECTED }} />
                   Sell rejected
                 </span>
               </div>
@@ -649,8 +592,8 @@ export function SimulationReportPage(): JSX.Element {
             <article className="panel chart-panel chart-panel-wide">
               <h2>Portfolio vs invested evolution</h2>
               <p className="chart-help">
-                Compare portfolio value to invested capital: above means overall
-                gain, below means overall loss.
+                Compare portfolio value to invested capital: above means overall gain, below means
+                overall loss.
               </p>
               <div className="chart-wrap">
                 <ResponsiveContainer width="100%" height={280}>
@@ -659,9 +602,7 @@ export function SimulationReportPage(): JSX.Element {
                     <XAxis dataKey="date" stroke="var(--muted)" />
                     <YAxis
                       stroke="var(--muted)"
-                      tickFormatter={(value: number) =>
-                        `${Math.round(value)} €`
-                      }
+                      tickFormatter={(value: number) => `${Math.round(value)} €`}
                     />
                     <Tooltip
                       formatter={(value: number) => formatAmountFromEur(value)}
@@ -694,8 +635,8 @@ export function SimulationReportPage(): JSX.Element {
             <article className="panel chart-panel chart-panel-wide">
               <h2>Gain/loss evolution</h2>
               <p className="chart-help">
-                This chart shows net gain/loss over time: positive means profit,
-                negative means loss.
+                This chart shows net gain/loss over time: positive means profit, negative means
+                loss.
               </p>
               <div className="chart-wrap">
                 <ResponsiveContainer width="100%" height={280}>
@@ -704,9 +645,7 @@ export function SimulationReportPage(): JSX.Element {
                     <XAxis dataKey="date" stroke="var(--muted)" />
                     <YAxis
                       stroke="var(--muted)"
-                      tickFormatter={(value: number) =>
-                        `${Math.round(value)} €`
-                      }
+                      tickFormatter={(value: number) => `${Math.round(value)} €`}
                     />
                     <Tooltip
                       formatter={(value: number) => formatAmountFromEur(value)}
@@ -731,8 +670,8 @@ export function SimulationReportPage(): JSX.Element {
             <article className="panel chart-panel chart-panel-wide">
               <h2>AI usage evolution</h2>
               <p className="chart-help">
-                Cumulative AI remote calls during the simulation, with
-                successful and failed calls over time.
+                Cumulative AI remote calls during the simulation, with successful and failed calls
+                over time.
               </p>
               <div className="chart-wrap">
                 <ResponsiveContainer width="100%" height={280}>
@@ -841,9 +780,7 @@ export function SimulationReportPage(): JSX.Element {
                 <select
                   value={operationSideFilter}
                   onChange={(event) => {
-                    const next = normalizeOperationSideFilter(
-                      event.target.value,
-                    );
+                    const next = normalizeOperationSideFilter(event.target.value);
                     setOperationSideFilter(next);
                     setSearchParams((current) => {
                       const params = new URLSearchParams(current);
@@ -864,9 +801,7 @@ export function SimulationReportPage(): JSX.Element {
                 <select
                   value={operationOutcomeFilter}
                   onChange={(event) => {
-                    const next = normalizeOperationOutcomeFilter(
-                      event.target.value,
-                    );
+                    const next = normalizeOperationOutcomeFilter(event.target.value);
                     setOperationOutcomeFilter(next);
                     setSearchParams((current) => {
                       const params = new URLSearchParams(current);
@@ -920,8 +855,8 @@ export function SimulationReportPage(): JSX.Element {
             </section>
 
             <p>
-              {filteredOperations.length} filtered operation(s) · page{' '}
-              {safeOperationsPage}/{operationsPageCount}
+              {filteredOperations.length} filtered operation(s) · page {safeOperationsPage}/
+              {operationsPageCount}
             </p>
 
             <div className="table-scroll table-scroll-wide">
@@ -994,9 +929,7 @@ export function SimulationReportPage(): JSX.Element {
                 className="button button-secondary button-small"
                 type="button"
                 onClick={() => {
-                  setOperationsPage((current) =>
-                    Math.min(operationsPageCount, current + 1),
-                  );
+                  setOperationsPage((current) => Math.min(operationsPageCount, current + 1));
                 }}
                 disabled={safeOperationsPage >= operationsPageCount}
               >

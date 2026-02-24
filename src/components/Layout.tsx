@@ -32,16 +32,10 @@ type RealtimeNotification = {
   createdAt: string;
 };
 
-export function Layout({
-  title,
-  subtitle,
-  children,
-}: LayoutProps): JSX.Element {
+export function Layout({ title, subtitle, children }: LayoutProps): JSX.Element {
   const { t, setLocale } = useI18n();
   const location = useLocation();
-  const [realtimeNotifications, setRealtimeNotifications] = useState<
-    RealtimeNotification[]
-  >([]);
+  const [realtimeNotifications, setRealtimeNotifications] = useState<RealtimeNotification[]>([]);
 
   const realtimeServerUrl = useMemo(() => {
     if (typeof window === 'undefined') {
@@ -127,9 +121,7 @@ export function Layout({
           return;
         }
 
-        setRealtimeNotifications((current) =>
-          [notification, ...current].slice(0, 4),
-        );
+        setRealtimeNotifications((current) => [notification, ...current].slice(0, 4));
         const timer = window.setTimeout(() => {
           setRealtimeNotifications((current) =>
             current.filter((item) => item.id !== notification.id),

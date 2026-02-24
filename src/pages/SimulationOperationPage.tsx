@@ -20,28 +20,19 @@ export function SimulationOperationPage(): JSX.Element {
   const navigate = useNavigate();
   const { simulationId = '', operationId = '' } = useParams();
   const [searchParams] = useSearchParams();
-  const operationSideFilter = normalizeOperationSideFilter(
-    searchParams.get('side'),
-  );
-  const operationOutcomeFilter = normalizeOperationOutcomeFilter(
-    searchParams.get('outcome'),
-  );
-  const [details, setDetails] =
-    useState<HistoricalSimulationOperationDetails | null>(null);
+  const operationSideFilter = normalizeOperationSideFilter(searchParams.get('side'));
+  const operationOutcomeFilter = normalizeOperationOutcomeFilter(searchParams.get('outcome'));
+  const [details, setDetails] = useState<HistoricalSimulationOperationDetails | null>(null);
   const [error, setError] = useState('');
 
   useEffect(() => {
     let active = true;
     async function loadDetails(): Promise<void> {
       try {
-        const payload = await getHistoricalSimulationOperation(
-          simulationId,
-          operationId,
-          {
-            side: operationSideFilter,
-            outcome: operationOutcomeFilter,
-          },
-        );
+        const payload = await getHistoricalSimulationOperation(simulationId, operationId, {
+          side: operationSideFilter,
+          outcome: operationOutcomeFilter,
+        });
         if (!active) {
           return;
         }
@@ -62,13 +53,7 @@ export function SimulationOperationPage(): JSX.Element {
     return () => {
       active = false;
     };
-  }, [
-    navigate,
-    operationId,
-    operationOutcomeFilter,
-    operationSideFilter,
-    simulationId,
-  ]);
+  }, [navigate, operationId, operationOutcomeFilter, operationSideFilter, simulationId]);
 
   const summaryLabel = useMemo(() => {
     if (!details) {
@@ -91,12 +76,7 @@ export function SimulationOperationPage(): JSX.Element {
     outcome: operationOutcomeFilter,
   });
   const parentSimulationUrl = useMemo(() => {
-    return (
-      '/simulations/' +
-      encodeURIComponent(simulationId) +
-      '?' +
-      operationFiltersQuery
-    );
+    return '/simulations/' + encodeURIComponent(simulationId) + '?' + operationFiltersQuery;
   }, [operationFiltersQuery, simulationId]);
 
   const previousOperationId = details?.navigation.previousOperationId ?? null;
@@ -156,9 +136,7 @@ export function SimulationOperationPage(): JSX.Element {
         </button>
       </section>
 
-      {error ? (
-        <section className="panel status status-error">{error}</section>
-      ) : null}
+      {error ? <section className="panel status status-error">{error}</section> : null}
 
       {!details ? (
         <section className="panel">Loading...</section>
@@ -167,29 +145,19 @@ export function SimulationOperationPage(): JSX.Element {
           <section className="kpis">
             <article className="kpi">
               <span>Spot price at time T</span>
-              <strong>
-                {formatAmountFromEur(details.valuationAtOperation.spotPriceEur)}
-              </strong>
+              <strong>{formatAmountFromEur(details.valuationAtOperation.spotPriceEur)}</strong>
             </article>
             <article className="kpi">
               <span>Portfolio value</span>
-              <strong>
-                {formatAmountFromEur(
-                  details.valuationAtOperation.portfolioValueEur,
-                )}
-              </strong>
+              <strong>{formatAmountFromEur(details.valuationAtOperation.portfolioValueEur)}</strong>
             </article>
             <article className="kpi">
               <span>Available cash</span>
-              <strong>
-                {formatAmountFromEur(details.valuationAtOperation.cashEur)}
-              </strong>
+              <strong>{formatAmountFromEur(details.valuationAtOperation.cashEur)}</strong>
             </article>
             <article className="kpi">
               <span>Cumulative invested</span>
-              <strong>
-                {formatAmountFromEur(details.valuationAtOperation.investedEur)}
-              </strong>
+              <strong>{formatAmountFromEur(details.valuationAtOperation.investedEur)}</strong>
             </article>
             <article className="kpi">
               <span>Position before order</span>
@@ -200,9 +168,7 @@ export function SimulationOperationPage(): JSX.Element {
             </article>
             <article className="kpi">
               <span>Asset weight before order</span>
-              <strong>
-                {details.valuationAtOperation.symbolWeightBeforePct.toFixed(2)}%
-              </strong>
+              <strong>{details.valuationAtOperation.symbolWeightBeforePct.toFixed(2)}%</strong>
             </article>
           </section>
 
@@ -210,8 +176,8 @@ export function SimulationOperationPage(): JSX.Element {
             <article className="panel">
               <h2>Execution</h2>
               <p>
-                Amount: {formatAmountFromEur(details.operation.amountEur)} |
-                Price: {formatAmountFromEur(details.operation.priceEur)}
+                Amount: {formatAmountFromEur(details.operation.amountEur)} | Price:{' '}
+                {formatAmountFromEur(details.operation.priceEur)}
               </p>
               <p>
                 Fees: {formatAmountFromEur(details.operation.feeEur)} (
@@ -219,8 +185,7 @@ export function SimulationOperationPage(): JSX.Element {
                 {formatAmountFromEur(details.operation.netAmountEur)}
               </p>
               <p>
-                ID: {details.operation.id} | Index: #
-                {details.operationIndex + 1} /{' '}
+                ID: {details.operation.id} | Index: #{details.operationIndex + 1} /{' '}
                 {details.navigation.totalOperations}
               </p>
             </article>
@@ -237,29 +202,14 @@ export function SimulationOperationPage(): JSX.Element {
               <h2>Financial impact</h2>
               {details.operation.side === 'SELL' ? (
                 <>
-                  <p>
-                    Realized gain:{' '}
-                    {formatNullableCurrency(details.pnl.realizedGainEur)}
-                  </p>
-                  <p>
-                    Realized return:{' '}
-                    {formatNullablePercent(details.pnl.realizedGainPct)}
-                  </p>
-                  <p>
-                    Average cost basis:{' '}
-                    {formatNullableCurrency(details.pnl.breakEvenPriceEur)}
-                  </p>
+                  <p>Realized gain: {formatNullableCurrency(details.pnl.realizedGainEur)}</p>
+                  <p>Realized return: {formatNullablePercent(details.pnl.realizedGainPct)}</p>
+                  <p>Average cost basis: {formatNullableCurrency(details.pnl.breakEvenPriceEur)}</p>
                 </>
               ) : (
                 <>
-                  <p>
-                    Expected gain:{' '}
-                    {formatNullableCurrency(details.pnl.expectedGainEur)}
-                  </p>
-                  <p>
-                    Expected gain (%):{' '}
-                    {formatNullablePercent(details.pnl.expectedGainPct)}
-                  </p>
+                  <p>Expected gain: {formatNullableCurrency(details.pnl.expectedGainEur)}</p>
+                  <p>Expected gain (%): {formatNullablePercent(details.pnl.expectedGainPct)}</p>
                   <p>
                     Break-even price (including fees):{' '}
                     {formatNullableCurrency(details.pnl.breakEvenPriceEur)}
@@ -285,14 +235,12 @@ export function SimulationOperationPage(): JSX.Element {
               title={`${details.operation.symbol} curve up to this operation`}
               subtitle="Historical spot price known at that time"
               stroke="#54a6ff"
-              points={details.charts.symbolPriceCurveToOperation.map(
-                (point) => {
-                  return {
-                    label: point.date,
-                    value: point.priceEur,
-                  };
-                },
-              )}
+              points={details.charts.symbolPriceCurveToOperation.map((point) => {
+                return {
+                  label: point.date,
+                  value: point.priceEur,
+                };
+              })}
               valueFormatter={(value) => formatAmountFromEur(value)}
             />
           </section>

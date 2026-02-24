@@ -1,12 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import {
-  InsightsData,
-  Strategy,
-  getInsights,
-  getStrategies,
-  isUnauthorizedError,
-} from '../api';
+import { InsightsData, Strategy, getInsights, getStrategies, isUnauthorizedError } from '../api';
 import { useI18n } from '../i18n/i18n';
 import { Layout } from '../components/Layout';
 
@@ -29,9 +23,7 @@ export function InsightsPage(): JSX.Element {
         }
         setStrategies(list);
         const fromUrl = searchParams.get('strategyId') ?? '';
-        setSelectedStrategyId(
-          list.find((item) => item.id === fromUrl)?.id ?? list[0]?.id ?? '',
-        );
+        setSelectedStrategyId(list.find((item) => item.id === fromUrl)?.id ?? list[0]?.id ?? '');
         setError('');
       } catch (currentError) {
         if (!active) {

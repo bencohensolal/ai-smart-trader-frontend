@@ -25,9 +25,7 @@ export interface StrategyWizardState {
   promptTemplates: any[];
   setPromptTemplates: (templates: any[]) => void;
   selectedTemplate: 'defensive' | 'balanced' | 'aggressive';
-  setSelectedTemplate: (
-    template: 'defensive' | 'balanced' | 'aggressive',
-  ) => void;
+  setSelectedTemplate: (template: 'defensive' | 'balanced' | 'aggressive') => void;
   selectedPromptContent: string;
   setSelectedPromptContent: (content: string) => void;
   customPrompt: string;
@@ -35,10 +33,7 @@ export interface StrategyWizardState {
   showPromptPreview: boolean;
   setShowPromptPreview: (show: boolean) => void;
   promptValidation: { isValid: boolean; warnings: string[] };
-  setPromptValidation: (validation: {
-    isValid: boolean;
-    warnings: string[];
-  }) => void;
+  setPromptValidation: (validation: { isValid: boolean; warnings: string[] }) => void;
   safeguards: SafeguardsDefaults;
   setSafeguards: (safeguards: SafeguardsDefaults) => void;
   allocationRebalancingFrequencyDays: number;

@@ -59,10 +59,7 @@ export function App(): JSX.Element {
         <Route path="/strategies" element={<StrategyWizardPage />} />
         <Route path="/insights" element={<InsightsPage />} />
         <Route path="/simulations" element={<SimulationsPage />} />
-        <Route
-          path="/simulations/:simulationId"
-          element={<SimulationReportPage />}
-        />
+        <Route path="/simulations/:simulationId" element={<SimulationReportPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="/help" element={<HelpPage />} />

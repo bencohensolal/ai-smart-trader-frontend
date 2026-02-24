@@ -51,20 +51,12 @@ export function applyVisualPreferences(input: {
   applyTheme(input.theme);
   applyColorMode(input.colorMode ?? getStoredColorMode() ?? 'dark');
   document.body.classList.toggle('dense-tables', input.denseTables);
-  document.body.setAttribute(
-    'data-tooltips',
-    input.showTooltips ? 'enabled' : 'disabled',
-  );
+  document.body.setAttribute('data-tooltips', input.showTooltips ? 'enabled' : 'disabled');
 }
 
 export function getStoredTheme(): UserTheme | null {
   const raw = localStorage.getItem(THEME_STORAGE_KEY);
-  if (
-    raw === 'ocean' ||
-    raw === 'sunset' ||
-    raw === 'forest' ||
-    raw === 'slate'
-  ) {
+  if (raw === 'ocean' || raw === 'sunset' || raw === 'forest' || raw === 'slate') {
     return raw;
   }
   return null;

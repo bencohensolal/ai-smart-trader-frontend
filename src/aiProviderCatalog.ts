@@ -173,16 +173,11 @@ export function getProviderModels(provider: AiProvider): string[] {
   return PRESETS[provider].models.slice();
 }
 
-export function getProviderDefaults(
-  provider: AiProvider,
-): ProviderPreset['defaults'] {
+export function getProviderDefaults(provider: AiProvider): ProviderPreset['defaults'] {
   return { ...PRESETS[provider].defaults };
 }
 
-export function getProviderModelRates(
-  provider: AiProvider,
-  model: string,
-): ModelRate {
+export function getProviderModelRates(provider: AiProvider, model: string): ModelRate {
   const preset = PRESETS[provider];
   return (
     preset.modelRates[model] ??

@@ -82,8 +82,7 @@ export function ExecutionConfigurationSection({
         ) : null}
       </div>
       <small className={styles.configSubsectionHint}>
-        Tip: keep checks low for stability, and increase only if you want more
-        reactive execution.
+        Tip: keep checks low for stability, and increase only if you want more reactive execution.
       </small>
     </div>
   );
