@@ -16,7 +16,7 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: resolve(process.cwd(), '../dist/public'),
-    emptyOutDir: false,
+    outDir: 'dist',
+    emptyOutDir: true,
   },
 });
