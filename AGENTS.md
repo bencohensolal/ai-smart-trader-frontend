@@ -4,6 +4,10 @@
 
 Build a React TypeScript SPA to help invest intelligently in cryptocurrencies with a progressive, testable and secure approach.
 
+## Language Policy
+
+- All code (source, comments, variable names, etc.), documentation, commit messages, and any project communication MUST be written in English only. No French or other languages are allowed in any part of the repository.
+
 ## General Guidelines
 
 - Maintain modular React architecture (`src/components`, `src/pages`, `src/i18n`, etc.)
