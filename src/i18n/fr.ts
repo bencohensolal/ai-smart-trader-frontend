@@ -334,4 +334,8 @@ export const frMessages: TranslationDictionary = {
   'cryptoPriceTicker.error': 'Échec du chargement du prix',
   'cryptoPriceTicker.price': 'Prix {{symbol}} : {{price}}',
   'cryptoPriceTicker.switch': 'Basculer vers {{symbol}}',
+
+  // MarketSourceBadge
+  'marketSource.label': '📡 {{source}}',
+  'marketSource.tooltip': 'Données de marché fournies par {{source}}',
 };

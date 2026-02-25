@@ -620,6 +620,10 @@ export const enMessages = {
   'cryptoPriceTicker.error': 'Failed to load price',
   'cryptoPriceTicker.price': '{{symbol}} price: {{price}}',
   'cryptoPriceTicker.switch': 'Switch to {{symbol}}',
+
+  // MarketSourceBadge
+  'marketSource.label': '📡 {{source}}',
+  'marketSource.tooltip': 'Market data powered by {{source}}',
 } as const;
 
 export type TranslationKey = keyof typeof enMessages;
