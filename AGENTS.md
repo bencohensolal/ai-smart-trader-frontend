@@ -61,6 +61,7 @@ Build a React TypeScript SPA to help invest intelligently in cryptocurrencies wi
   - Run `npm run agents:ack` to generate a local acknowledgement token bound to the current `AGENTS.md` hash and timestamp
   - The `pre-commit` hook validates this acknowledgement and blocks the commit if missing, stale, or inconsistent with current `AGENTS.md` content
   - If blocked, re-read `AGENTS.md`, run `npm run agents:ack`, then retry commit
+- **Never skip pre-commit hooks**: Using `git commit --no-verify` is strictly forbidden. All commits must pass the full pre-commit validation (quality checks + AGENTS acknowledgement). If the hook fails, fix the underlying issue before committing.
 - **Commit corrections (fixes to immediately-prior commit)**: If changes are purely corrections of errors in the previous commit (e.g., build errors, missing imports, typos introduced just before), use `git commit --amend --no-edit` to squash into the previous commit rather than creating a separate commit. This prevents "fix" commits and keeps history clean.
 - When changing public API, update associated documentation.
 
