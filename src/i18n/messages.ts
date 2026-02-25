@@ -8,4 +8,4 @@ export const messages = {
   en: enMessages,
 } as const;
 
-export type { TranslationKey } from './fr';
+export type { TranslationKey } from './en';

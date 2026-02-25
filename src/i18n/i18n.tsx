@@ -26,7 +26,9 @@ export function I18nProvider({ children }: { children: ReactNode }): JSX.Element
 
   const t = useCallback(
     (key: TranslationKey, params?: TranslationParams): string => {
-      const template = messages[locale][key] ?? messages.fr[key];
+      const dict = messages[locale] as Record<TranslationKey, string>;
+      const fallback = messages.fr as Record<TranslationKey, string>;
+      const template = dict[key] ?? fallback[key];
       if (!params) {
         return template;
       }
