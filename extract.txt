@@ -1,0 +1,912 @@
+
+--- /home/ben/workspace/ai-smart-trader/frontend/src/components/BrandLogo.tsx ---
+  AI Smart Trader
+  : null}
+
+--- /home/ben/workspace/ai-smart-trader/frontend/src/components/CryptoPriceTicker.tsx ---
+  (
+    (initialSymbol as StrategySymbol) || STRATEGY_SYMBOLS[0],
+  );
+  const [price, setPrice] = useState
+  Loading price…
+  ) : error ? (
+  Error loading price for
+  ) : price !== null ? (
+  No price data available.
+
+--- /home/ben/workspace/ai-smart-trader/frontend/src/components/Layout.tsx ---
+  ) : null}
+  : null}
+
+--- /home/ben/workspace/ai-smart-trader/frontend/src/components/LineChart.tsx ---
+  : null}
+  No data available.
+  0 ? '+' : '';
+
+  return (
+  : null}
+
+--- /home/ben/workspace/ai-smart-trader/frontend/src/components/UserMenu.tsx ---
+  (null);
+  const [dailyCostBudgetEur, setDailyCostBudgetEur] = useState
+  (null);
+  const rootRef = useRef
+  (null);
+  const location = useLocation();
+  const loadStatus = useCallback(async (): Promise
+  : null}
+  ) : null}
+  ) : null}
+
+--- /home/ben/workspace/ai-smart-trader/frontend/src/components/simulations/AdvancedComparisonSection.tsx ---
+  void;
+  onSubmit: (event: FormEvent
+  Multi-strategy comparison (same period)
+  Select 2 to 3 strategies, define one shared period, then run 2-3 simulations in parallel.
+  Period start
+  Period end
+  Use live AI for these parallel simulations
+  = 3;
+            return (
+  Best strategy
+  Comparison period
+  Rank
+  Strategy
+  Return
+  Net profit
+  Final value
+  Win rate
+  Operations
+  Δ vs best return
+  ) : null}
+
+--- /home/ben/workspace/ai-smart-trader/frontend/src/components/simulations/AdvancedRunProgressModal.tsx ---
+  = 100
+            ? 'Completed'
+            : 'Pending';
+
+  return (
+  AI req. total:
+  Live AI was not requested for this run.
+
+--- /home/ben/workspace/ai-smart-trader/frontend/src/components/simulations/ContinuousSimulationSection.tsx ---
+  10s
+  15s
+  30s
+  60s
+  ) : null}
+  ) : null}
+
+--- /home/ben/workspace/ai-smart-trader/frontend/src/components/simulations/RunProgressModal.tsx ---
+  Executed operations
+  Total AI calls
+  Successful calls
+  Failed calls
+  Tokens consumed
+  Prompt tokens
+  Completion tokens
+  Current cost
+  Last 5 operations
+  No operations executed yet.
+  Close
+  ) : null}
+
+--- /home/ben/workspace/ai-smart-trader/frontend/src/components/simulations/SimulationArchiveSection.tsx ---
+  Simulation archives
+  Loading...
+  ) : runs.length === 0 ? (
+  No archived simulation yet.
+  Status
+  All
+  Completed
+  Failed
+  Strategy
+  All
+  Rows/page
+  Execution date
+  Strategy
+  Period
+  Status
+  Invested
+  Final value
+  PnL
+  Batch
+  Operations
+  Action
+  View details
+  Delete
+  No simulations for these filters.
+  ) : null}
+  Previous
+  Next
+
+--- /home/ben/workspace/ai-smart-trader/frontend/src/pages/AiUsagePage.tsx ---
+  (null);
+  const [calls, setCalls] = useState
+  ([]);
+  const [callsStatusFilter, setCallsStatusFilter] = useState
+  ('all');
+  const [callsModelFilter, setCallsModelFilter] = useState('all');
+  const [callsPageSize, setCallsPageSize] = useState(50);
+  const [callsPage, setCallsPage] = useState(1);
+  const [settings, setSettings] = useState
+  (null);
+  const [prompts, setPrompts] = useState
+  ([]);
+  const [selectedCallId, setSelectedCallId] = useState
+  ('');
+  const [selectedCall, setSelectedCall] = useState
+  (null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingDetail, setIsLoadingDetail] = useState(false);
+  const [error, setError] = useState('');
+  const [settingsSaving, setSettingsSaving] = useState(false);
+  const [settingsStatus, setSettingsStatus] = useState('');
+  const [settingsStatusKind, setSettingsStatusKind] = useState
+  ('success');
+  const [isTestingAiConfig, setIsTestingAiConfig] = useState(false);
+  const [lastAiConfigTest, setLastAiConfigTest] = useState
+  (
+    null,
+  );
+  const [aiApiKeyDraft, setAiApiKeyDraft] = useState('');
+  const [clearAiApiKey, setClearAiApiKey] = useState(false);
+  const [promptsSaving, setPromptsSaving] = useState(false);
+  const [promptsStatus, setPromptsStatus] = useState('');
+  const [promptsStatusKind, setPromptsStatusKind] = useState
+  ('success');
+  const [editingPromptId, setEditingPromptId] = useState
+  (null);
+  const [type, setType] = useState
+  ): Promise
+  OpenAI
+  Anthropic
+  Google Gemini
+  ) : null}
+  ) : null}
+  ) : null}
+  You can create multiple prompts per type to compare algorithm behaviors.
+  Prompt type
+  AI Advisor - System
+  AI Advisor - Context
+  Simulation - Explanation
+  Name
+  Description
+  Prompt content
+  Reset form
+  Restore all defaults
+  Quick help
+  Multiple variants
+  Create multiple prompts of the same type for A/B testing.
+  Default version
+  Prompts shipped with the project remain available and can be restored.
+  Strategy setup
+  Each strategy can choose its AI prompts in the Strategies page.
+  ID
+  Name
+  Description
+  Default
+  Actions
+  Edit
+  Reset to default
+  Delete
+  ) : null}
+  Tokens used
+  Estimated cost
+  Status
+  All
+  Success
+  Error
+  Model
+  All
+  Rows/page
+  No calls for these filters.
+  ) : null}
+  Previous
+  Next
+  ) : null}
+  ) : null}
+  ) : null}
+
+--- /home/ben/workspace/ai-smart-trader/frontend/src/pages/DashboardPage.tsx ---
+  sum + value, 0) / points;
+
+  let covariance = 0;
+  let varianceA = 0;
+  let varianceB = 0;
+
+  for (let index = 0; index
+  ([]);
+  const [selectedStrategyId, setSelectedStrategyId] = useState('');
+  const [dashboard, setDashboard] = useState
+  (null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [operationSideFilter, setOperationSideFilter] = useState
+  ('all');
+  const [operationOutcomeFilter, setOperationOutcomeFilter] =
+    useState
+  left.localeCompare(right));
+
+    const returnsBySymbol = new Map
+  point.value);
+    const returns = computeReturns(equityValues);
+    if (returns.length
+  previous ? step.targetValue - previous : 0;
+      const fall = step.targetValue
+  = 0 ? 'var(--accent)' : 'var(--muted)';
+                        return (
+  Rows/page
+  ) : null}
+  Previous
+  Next
+
+--- /home/ben/workspace/ai-smart-trader/frontend/src/pages/InsightsPage.tsx ---
+  ([]);
+  const [selectedStrategyId, setSelectedStrategyId] = useState('');
+  const [insights, setInsights] = useState
+  Analyzed strategy
+  Market regime
+  Risk
+  Confidence
+  30d volatility
+  Recommendations
+  Alerts
+  Loading...
+
+--- /home/ben/workspace/ai-smart-trader/frontend/src/pages/LoginPage.tsx ---
+  Loading...
+  Session active
+  Open dashboard
+  );
+  }
+
+  return (
+  Sign-in required
+  Access dashboard
+  ) : status.googleSsoConfigured ? (
+  Sign in with Google
+  ) : null}
+
+--- /home/ben/workspace/ai-smart-trader/frontend/src/pages/MarketOverviewPage.tsx ---
+  Market Overview
+
+--- /home/ben/workspace/ai-smart-trader/frontend/src/pages/MovementPage.tsx ---
+  Execution
+  Decision
+  Expected gain
+  AI recommendation
+  Risk
+  Goal contribution
+
+--- /home/ben/workspace/ai-smart-trader/frontend/src/pages/ProfilePage.tsx ---
+  (null);
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState('');
+  const [statusKind, setStatusKind] = useState
+  ): Promise
+  First name
+  Last name
+  Date of birth
+  Email (Google)
+  Country
+  City
+  Time zone
+  Occupation
+  Investment experience level
+  Beginner
+  Intermediate
+  Advanced
+  Bio / goals
+  ) : null}
+
+--- /home/ben/workspace/ai-smart-trader/frontend/src/pages/PromptsPage.tsx ---
+  ([]);
+  const [loading, setLoading] = useState(true);
+  const [status, setStatus] = useState('');
+  const [statusKind, setStatusKind] = useState
+  ('success');
+  const [editingPromptId, setEditingPromptId] = useState
+  (null);
+
+  const [type, setType] = useState
+  ): Promise
+  You can create multiple prompts per type to compare algorithm behaviors.
+  Prompt type
+  AI Advisor - System
+  AI Advisor - Context
+  Simulation - Explanation
+  Name
+  Description
+  Prompt content
+  Reset form
+  Restore all defaults
+  Quick help
+  Multiple variants
+  Create multiple prompts of the same type for A/B testing.
+  Default version
+  Prompts shipped with the project remain available and can be restored.
+  Strategy setup
+  Each strategy can choose its AI prompts in the Strategies page.
+  Prompt library
+  Loading...
+  ID
+  Name
+  Description
+  Default
+  Actions
+  Edit
+  Reset to default
+  Delete
+  ) : null}
+
+--- /home/ben/workspace/ai-smart-trader/frontend/src/pages/SettingsPage.tsx ---
+  (null);
+  const [status, setStatus] = useState('');
+  const [statusKind, setStatusKind] = useState
+  ('success');
+  const [saving, setSaving] = useState(false);
+  const [colorMode, setColorMode] = useState
+  (getStoredColorMode() ?? 'dark');
+  const [displayCurrency, setDisplayCurrency] = useState
+  ): Promise
+  ) : null}
+
+--- /home/ben/workspace/ai-smart-trader/frontend/src/pages/SimulationOperationPage.tsx ---
+  Back to parent simulation
+  Previous operation
+  Next operation
+  Loading...
+  Spot price at time T
+  Portfolio value
+  Available cash
+  Cumulative invested
+  Position before order
+  Asset weight before order
+  Execution
+  Decision rationale
+  Financial impact
+
+--- /home/ben/workspace/ai-smart-trader/frontend/src/pages/SimulationReportPage.tsx ---
+  left.localeCompare(right));
+
+  const lastPriceBySymbol = symbols.reduce
+  (null);
+  const [report, setReport] = useState
+  (null);
+  const [allRuns, setAllRuns] = useState
+  ([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  const [operationSideFilter, setOperationSideFilter] = useState
+  ← Back to simulations
+  Previous simulation
+  Next simulation
+  Loading...
+  Total invested
+  Final value
+  Net gain/loss
+  Return
+  Fees
+  Win rate
+  AI calls
+  AI calls successful
+  AI calls failed
+  AI tokens
+  AI cost
+  Asset price curves by crypto
+  Real crypto price evolution over time (not holdings quantity or owned amount). One
+                chart per crypto.
+  ;
+                              }
+                              return (
+  No operation data available to build asset price curves.
+  Buy filled
+  Sell filled
+  Buy rejected
+  Sell rejected
+  Portfolio vs invested evolution
+  Compare portfolio value to invested capital: above means overall gain, below means
+                overall loss.
+  Gain/loss evolution
+  This chart shows net gain/loss over time: positive means profit, negative means
+                loss.
+  AI usage evolution
+  Cumulative AI remote calls during the simulation, with successful and failed calls
+                over time.
+  AI recommendation evolution
+  Cumulative recommendation flow by action type and source.
+  Simulation operations
+  Side
+  All
+  Buy
+  Sell
+  Outcome
+  Successful
+  Failed
+  All
+  Asset
+  All
+  Rows/page
+  Timestamp
+  Asset
+  Side
+  Status
+  Amount
+  Price
+  Fees
+  Rationale
+  Detail
+  Open
+  No operations for these filters.
+  ) : null}
+  Previous
+  Next
+  ) : null}
+
+--- /home/ben/workspace/ai-smart-trader/frontend/src/pages/SimulationsPage.tsx ---
+  ([]);
+  const [runs, setRuns] = useState
+  ([]);
+  const [selectedStrategyId, setSelectedStrategyId] = useState('');
+  const [periodStart, setPeriodStart] = useState(resolveDefaultPeriodStart());
+  const [periodEnd, setPeriodEnd] = useState(resolveDefaultPeriodEnd());
+  const [overrideEnabled, setOverrideEnabled] = useState(false);
+  const [overrideRiskProfile, setOverrideRiskProfile] = useState
+  ('balanced');
+  const [overrideMonthlyBudget, setOverrideMonthlyBudget] = useState(300);
+  const [overrideRebalancingPerDay, setOverrideRebalancingPerDay] = useState(2);
+  const [overrideMaxPositionPct, setOverrideMaxPositionPct] = useState(45);
+  const [useLiveAiInSimulation, setUseLiveAiInSimulation] = useState(false);
+  const [running, setRunning] = useState(false);
+  const [loadingRuns, setLoadingRuns] = useState(true);
+  const [status, setStatus] = useState('');
+  const [statusKind, setStatusKind] = useState
+  ('success');
+  const [runSession, setRunSession] = useState
+  (null);
+  const [showRunProgressModal, setShowRunProgressModal] = useState(false);
+  const [advancedPeriods, setAdvancedPeriods] = useState
+  buildDefaultAdvancedPeriods(),
+  );
+  const [advancedMonteCarloIterations, setAdvancedMonteCarloIterations] = useState(400);
+  const [advancedMonteCarloHorizonMonths, setAdvancedMonteCarloHorizonMonths] = useState(12);
+  const [advancedBacktestStrategyId, setAdvancedBacktestStrategyId] = useState('');
+  const [advancedBacktestResult, setAdvancedBacktestResult] =
+    useState
+  (null);
+  const [advancedBacktestRunning, setAdvancedBacktestRunning] = useState(false);
+  const [abComparisonStrategyIds, setAbComparisonStrategyIds] = useState
+  ([]);
+  const [abComparisonPeriodStart, setAbComparisonPeriodStart] = useState(
+    resolveDefaultPeriodStart(),
+  );
+  const [abComparisonPeriodEnd, setAbComparisonPeriodEnd] = useState(resolveDefaultPeriodEnd());
+  const [abComparisonUseLiveAiInSimulation, setAbComparisonUseLiveAiInSimulation] = useState(false);
+  const [advancedBacktestComparisonResult, setAdvancedBacktestComparisonResult] =
+    useState
+  (null);
+  const [advancedBacktestComparisonRunning, setAdvancedBacktestComparisonRunning] = useState(false);
+  const [showAdvancedProgressModal, setShowAdvancedProgressModal] = useState(false);
+  const [advancedRunSession, setAdvancedRunSession] =
+    useState
+  (null);
+  const [advancedProgressScope, setAdvancedProgressScope] = useState
+  (
+    'period',
+  );
+  const [advancedProgressLabels, setAdvancedProgressLabels] = useState
+  ): Promise
+  ): Promise
+  period.periodStart && period.periodEnd);
+
+    if (periods.length
+  ,
+  ): Promise
+  New simulation
+  Strategy
+  Start
+  End
+  Override strategy for this test
+  Use live AI (potential cost)
+  Temporary override (not persisted)
+  Risk profile
+  defensive
+  balanced
+  aggressive
+  Monthly budget (EUR)
+  Cycles / day
+  Max position (%)
+  ) : null}
+  Reset
+  Simulation rules
+  Initial capital
+  300 EUR injected at the start date.
+  Monthly contributions
+  The strategy monthly budget is added at the start of each following month.
+  No look-ahead bias
+  On each date, decisions use only historical data available up to that date.
+  Advanced backtesting (multi-period + Monte Carlo)
+  Strategy
+  Monte Carlo iterations
+  Projection horizon (months)
+  Period
+  Start
+  End
+  Presets
+  Average return
+  Positive period rate
+  Average final value
+  Median projection (P50)
+  Results by period
+  Period
+  Return
+  Final value
+  Win rate
+  Operations
+  Projection Monte Carlo (P10 / P50 / P90)
+  Month
+  P10
+  P50
+  P90
+  ) : null}
+  ) : null}
+
+--- /home/ben/workspace/ai-smart-trader/frontend/src/pages/StrategiesPage.tsx ---
+  ([]);
+  const [prompts, setPrompts] = useState
+  ([]);
+  const [loading, setLoading] = useState(true);
+  const [status, setStatus] = useState('');
+  const [statusKind, setStatusKind] = useState
+  ('success');
+  const [editingStrategyId, setEditingStrategyId] = useState
+  (null);
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [riskProfile, setRiskProfile] = useState
+  ('balanced');
+  const [monthlyBudgetEur, setMonthlyBudgetEur] = useState(300);
+  const [rebalancingPerDay, setRebalancingPerDay] = useState(1);
+  const [maxPositionPct, setMaxPositionPct] = useState(55);
+  const [reserveCashPct, setReserveCashPct] = useState(6);
+  const [minOrderSizeEur, setMinOrderSizeEur] = useState(6);
+  const [slippagePct, setSlippagePct] = useState(0.12);
+  const [feePreference, setFeePreference] = useState
+  ('maker');
+  const [takeProfitTargetPct, setTakeProfitTargetPct] = useState(4.8);
+  const [stopLossPct, setStopLossPct] = useState(2.6);
+  const [allowSellAtLoss, setAllowSellAtLoss] = useState(false);
+  const [forceSellAfterDowntrendDays, setForceSellAfterDowntrendDays] = useState(10);
+  const [forceSellDowntrendThresholdPct, setForceSellDowntrendThresholdPct] = useState(6);
+  const [requireDipForBuy, setRequireDipForBuy] = useState(true);
+  const [minDipPctToBuy, setMinDipPctToBuy] = useState(0.5);
+  const [maxDailyPumpPctToBuy, setMaxDailyPumpPctToBuy] = useState(2.6);
+  const [decisionMode, setDecisionMode] = useState
+  ('ai_assisted');
+  const [aiSystemPromptId, setAiSystemPromptId] = useState('ai-advisor-system-default');
+  const [aiUserPromptId, setAiUserPromptId] = useState('ai-advisor-user-default');
+  const [targetAllocation, setTargetAllocation] = useState
+  (
+    defaultTargetAllocationByRisk('balanced'),
+  );
+  const [comparisonStrategyIds, setComparisonStrategyIds] = useState
+  ([]);
+  const [publicStrategies, setPublicStrategies] = useState
+  comparisonStrategyIds.includes(strategy.id),
+  );
+
+  async function handleSave(event: FormEvent
+  ): Promise
+  Beginner tip: change only a few parameters at a time to compare strategies reliably.
+  Strategy identity
+  Name
+  Description
+  Execution
+  Monthly budget (EUR)
+  Trading cycles / day
+  Risk
+  Risk profile
+  defensive
+  balanced
+  aggressive
+  AI system prompt
+  AI context prompt
+  Max position per asset (%)
+  Target allocation (%)
+  Define the weight of each crypto in the strategy.
+  Prefill from profile
+  Advanced configuration
+  Cash / stablecoin reserve (%)
+  Minimum order size (EUR)
+  Estimated max slippage (%)
+  Fee preference
+  hybrid (mix)
+  maker
+  taker
+  Take-profit threshold (%)
+  Decision mode
+  simple allocation
+  strategy rules
+  AI-assisted
+  Stop-loss threshold (%)
+  Allow selling at a loss
+  Forced sell after downtrend (days)
+  Minimum drawdown for forced sell (%)
+  Require a dip before buy
+  Minimum dip before buy (%)
+  Maximum tolerated rise before buy (%)
+  Recreate default strategies
+  Reset
+  Cancel editing
+  ) : null}
+  Quick help
+  This page fully replaces YAML editing: every strategy is now configured through forms.
+  Clean A/B testing
+  Compare two strategies over the same period and with the same monthly budget.
+  Beginner risk
+  If you are starting, begin with
+  balanced
+  and a low frequency (1 or
+                2 cycles/day).
+  Concentration
+  Keep a reasonable max-per-asset limit to avoid over-depending on one crypto.
+  Advanced, not complicated
+  Open advanced settings only when testing a precise hypothesis (fees, slippage, cash
+                reserve, etc.).
+  Saved strategies
+  Loading...
+  ID
+  Name
+  Description
+  Risk
+  Budget
+  Cycles
+  Position max
+  Reserve
+  Fees
+  Slippage
+  Mode
+  Guardrails
+  Allocation
+  Actions
+  Edit
+  Duplicate
+  Delete
+  Strategy comparison (2 to 3)
+  Select at least 2 strategies with the "Compare" button in the table above.
+  Criterion
+  Risk profile
+  Monthly budget
+  Cycles / day
+  Position max (%)
+  Decision mode
+  Target allocation
+  Social portfolio (public and anonymized)
+  Discover community-shared strategies and import them for local testing.
+  !row.isOwnedByRequester).length === 0 ? (
+  No public strategy available at the moment.
+  Share
+  Author
+  Name
+  Description
+  Risk
+  Budget
+  Cycles
+  Position max
+  Allocation
+  Action
+  Import
+  ) : null}
+  !Number.isFinite(value) || value
+
+--- /home/ben/workspace/ai-smart-trader/frontend/src/pages/StrategyWizardPage.tsx ---
+  ;
+  }
+
+  return (
+  );
+
+  const handleImportStrategies = async (event: ChangeEvent
+  ): Promise
+  Your Strategies
+  Import
+  Export
+  Restore defaults
+  Create strategy
+  Loading...
+  ) : strategies.length === 0 ? (
+  No strategy created yet. Create your first strategy to get started.
+  Create my first strategy
+  Name
+  Type
+  Risk level
+  Created on
+  Actions
+  Edit
+  Delete
+  Strategy name *
+  Description
+  Cancel
+  Next: Risk level
+  Risk level *
+  Defensive
+  Lower-volatility targeting with strict downside controls.
+  Balanced
+  Medium risk with diversified execution.
+  Aggressive
+  Higher return target with higher tolerated losses.
+  Strategy type *
+  Allocation
+  Fixed allocation and periodic rebalancing.
+  AI-assisted
+  Dynamic recommendations with guardrails and spending limits.
+  Historical signals
+  Buy/sell triggers based on historical price changes.
+  Cancel
+  Back
+  Next: Configuration
+  Portfolio allocation
+  Specify target percentage for each cryptocurrency:
+  Rebalancing frequency (days)
+  Rebalancing threshold (%)
+  s + v, 0) - 100)
+  s + v, 0) - 100)
+  Cancel
+  Back
+  Next: Safeguards
+  Cryptocurrencies to monitor *
+  Select at least 3 cryptos
+  Prompt template
+  ⚠️ Suggestions:
+  Your custom prompt:
+  ) : null}
+  Cancel
+  Back
+  Next: Safeguards
+  Cryptocurrencies to monitor *
+  Select at least 2 cryptos
+  Analysis window (days)
+  Drop threshold for buy (%)
+  Rise threshold for sell (%)
+  Maximum capital per signal (%)
+  Trend lookback (days)
+  Max volatility filter (%/day)
+  Minimum days between trades
+  Cancel
+  Back
+  Next: Safeguards
+  Monthly budget (EUR)
+  Maximum daily spend (EUR)
+  Maximum position size (EUR)
+  Maximum concurrent positions
+  Minimum order size (EUR)
+  Enable rebalancing
+  Allow selling at a loss
+  AI usage guardrails
+  AI query frequency (days)
+  Maximum AI cost per call (EUR)
+  Maximum AI calls per month
+  Maximum AI context session duration (minutes)
+  Maximum concurrent AI positions
+  ) : null}
+  Cancel
+  Back
+  Next: Review and creation
+  );
+  }
+
+  // Step 5: Review
+  return (
+  Strategy summary
+  Name:
+  Description:
+  Type:
+  Risk level:
+  Monthly budget:
+  Daily maximum:
+  Decision checks/day:
+  Minimum AI confidence:
+  ) : null}
+  Max position size:
+  Minimum order:
+  Sell at loss allowed:
+  Selected cryptos:
+  AI query frequency:
+  AI cost cap:
+  AI call limit:
+  AI session limit:
+  Analysis window:
+  Buy trigger (drop):
+  Sell trigger (rise):
+  Max capital / signal:
+  Trend lookback:
+  Max volatility:
+  Trade cooldown:
+  Monthly simulation preview
+  Estimated orders / month:
+  No blocking warning detected for this simulation.
+  Preview simulation
+  Cancel
+  Back
+
+--- /home/ben/workspace/ai-smart-trader/frontend/src/pages/simulations/useSimulationSessionTracking.ts ---
+  ;
+  setRuns: Dispatch
+  ;
+  setRunning: Dispatch
+  ;
+  setShowRunProgressModal: Dispatch
+  ;
+  advancedRunSession: AdvancedBacktestingRunSession | null;
+  setAdvancedRunSession: Dispatch
+  ;
+  setAdvancedBacktestResult: Dispatch
+  ;
+  setAdvancedBacktestComparisonResult: Dispatch
+  ;
+  advancedProgressLiveAiRequested: boolean;
+  setStatusKind: Dispatch
+  ;
+  setStatus: Dispatch
+
+--- /home/ben/workspace/ai-smart-trader/frontend/src/pages/strategy-wizard/ExecutionConfigurationSection.tsx ---
+  Execution cadence
+  Decision checks per day
+  Minimum AI confidence to execute (%)
+  ) : null}
+  Tip: keep checks low for stability, and increase only if you want more reactive execution.
+
+--- /home/ben/workspace/ai-smart-trader/frontend/src/pages/strategy-wizard/types.ts ---
+  void;
+  allocation: Record
+  ;
+  setAllocation: (allocation: Record
+  Promise
+  Promise
+  Record
+
+--- /home/ben/workspace/ai-smart-trader/frontend/src/pages/strategy-wizard/useStrategyWizardState.ts ---
+  (null);
+
+  const [currentStep, setCurrentStep] = useState
+  ('list');
+  const [strategies, setStrategies] = useState
+  ([]);
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState('');
+  const [statusKind, setStatusKind] = useState
+  ('success');
+  const [editingStrategyId, setEditingStrategyId] = useState
+  (null);
+  const [strategyPreview, setStrategyPreview] = useState
+  (null);
+
+  // Wizard state
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [riskLevel, setRiskLevel] = useState
+  ('balanced');
+  const [strategyType, setStrategyType] = useState
+  ('ai_assisted');
+  const [promptTemplates, setPromptTemplates] = useState
+  ([]);
+  const [selectedTemplate, setSelectedTemplate] = useState
+  (
+    'balanced',
+  );
+  const [selectedPromptContent, setSelectedPromptContent] = useState('');
+  const [customPrompt, setCustomPrompt] = useState('');
+  const [showPromptPreview, setShowPromptPreview] = useState(false);
+  const [promptValidation, setPromptValidation] = useState
+  (
+    defaultSafeguardsByRisk('balanced'),
+  );
+  const [allocationRebalancingFrequencyDays, setAllocationRebalancingFrequencyDays] = useState(1);
+  const [allocationRebalancingThresholdPct, setAllocationRebalancingThresholdPct] = useState(5);
+  const [aiGuardrails, setAiGuardrails] = useState
+  (defaultAiGuardrails());
+  const [historicalLevers, setHistoricalLevers] = useState
+  (getDefaultCryptoSymbols());
+  const [allocation, setAllocation] = useState
