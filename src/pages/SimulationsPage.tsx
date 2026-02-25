@@ -452,7 +452,7 @@ export function SimulationsPage(): ReactElement {
     <Layout title={t('page.simulations.title')} subtitle={t('page.simulations.subtitle')}>
       <section className="strategies-grid">
         <article className="panel strategy-form-panel">
-          <h2>New simulation</h2>
+          <h2>{t('auto.new_simulation')}</h2>
           <form
             className="strategy-form strategy-form--stacked"
             onSubmit={(event) => {
@@ -462,7 +462,7 @@ export function SimulationsPage(): ReactElement {
             <div className="form-grid">
               <label className="field">
                 <span className="field-label">
-                  Strategy
+                  {t('auto.strategy')}
                   <InfoTip label="Strategy" text="Base strategy used for this simulation." />
                 </span>
                 <select
@@ -486,7 +486,7 @@ export function SimulationsPage(): ReactElement {
             <div className="form-grid simulations-period-grid">
               <label className="field">
                 <span className="field-label">
-                  Start
+                  {t('auto.start')}
                   <InfoTip label="Start date" text="Backtest start date (inclusive)." />
                 </span>
                 <DatePickerInput
@@ -501,7 +501,7 @@ export function SimulationsPage(): ReactElement {
 
               <label className="field">
                 <span className="field-label">
-                  End
+                  {t('auto.end')}
                   <InfoTip label="End date" text="Backtest end date (inclusive)." />
                 </span>
                 <DatePickerInput
@@ -546,7 +546,7 @@ export function SimulationsPage(): ReactElement {
                   }
                 }}
               >
-                Override strategy for this test
+                {t('auto.override_strategy_for_this_tes')}
               </div>
               <div
                 className={`toggle-btn${useLiveAiInSimulation ? ' selected' : ''}`}
@@ -574,16 +574,16 @@ export function SimulationsPage(): ReactElement {
                 <h3>Temporary override (not persisted)</h3>
                 <div className="form-grid">
                   <label className="field">
-                    <span>Risk profile</span>
+                    <span>{t('auto.risk_profile')}</span>
                     <select
                       value={overrideRiskProfile}
                       onChange={(event) => {
                         setOverrideRiskProfile(event.target.value as StrategyRiskProfile);
                       }}
                     >
-                      <option value="defensive">defensive</option>
-                      <option value="balanced">balanced</option>
-                      <option value="aggressive">aggressive</option>
+                      <option value="defensive">{t('auto.defensive')}</option>
+                      <option value="balanced">{t('auto.balanced')}</option>
+                      <option value="aggressive">{t('auto.aggressive')}</option>
                     </select>
                   </label>
                   <label className="field">
@@ -599,7 +599,7 @@ export function SimulationsPage(): ReactElement {
                     />
                   </label>
                   <label className="field">
-                    <span>Cycles / day</span>
+                    <span>{t('auto.cycles_day')}</span>
                     <input
                       type="number"
                       min={1}
@@ -640,26 +640,26 @@ export function SimulationsPage(): ReactElement {
                   setUseLiveAiInSimulation(false);
                 }}
               >
-                Reset
+                {t('auto.reset')}
               </button>
             </div>
           </form>
         </article>
 
         <aside className="panel strategy-help-panel">
-          <h2>Simulation rules</h2>
+          <h2>{t('auto.simulation_rules')}</h2>
           <ul className="cards-list">
             <li>
-              <h3>Initial capital</h3>
-              <p>300 EUR injected at the start date.</p>
+              <h3>{t('auto.initial_capital')}</h3>
+              <p>{t('auto.300_eur_injected_at_the_start')}</p>
             </li>
             <li>
-              <h3>Monthly contributions</h3>
-              <p>The strategy monthly budget is added at the start of each following month.</p>
+              <h3>{t('auto.monthly_contributions')}</h3>
+              <p>{t('auto.the_strategy_monthly_budget_is')}</p>
             </li>
             <li>
-              <h3>No look-ahead bias</h3>
-              <p>On each date, decisions use only historical data available up to that date.</p>
+              <h3>{t('auto.no_look_ahead_bias')}</h3>
+              <p>{t('auto.on_each_date_decisions_use_onl')}</p>
             </li>
           </ul>
         </aside>
@@ -675,7 +675,7 @@ export function SimulationsPage(): ReactElement {
         >
           <div className="form-grid">
             <label className="field">
-              <span>Strategy</span>
+              <span>{t('auto.strategy')}</span>
               <select
                 value={advancedBacktestStrategyId}
                 onChange={(event) => {
@@ -693,7 +693,7 @@ export function SimulationsPage(): ReactElement {
               </select>
             </label>
             <label className="field">
-              <span>Monte Carlo iterations</span>
+              <span>{t('auto.monte_carlo_iterations')}</span>
               <input
                 type="number"
                 min={100}
@@ -723,10 +723,10 @@ export function SimulationsPage(): ReactElement {
             <table>
               <thead>
                 <tr>
-                  <th>Period</th>
-                  <th>Start</th>
-                  <th>End</th>
-                  <th>Presets</th>
+                  <th>{t('auto.period')}</th>
+                  <th>{t('auto.start')}</th>
+                  <th>{t('auto.end')}</th>
+                  <th>{t('auto.presets')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -806,15 +806,15 @@ export function SimulationsPage(): ReactElement {
           <>
             <section className="kpis">
               <article className="kpi">
-                <span>Average return</span>
+                <span>{t('auto.average_return')}</span>
                 <strong>{advancedBacktestResult.aggregate.averageReturnPct}%</strong>
               </article>
               <article className="kpi">
-                <span>Positive period rate</span>
+                <span>{t('auto.positive_period_rate')}</span>
                 <strong>{advancedBacktestResult.aggregate.positiveRatePct}%</strong>
               </article>
               <article className="kpi">
-                <span>Average final value</span>
+                <span>{t('auto.average_final_value')}</span>
                 <strong>
                   {formatAmountFromEur(advancedBacktestResult.aggregate.averageFinalValueEur)}
                 </strong>
@@ -827,16 +827,16 @@ export function SimulationsPage(): ReactElement {
               </article>
             </section>
 
-            <h3>Results by period</h3>
+            <h3>{t('auto.results_by_period')}</h3>
             <div className="table-scroll">
               <table>
                 <thead>
                   <tr>
-                    <th>Period</th>
-                    <th>Return</th>
-                    <th>Final value</th>
-                    <th>Win rate</th>
-                    <th>Operations</th>
+                    <th>{t('auto.period')}</th>
+                    <th>{t('auto.return')}</th>
+                    <th>{t('auto.final_value')}</th>
+                    <th>{t('auto.win_rate')}</th>
+                    <th>{t('auto.operations')}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -862,7 +862,7 @@ export function SimulationsPage(): ReactElement {
               <table>
                 <thead>
                   <tr>
-                    <th>Month</th>
+                    <th>{t('auto.month')}</th>
                     <th>P10</th>
                     <th>P50</th>
                     <th>P90</th>

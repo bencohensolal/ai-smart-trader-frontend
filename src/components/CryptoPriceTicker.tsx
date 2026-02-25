@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react';
 import { STRATEGY_SYMBOLS, StrategySymbol } from '../api';
 import { formatAmountFromEur } from '../currency';
 import { getCryptoSpotPrice } from '../api';
+import { useI18n } from '../i18n/i18n';
 
 interface CryptoPriceTickerProps {
   initialSymbol?: string;
 }
 
 export function CryptoPriceTicker({ initialSymbol }: CryptoPriceTickerProps) {
+  const { t } = useI18n();
   const [symbol, setSymbol] = useState<StrategySymbol>(
     (initialSymbol as StrategySymbol) || STRATEGY_SYMBOLS[0],
   );
@@ -24,7 +26,7 @@ export function CryptoPriceTicker({ initialSymbol }: CryptoPriceTickerProps) {
         if (active) setPrice(p);
       })
       .catch(() => {
-        if (active) setError('Erreur de récupération du cours');
+        if (active) setError(t('cryptoPriceTicker.error'));
       })
       .finally(() => {
         if (active) setLoading(false);
@@ -42,7 +44,7 @@ export function CryptoPriceTicker({ initialSymbol }: CryptoPriceTickerProps) {
             key={s}
             className={s === symbol ? 'active' : ''}
             onClick={() => setSymbol(s)}
-            aria-label={`Voir le cours de ${s}`}
+            aria-label={t('cryptoPriceTicker.switch', { symbol: s })}
           >
             {s}
           </button>
@@ -50,13 +52,11 @@ export function CryptoPriceTicker({ initialSymbol }: CryptoPriceTickerProps) {
       </div>
       <div className="crypto-price">
         {loading ? (
-          <span>Chargement…</span>
+          <span>{t('cryptoPriceTicker.loading')}</span>
         ) : error ? (
           <span style={{ color: 'red' }}>{error}</span>
         ) : price !== null ? (
-          <span>
-            {symbol} : <strong>{formatAmountFromEur(price)}</strong>
-          </span>
+          <span>{t('cryptoPriceTicker.price', { symbol, price: formatAmountFromEur(price) })}</span>
         ) : null}
       </div>
     </div>

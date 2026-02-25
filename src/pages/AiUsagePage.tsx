@@ -138,7 +138,7 @@ export function AiUsagePage(): JSX.Element {
     if (!settings || settings.aiAdvisor.maxPromptTokensPerCall <= 0) {
       return 0;
     }
-    const used = usage?.totalPromptTokens ?? 0;
+    const used = usage?.promptTokens ?? 0;
     const maxTheoretical =
       settings.aiAdvisor.maxPromptTokensPerCall * Math.max(1, usage?.totalCalls ?? 1);
     return Math.min(100, (used / maxTheoretical) * 100);
@@ -549,9 +549,9 @@ export function AiUsagePage(): JSX.Element {
                       );
                     }}
                   >
-                    <option value="openai">OpenAI</option>
-                    <option value="anthropic">Anthropic</option>
-                    <option value="gemini">Google Gemini</option>
+                    <option value="openai">{t('auto.openai')}</option>
+                    <option value="anthropic">{t('auto.anthropic')}</option>
+                    <option value="gemini">{t('auto.google_gemini')}</option>
                   </select>
                 </label>
 
@@ -890,7 +890,7 @@ export function AiUsagePage(): JSX.Element {
             <div className="prompts-grid">
               <article className="panel">
                 <h3>{editingPromptId ? 'Edit prompt' : 'New prompt'}</h3>
-                <p>You can create multiple prompts per type to compare algorithm behaviors.</p>
+                <p>{t('auto.you_can_create_multiple_prompt')}</p>
                 <form
                   className="strategy-form strategy-form--stacked"
                   onSubmit={(event) => {
@@ -899,7 +899,7 @@ export function AiUsagePage(): JSX.Element {
                 >
                   <div className="form-grid">
                     <label className="field">
-                      <span className="field-label">Prompt type</span>
+                      <span className="field-label">{t('auto.prompt_type')}</span>
                       <select
                         value={type}
                         onChange={(event) => {
@@ -907,14 +907,16 @@ export function AiUsagePage(): JSX.Element {
                         }}
                         disabled={Boolean(editingPromptId)}
                       >
-                        <option value="ai_advisor_system">AI Advisor - System</option>
-                        <option value="ai_advisor_user">AI Advisor - Context</option>
-                        <option value="simulation_explainer">Simulation - Explanation</option>
+                        <option value="ai_advisor_system">{t('auto.ai_advisor_system')}</option>
+                        <option value="ai_advisor_user">{t('auto.ai_advisor_context')}</option>
+                        <option value="simulation_explainer">
+                          {t('auto.simulation_explanation')}
+                        </option>
                       </select>
                     </label>
 
                     <label className="field">
-                      <span className="field-label">Name</span>
+                      <span className="field-label">{t('auto.name')}</span>
                       <input
                         value={name}
                         onChange={(event) => {
@@ -926,7 +928,7 @@ export function AiUsagePage(): JSX.Element {
                     </label>
 
                     <label className="field">
-                      <span className="field-label">Description</span>
+                      <span className="field-label">{t('auto.description')}</span>
                       <input
                         value={description}
                         onChange={(event) => {
@@ -939,7 +941,7 @@ export function AiUsagePage(): JSX.Element {
                   </div>
 
                   <label className="field">
-                    <span className="field-label">Prompt content</span>
+                    <span className="field-label">{t('auto.prompt_content')}</span>
                     <textarea
                       rows={10}
                       value={content}
@@ -961,7 +963,7 @@ export function AiUsagePage(): JSX.Element {
                       onClick={resetPromptForm}
                       disabled={promptsSaving}
                     >
-                      Reset form
+                      {t('auto.reset_form')}
                     </button>
                     <button
                       className="button button-secondary"
@@ -971,26 +973,26 @@ export function AiUsagePage(): JSX.Element {
                       }}
                       disabled={promptsSaving}
                     >
-                      Restore all defaults
+                      {t('auto.restore_all_defaults')}
                     </button>
                   </div>
                 </form>
               </article>
 
               <aside className="panel">
-                <h3>Quick help</h3>
+                <h3>{t('auto.quick_help')}</h3>
                 <ul className="cards-list">
                   <li>
-                    <h3>Multiple variants</h3>
-                    <p>Create multiple prompts of the same type for A/B testing.</p>
+                    <h3>{t('auto.multiple_variants')}</h3>
+                    <p>{t('auto.create_multiple_prompts_of_the')}</p>
                   </li>
                   <li>
-                    <h3>Default version</h3>
-                    <p>Prompts shipped with the project remain available and can be restored.</p>
+                    <h3>{t('auto.default_version')}</h3>
+                    <p>{t('auto.prompts_shipped_with_the_proje')}</p>
                   </li>
                   <li>
-                    <h3>Strategy setup</h3>
-                    <p>Each strategy can choose its AI prompts in the Strategies page.</p>
+                    <h3>{t('auto.strategy_setup')}</h3>
+                    <p>{t('auto.each_strategy_can_choose_its_a')}</p>
                   </li>
                 </ul>
               </aside>
@@ -1018,11 +1020,11 @@ export function AiUsagePage(): JSX.Element {
                       <table>
                         <thead>
                           <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Default</th>
-                            <th>Actions</th>
+                            <th>{t('auto.id')}</th>
+                            <th>{t('auto.name')}</th>
+                            <th>{t('auto.description')}</th>
+                            <th>{t('auto.default')}</th>
+                            <th>{t('auto.actions')}</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -1043,7 +1045,7 @@ export function AiUsagePage(): JSX.Element {
                                       }}
                                       disabled={promptsSaving}
                                     >
-                                      Edit
+                                      {t('auto.edit')}
                                     </button>
                                     {prompt.templateKey ? (
                                       <button
@@ -1054,7 +1056,7 @@ export function AiUsagePage(): JSX.Element {
                                         }}
                                         disabled={promptsSaving}
                                       >
-                                        Reset to default
+                                        {t('auto.reset_to_default')}
                                       </button>
                                     ) : (
                                       <button
@@ -1065,7 +1067,7 @@ export function AiUsagePage(): JSX.Element {
                                         }}
                                         disabled={promptsSaving}
                                       >
-                                        Delete
+                                        {t('auto.delete')}
                                       </button>
                                     )}
                                   </div>
@@ -1093,12 +1095,12 @@ export function AiUsagePage(): JSX.Element {
           <section className="panel">
             <div className="kpis ai-usage-summary-kpis">
               <article className="kpi">
-                <span>Tokens used</span>
+                <span>{t('auto.tokens_used')}</span>
                 <strong>{numberFormatter.format(usage?.totalTokens ?? 0)}</strong>
                 <small>{usageTokenLimitPct.toFixed(1)}% of theoretical limit</small>
               </article>
               <article className="kpi">
-                <span>Estimated cost</span>
+                <span>{t('auto.estimated_cost')}</span>
                 <strong>{currencyFormatter.format(usage?.estimatedCostEur ?? 0)} EUR</strong>
                 <small>{usageCostGuardrailPct.toFixed(1)}% of daily limit</small>
               </article>
@@ -1109,7 +1111,7 @@ export function AiUsagePage(): JSX.Element {
                 <h2>{t('aiUsage.calls.title')}</h2>
                 <section className="controls-panel">
                   <label className="field">
-                    <span>Status</span>
+                    <span>{t('auto.status')}</span>
                     <select
                       value={callsStatusFilter}
                       onChange={(event) => {
@@ -1119,20 +1121,20 @@ export function AiUsagePage(): JSX.Element {
                         }
                       }}
                     >
-                      <option value="all">All</option>
-                      <option value="success">Success</option>
-                      <option value="error">Error</option>
+                      <option value="all">{t('auto.all')}</option>
+                      <option value="success">{t('auto.success')}</option>
+                      <option value="error">{t('auto.error')}</option>
                     </select>
                   </label>
                   <label className="field">
-                    <span>Model</span>
+                    <span>{t('auto.model')}</span>
                     <select
                       value={callsModelFilter}
                       onChange={(event) => {
                         setCallsModelFilter(event.target.value);
                       }}
                     >
-                      <option value="all">All</option>
+                      <option value="all">{t('auto.all')}</option>
                       {callModels.map((model) => {
                         return (
                           <option key={model} value={model}>
@@ -1143,7 +1145,7 @@ export function AiUsagePage(): JSX.Element {
                     </select>
                   </label>
                   <label className="field">
-                    <span>Rows/page</span>
+                    <span>{t('auto.rows_page')}</span>
                     <select
                       value={String(callsPageSize)}
                       onChange={(event) => {
@@ -1204,7 +1206,7 @@ export function AiUsagePage(): JSX.Element {
                         })}
                         {pagedCalls.length === 0 ? (
                           <tr>
-                            <td colSpan={6}>No calls for these filters.</td>
+                            <td colSpan={6}>{t('auto.no_calls_for_these_filters')}</td>
                           </tr>
                         ) : null}
                       </tbody>
@@ -1221,7 +1223,7 @@ export function AiUsagePage(): JSX.Element {
                       }}
                       disabled={safeCallsPage <= 1}
                     >
-                      Previous
+                      {t('auto.previous')}
                     </button>
                     <span>
                       Page {safeCallsPage} / {callsPageCount}
@@ -1234,7 +1236,7 @@ export function AiUsagePage(): JSX.Element {
                       }}
                       disabled={safeCallsPage >= callsPageCount}
                     >
-                      Next
+                      {t('auto.next')}
                     </button>
                   </div>
                 ) : null}

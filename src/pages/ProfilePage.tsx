@@ -83,7 +83,7 @@ export function ProfilePage(): JSX.Element {
           >
             <div className="form-grid">
               <label className="field">
-                <span className="field-label">First name</span>
+                <span className="field-label">{t('auto.first_name')}</span>
                 <input
                   value={profile.firstName}
                   onChange={(event) => {
@@ -92,7 +92,7 @@ export function ProfilePage(): JSX.Element {
                 />
               </label>
               <label className="field">
-                <span className="field-label">Last name</span>
+                <span className="field-label">{t('auto.last_name')}</span>
                 <input
                   value={profile.lastName}
                   onChange={(event) => {
@@ -101,7 +101,7 @@ export function ProfilePage(): JSX.Element {
                 />
               </label>
               <label className="field">
-                <span className="field-label">Date of birth</span>
+                <span className="field-label">{t('auto.date_of_birth')}</span>
                 <DatePickerInput
                   value={profile.birthDate}
                   onChange={(event) => {
@@ -114,7 +114,7 @@ export function ProfilePage(): JSX.Element {
                 <input value={email} disabled />
               </label>
               <label className="field">
-                <span className="field-label">Country</span>
+                <span className="field-label">{t('auto.country')}</span>
                 <input
                   value={profile.country}
                   onChange={(event) => {
@@ -123,7 +123,7 @@ export function ProfilePage(): JSX.Element {
                 />
               </label>
               <label className="field">
-                <span className="field-label">City</span>
+                <span className="field-label">{t('auto.city')}</span>
                 <input
                   value={profile.city}
                   onChange={(event) => {
@@ -132,7 +132,7 @@ export function ProfilePage(): JSX.Element {
                 />
               </label>
               <label className="field">
-                <span className="field-label">Time zone</span>
+                <span className="field-label">{t('auto.time_zone')}</span>
                 <input
                   value={profile.timezone}
                   onChange={(event) => {
@@ -141,7 +141,7 @@ export function ProfilePage(): JSX.Element {
                 />
               </label>
               <label className="field">
-                <span className="field-label">Occupation</span>
+                <span className="field-label">{t('auto.occupation')}</span>
                 <input
                   value={profile.occupation}
                   onChange={(event) => {
@@ -150,7 +150,7 @@ export function ProfilePage(): JSX.Element {
                 />
               </label>
               <label className="field">
-                <span className="field-label">Investment experience level</span>
+                <span className="field-label">{t('auto.investment_experience_level')}</span>
                 <select
                   value={profile.investmentExperience}
                   onChange={(event) => {
@@ -161,15 +161,15 @@ export function ProfilePage(): JSX.Element {
                     });
                   }}
                 >
-                  <option value="beginner">Beginner</option>
-                  <option value="intermediate">Intermediate</option>
-                  <option value="advanced">Advanced</option>
+                  <option value="beginner">{t('auto.beginner')}</option>
+                  <option value="intermediate">{t('auto.intermediate')}</option>
+                  <option value="advanced">{t('auto.advanced')}</option>
                 </select>
               </label>
             </div>
 
             <label className="field">
-              <span className="field-label">Bio / goals</span>
+              <span className="field-label">{t('auto.bio_goals')}</span>
               <textarea
                 rows={4}
                 value={profile.bio}

@@ -25,12 +25,12 @@ export function DatePickerInput({
   return (
     <DatePicker
       selected={parseIsoDate(value)}
-      onChange={(nextDate) => {
+      onChange={(nextDate: Date | null) => {
         onChange(nextDate ? formatIsoDate(nextDate) : '');
       }}
       dateFormat="yyyy-MM-dd"
-      minDate={min ? parseIsoDate(min) : undefined}
-      maxDate={max ? parseIsoDate(max) : undefined}
+      minDate={min ? (parseIsoDate(min) ?? undefined) : undefined}
+      maxDate={max ? (parseIsoDate(max) ?? undefined) : undefined}
       showPopperArrow={false}
       showMonthDropdown
       showYearDropdown

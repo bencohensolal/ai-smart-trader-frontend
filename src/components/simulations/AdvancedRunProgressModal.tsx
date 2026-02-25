@@ -1,5 +1,6 @@
 import { ReactElement } from 'react';
 import { AdvancedBacktestingRunProgress, AdvancedBacktestingRunScope } from '../../api';
+import { useI18n } from '../../i18n/i18n';
 
 type AdvancedRunProgressModalProps = {
   open: boolean;
@@ -24,6 +25,7 @@ export function AdvancedRunProgressModal({
   onSelectedIndexChange,
   onClose,
 }: AdvancedRunProgressModalProps): ReactElement | null {
+  const { t } = useI18n();
   if (!open || labels.length === 0) {
     return null;
   }
@@ -69,7 +71,8 @@ export function AdvancedRunProgressModal({
           </span>
           {liveAiRequested && (
             <span>
-              AI req. total: <strong>{integer.format(progress?.aiCallsTotal ?? 0)}</strong>
+              {t('auto.ai_req_total')}
+              <strong>{integer.format(progress?.aiCallsTotal ?? 0)}</strong>
             </span>
           )}
         </div>
@@ -119,7 +122,7 @@ export function AdvancedRunProgressModal({
               <strong>{integer.format(progress?.aiCallsByLabel[selectedSafeIndex] ?? 0)}</strong>
             </p>
           ) : (
-            <p>Live AI was not requested for this run.</p>
+            <p>{t('auto.live_ai_was_not_requested_for')}</p>
           )}
         </article>
         <div className="form-actions">

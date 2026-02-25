@@ -338,19 +338,17 @@ export function StrategiesPage(): JSX.Element {
       <section className="strategies-grid">
         <article className="panel strategy-form-panel">
           <h2>{formTitle}</h2>
-          <p>
-            Beginner tip: change only a few parameters at a time to compare strategies reliably.
-          </p>
+          <p>{t('auto.beginner_tip_change_only_a_few')}</p>
           <form
             className="strategy-form strategy-form--stacked"
             onSubmit={(event) => void handleSave(event)}
           >
             <div className="form-group">
-              <h3>Strategy identity</h3>
+              <h3>{t('auto.strategy_identity')}</h3>
               <div className="form-grid">
                 <label className="field">
                   <span className="field-label">
-                    Name
+                    {t('auto.name')}
                     <InfoTip
                       label="Strategy name"
                       text="Short name to quickly identify the tested idea."
@@ -367,7 +365,7 @@ export function StrategiesPage(): JSX.Element {
                 </label>
                 <label className="field">
                   <span className="field-label">
-                    Description
+                    {t('auto.description')}
                     <InfoTip
                       label="Description"
                       text="Hypothesis being tested (ex: more ETH, lower frequency, etc.)."
@@ -386,7 +384,7 @@ export function StrategiesPage(): JSX.Element {
             </div>
 
             <div className="form-group">
-              <h3>Execution</h3>
+              <h3>{t('auto.execution')}</h3>
               <div className="form-grid">
                 <label className="field">
                   <span className="field-label">
@@ -409,7 +407,7 @@ export function StrategiesPage(): JSX.Element {
                 </label>
                 <label className="field">
                   <span className="field-label">
-                    Trading cycles / day
+                    {t('auto.trading_cycles_day')}
                     <InfoTip
                       label="Trading cycles"
                       text="Number of order passes per day. Higher is more reactive but noisier."
@@ -430,11 +428,11 @@ export function StrategiesPage(): JSX.Element {
             </div>
 
             <div className="form-group">
-              <h3>Risk</h3>
+              <h3>{t('auto.risk')}</h3>
               <div className="form-grid">
                 <label className="field">
                   <span className="field-label">
-                    Risk profile
+                    {t('auto.risk_profile')}
                     <InfoTip
                       label="Risk profile"
                       text="Defensive = more cautious, balanced = intermediate, aggressive = more volatile."
@@ -446,15 +444,15 @@ export function StrategiesPage(): JSX.Element {
                       setRiskProfile(event.target.value as StrategyRiskProfile);
                     }}
                   >
-                    <option value="defensive">defensive</option>
-                    <option value="balanced">balanced</option>
-                    <option value="aggressive">aggressive</option>
+                    <option value="defensive">{t('auto.defensive')}</option>
+                    <option value="balanced">{t('auto.balanced')}</option>
+                    <option value="aggressive">{t('auto.aggressive')}</option>
                   </select>
                 </label>
 
                 <label className="field">
                   <span className="field-label">
-                    AI system prompt
+                    {t('auto.ai_system_prompt')}
                     <InfoTip
                       label="AI system prompt"
                       text="Global rules sent to the AI model (response format, guardrails, decision style)."
@@ -478,7 +476,7 @@ export function StrategiesPage(): JSX.Element {
 
                 <label className="field">
                   <span className="field-label">
-                    AI context prompt
+                    {t('auto.ai_context_prompt')}
                     <InfoTip
                       label="AI context prompt"
                       text="Template containing cycle context. Usually uses {{contextJson}} to inject data."
@@ -523,7 +521,7 @@ export function StrategiesPage(): JSX.Element {
 
             <div className="form-group">
               <h3>Target allocation (%)</h3>
-              <p>Define the weight of each crypto in the strategy.</p>
+              <p>{t('auto.define_the_weight_of_each_cryp')}</p>
               <div className="form-grid">
                 {STRATEGY_SYMBOLS.map((symbol) => {
                   return (
@@ -564,14 +562,14 @@ export function StrategiesPage(): JSX.Element {
                     setTargetAllocation(defaultTargetAllocationByRisk(riskProfile));
                   }}
                 >
-                  Prefill from profile
+                  {t('auto.prefill_from_profile')}
                 </button>
               </div>
             </div>
 
             <details className="form-group advanced-group">
               <summary>
-                Advanced configuration
+                {t('auto.advanced_configuration')}
                 <InfoTip
                   label="Advanced configuration"
                   text="Optional parameters to refine simulation: use them progressively for clean comparisons."
@@ -643,7 +641,7 @@ export function StrategiesPage(): JSX.Element {
 
                 <label className="field">
                   <span className="field-label">
-                    Fee preference
+                    {t('auto.fee_preference')}
                     <InfoTip
                       label="Fee preference"
                       text="Maker: often lower fees but less immediate execution. Taker: immediate execution but higher fees."
@@ -656,8 +654,8 @@ export function StrategiesPage(): JSX.Element {
                     }}
                   >
                     <option value="hybrid">hybrid (mix)</option>
-                    <option value="maker">maker</option>
-                    <option value="taker">taker</option>
+                    <option value="maker">{t('auto.maker')}</option>
+                    <option value="taker">{t('auto.taker')}</option>
                   </select>
                 </label>
 
@@ -684,7 +682,7 @@ export function StrategiesPage(): JSX.Element {
 
                 <label className="field">
                   <span className="field-label">
-                    Decision mode
+                    {t('auto.decision_mode')}
                     <InfoTip
                       label="Decision mode"
                       text="Simple allocation: automatic distribution. Rules: configurable buy/sell filter. AI: assistant suggesting buy/sell/hold without future data."
@@ -696,9 +694,9 @@ export function StrategiesPage(): JSX.Element {
                       setDecisionMode(event.target.value as StrategyDecisionMode);
                     }}
                   >
-                    <option value="allocation_only">simple allocation</option>
-                    <option value="rule_based">strategy rules</option>
-                    <option value="ai_assisted">AI-assisted</option>
+                    <option value="allocation_only">{t('auto.simple_allocation')}</option>
+                    <option value="rule_based">{t('auto.strategy_rules')}</option>
+                    <option value="ai_assisted">{t('auto.ai_assisted')}</option>
                   </select>
                 </label>
 
@@ -737,7 +735,7 @@ export function StrategiesPage(): JSX.Element {
                       }
                     }}
                   >
-                    Allow selling at a loss
+                    {t('auto.allow_selling_at_a_loss')}
                     <InfoTip
                       label="Sell at loss"
                       text="Disabled (recommended): strategy avoids negative exits unless trend remains durably poor."
@@ -801,7 +799,7 @@ export function StrategiesPage(): JSX.Element {
                       }
                     }}
                   >
-                    Require a dip before buy
+                    {t('auto.require_a_dip_before_buy')}
                     <InfoTip
                       label="Buy timing"
                       text="Strategy waits for a slight dip before buying to avoid chasing a rapid rally."
@@ -865,14 +863,14 @@ export function StrategiesPage(): JSX.Element {
                   void handleResetDefaults();
                 }}
               >
-                Recreate default strategies
+                {t('auto.recreate_default_strategies')}
               </button>
               <button className="button button-secondary" type="button" onClick={resetForm}>
-                Reset
+                {t('auto.reset')}
               </button>
               {editingStrategyId ? (
                 <button className="button button-secondary" type="button" onClick={resetForm}>
-                  Cancel editing
+                  {t('auto.cancel_editing')}
                 </button>
               ) : null}
             </div>
@@ -880,28 +878,26 @@ export function StrategiesPage(): JSX.Element {
         </article>
 
         <aside className="panel strategy-help-panel">
-          <h2>Quick help</h2>
-          <p>
-            This page fully replaces YAML editing: every strategy is now configured through forms.
-          </p>
+          <h2>{t('auto.quick_help')}</h2>
+          <p>{t('auto.this_page_fully_replaces_yaml')}</p>
           <ul className="cards-list">
             <li>
-              <h3>Clean A/B testing</h3>
-              <p>Compare two strategies over the same period and with the same monthly budget.</p>
+              <h3>{t('auto.clean_a_b_testing')}</h3>
+              <p>{t('auto.compare_two_strategies_over_th')}</p>
             </li>
             <li>
-              <h3>Beginner risk</h3>
+              <h3>{t('auto.beginner_risk')}</h3>
               <p>
-                If you are starting, begin with <strong>balanced</strong> and a low frequency (1 or
-                2 cycles/day).
+                {t('auto.if_you_are_starting_begin_with')}
+                <strong>{t('auto.balanced')}</strong> and a low frequency (1 or 2 cycles/day).
               </p>
             </li>
             <li>
-              <h3>Concentration</h3>
-              <p>Keep a reasonable max-per-asset limit to avoid over-depending on one crypto.</p>
+              <h3>{t('auto.concentration')}</h3>
+              <p>{t('auto.keep_a_reasonable_max_per_asse')}</p>
             </li>
             <li>
-              <h3>Advanced, not complicated</h3>
+              <h3>{t('auto.advanced_not_complicated')}</h3>
               <p>
                 Open advanced settings only when testing a precise hypothesis (fees, slippage, cash
                 reserve, etc.).
@@ -912,28 +908,28 @@ export function StrategiesPage(): JSX.Element {
       </section>
 
       <section className="panel">
-        <h2>Saved strategies</h2>
+        <h2>{t('auto.saved_strategies')}</h2>
         {loading ? (
-          <p>Loading...</p>
+          <p>{t('auto.loading')}</p>
         ) : (
           <div className="table-scroll table-scroll-wide">
             <table>
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Risk</th>
-                  <th>Budget</th>
-                  <th>Cycles</th>
-                  <th>Position max</th>
-                  <th>Reserve</th>
-                  <th>Fees</th>
-                  <th>Slippage</th>
-                  <th>Mode</th>
-                  <th>Guardrails</th>
-                  <th>Allocation</th>
-                  <th>Actions</th>
+                  <th>{t('auto.id')}</th>
+                  <th>{t('auto.name')}</th>
+                  <th>{t('auto.description')}</th>
+                  <th>{t('auto.risk')}</th>
+                  <th>{t('auto.budget')}</th>
+                  <th>{t('auto.cycles')}</th>
+                  <th>{t('auto.position_max')}</th>
+                  <th>{t('auto.reserve')}</th>
+                  <th>{t('auto.fees')}</th>
+                  <th>{t('auto.slippage')}</th>
+                  <th>{t('auto.mode')}</th>
+                  <th>{t('auto.guardrails')}</th>
+                  <th>{t('auto.allocation')}</th>
+                  <th>{t('auto.actions')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -989,7 +985,7 @@ export function StrategiesPage(): JSX.Element {
                               startEdit(strategy);
                             }}
                           >
-                            Edit
+                            {t('auto.edit')}
                           </button>
                           <button
                             className="button button-secondary button-small"
@@ -998,7 +994,7 @@ export function StrategiesPage(): JSX.Element {
                               void handleDuplicate(strategy);
                             }}
                           >
-                            Duplicate
+                            {t('auto.duplicate')}
                           </button>
                           <button
                             className="button button-danger button-small"
@@ -1007,7 +1003,7 @@ export function StrategiesPage(): JSX.Element {
                               void handleDelete(strategy);
                             }}
                           >
-                            Delete
+                            {t('auto.delete')}
                           </button>
                         </div>
                       </td>
@@ -1023,13 +1019,13 @@ export function StrategiesPage(): JSX.Element {
       <section className="panel">
         <h2>Strategy comparison (2 to 3)</h2>
         {comparedStrategies.length < 2 ? (
-          <p>Select at least 2 strategies with the "Compare" button in the table above.</p>
+          <p>{t('auto.select_at_least_2_strategies_w')}</p>
         ) : (
           <div className="table-scroll table-scroll-wide">
             <table>
               <thead>
                 <tr>
-                  <th>Criterion</th>
+                  <th>{t('auto.criterion')}</th>
                   {comparedStrategies.map((strategy) => (
                     <th key={strategy.id}>{strategy.name}</th>
                   ))}
@@ -1037,19 +1033,19 @@ export function StrategiesPage(): JSX.Element {
               </thead>
               <tbody>
                 <tr>
-                  <td>Risk profile</td>
+                  <td>{t('auto.risk_profile')}</td>
                   {comparedStrategies.map((strategy) => (
                     <td key={strategy.id}>{strategy.riskProfile}</td>
                   ))}
                 </tr>
                 <tr>
-                  <td>Monthly budget</td>
+                  <td>{t('auto.monthly_budget')}</td>
                   {comparedStrategies.map((strategy) => (
                     <td key={strategy.id}>{strategy.monthlyBudgetEur} EUR</td>
                   ))}
                 </tr>
                 <tr>
-                  <td>Cycles / day</td>
+                  <td>{t('auto.cycles_day')}</td>
                   {comparedStrategies.map((strategy) => (
                     <td key={strategy.id}>{strategy.rebalancingPerDay}</td>
                   ))}
@@ -1061,13 +1057,13 @@ export function StrategiesPage(): JSX.Element {
                   ))}
                 </tr>
                 <tr>
-                  <td>Decision mode</td>
+                  <td>{t('auto.decision_mode')}</td>
                   {comparedStrategies.map((strategy) => (
                     <td key={strategy.id}>{formatDecisionMode(strategy.advanced.decisionMode)}</td>
                   ))}
                 </tr>
                 <tr>
-                  <td>Target allocation</td>
+                  <td>{t('auto.target_allocation')}</td>
                   {comparedStrategies.map((strategy) => (
                     <td key={strategy.id}>{formatTargetAllocation(strategy.targetAllocation)}</td>
                   ))}
@@ -1080,24 +1076,24 @@ export function StrategiesPage(): JSX.Element {
 
       <section className="panel">
         <h2>Social portfolio (public and anonymized)</h2>
-        <p>Discover community-shared strategies and import them for local testing.</p>
+        <p>{t('auto.discover_community_shared_stra')}</p>
         {publicStrategies.filter((row) => !row.isOwnedByRequester).length === 0 ? (
-          <p>No public strategy available at the moment.</p>
+          <p>{t('auto.no_public_strategy_available_a')}</p>
         ) : (
           <div className="table-scroll table-scroll-wide">
             <table>
               <thead>
                 <tr>
-                  <th>Share</th>
-                  <th>Author</th>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Risk</th>
-                  <th>Budget</th>
-                  <th>Cycles</th>
-                  <th>Position max</th>
-                  <th>Allocation</th>
-                  <th>Action</th>
+                  <th>{t('auto.share')}</th>
+                  <th>{t('auto.author')}</th>
+                  <th>{t('auto.name')}</th>
+                  <th>{t('auto.description')}</th>
+                  <th>{t('auto.risk')}</th>
+                  <th>{t('auto.budget')}</th>
+                  <th>{t('auto.cycles')}</th>
+                  <th>{t('auto.position_max')}</th>
+                  <th>{t('auto.allocation')}</th>
+                  <th>{t('auto.action')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -1122,7 +1118,7 @@ export function StrategiesPage(): JSX.Element {
                             void handleImportPublic(row.shareId);
                           }}
                         >
-                          Import
+                          {t('auto.import')}
                         </button>
                       </td>
                     </tr>

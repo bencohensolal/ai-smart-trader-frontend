@@ -1,6 +1,5 @@
 import { ChangeEvent, ReactElement, ReactNode } from 'react';
 import { Layout } from '../components/Layout';
-import { useI18n } from '../i18n/i18n';
 import { getWizardStrategy, importWizardStrategies } from '../api';
 import { CRYPTO_CATALOG } from './strategy-wizard/constants';
 import { ExecutionConfigurationSection } from './strategy-wizard/ExecutionConfigurationSection';
@@ -9,12 +8,9 @@ import { useStrategyWizardState } from './strategy-wizard/useStrategyWizardState
 import { useStrategyWizardHandlers } from './strategy-wizard/useStrategyWizardHandlers';
 import styles from './StrategyWizardPage.module.css';
 
-type StrategyProfile = ApiStrategyProfile;
-type PromptTemplate = ApiPromptTemplate;
-
 export function StrategyWizardPage(): ReactElement {
   const wizardState = useStrategyWizardState();
-  const wizardHandlers = useStrategyWizardHandlers(wizardState);
+  const _wizardHandlers = useStrategyWizardHandlers(wizardState);
   // ...existing component code...
 }
 

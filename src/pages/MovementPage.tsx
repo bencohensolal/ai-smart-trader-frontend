@@ -32,7 +32,7 @@ export function MovementPage(): JSX.Element {
           navigate('/login', { replace: true });
           return;
         }
-        setError('Unable to load the requested movement.');
+        setError(t('movementPage.loadError'));
       }
     }
     void loadMovement();
@@ -50,7 +50,7 @@ export function MovementPage(): JSX.Element {
       {movement ? (
         <section className="panel movement-grid">
           <article>
-            <h2>Execution</h2>
+            <h2>{t('auto.execution')}</h2>
             <p>
               {movement.side} {movement.symbol} | {formatAmountFromEur(movement.amountEur)} |{' '}
               {formatAmountFromEur(movement.priceEur)} | {movement.status}
@@ -62,16 +62,16 @@ export function MovementPage(): JSX.Element {
             </p>
           </article>
           <article>
-            <h2>Decision</h2>
+            <h2>{t('auto.decision')}</h2>
             <p>{movement.decisionSummary}</p>
           </article>
           <article>
-            <h2>Expected gain</h2>
+            <h2>{t('auto.expected_gain')}</h2>
             <p>{movement.expectedGainPct.toFixed(2)}%</p>
             <p>{movement.expectedGainScenario}</p>
           </article>
           <article>
-            <h2>AI recommendation</h2>
+            <h2>{t('auto.ai_recommendation')}</h2>
             <p>
               {movement.aiRecommendationAction} | Confidence:{' '}
               {movement.aiRecommendationConfidencePct.toFixed(1)}% | Source:{' '}
@@ -80,12 +80,12 @@ export function MovementPage(): JSX.Element {
             <p>{movement.aiRecommendationRationale}</p>
           </article>
           <article>
-            <h2>Risk</h2>
+            <h2>{t('auto.risk')}</h2>
             <p>{movement.riskLevel}</p>
             <p>{movement.riskScenario}</p>
           </article>
           <article>
-            <h2>Goal contribution</h2>
+            <h2>{t('auto.goal_contribution')}</h2>
             <p>{movement.objectiveContribution}</p>
             <p>{movement.extraInfo}</p>
           </article>

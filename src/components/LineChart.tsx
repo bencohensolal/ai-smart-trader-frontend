@@ -1,3 +1,5 @@
+import { useI18n } from '../i18n/i18n';
+
 type LineChartPoint = {
   label: string;
   value: number;
@@ -18,6 +20,7 @@ export function LineChart({
   stroke = '#00c389',
   valueFormatter = (value) => value.toFixed(2),
 }: LineChartProps): JSX.Element {
+  const { t } = useI18n();
   const width = 640;
   const height = 220;
   const padding = 22;
@@ -27,7 +30,7 @@ export function LineChart({
       <article className="panel chart-panel">
         <h3>{title}</h3>
         {subtitle ? <p>{subtitle}</p> : null}
-        <p>No data available.</p>
+        <p>{t('auto.no_data_available')}</p>
       </article>
     );
   }

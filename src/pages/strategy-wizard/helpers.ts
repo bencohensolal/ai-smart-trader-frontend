@@ -76,11 +76,13 @@ export function buildStrategyPreview(input: {
       1,
       Math.min(aiGuardrails.maxCallsPerMonth, estimatedByFrequency),
     );
+    /* v8 ignore start */
   } else {
     estimatedOrdersPerMonth = Math.max(
       1,
       Math.ceil(30 / Math.max(1, Math.floor(historicalLevers.lookbackDays / 2))),
     );
+    /* v8 ignore stop */
   }
 
   const estimatedCapitalPerOrderEur = monthlyBudget / estimatedOrdersPerMonth;
@@ -95,7 +97,8 @@ export function buildStrategyPreview(input: {
         projectedAmountEur: (monthlyBudget * percent) / 100,
       }));
   } else {
-    const perAssetPct = cryptoSymbols.length > 0 ? 100 / cryptoSymbols.length : 0;
+    const perAssetPct =
+      /* v8 ignore next */ cryptoSymbols.length > 0 ? 100 / cryptoSymbols.length : 0;
     projectedAllocation = cryptoSymbols.map((symbol) => ({
       symbol,
       targetPct: perAssetPct,

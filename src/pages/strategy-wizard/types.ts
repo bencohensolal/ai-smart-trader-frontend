@@ -2,8 +2,8 @@ export interface StrategyWizardState {
   importInputRef: React.RefObject<HTMLInputElement>;
   currentStep: WizardStep;
   setCurrentStep: (step: WizardStep) => void;
-  strategies: any[];
-  setStrategies: (strategies: any[]) => void;
+  strategies: unknown[];
+  setStrategies: (strategies: unknown[]) => void;
   loading: boolean;
   setLoading: (loading: boolean) => void;
   status: string;
@@ -22,8 +22,8 @@ export interface StrategyWizardState {
   setRiskLevel: (level: StrategyRiskLevel) => void;
   strategyType: StrategyType;
   setStrategyType: (type: StrategyType) => void;
-  promptTemplates: any[];
-  setPromptTemplates: (templates: any[]) => void;
+  promptTemplates: unknown[];
+  setPromptTemplates: (templates: unknown[]) => void;
   selectedTemplate: 'defensive' | 'balanced' | 'aggressive';
   setSelectedTemplate: (template: 'defensive' | 'balanced' | 'aggressive') => void;
   selectedPromptContent: string;

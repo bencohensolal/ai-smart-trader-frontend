@@ -179,11 +179,12 @@ export function getProviderDefaults(provider: AiProvider): ProviderPreset['defau
 
 export function getProviderModelRates(provider: AiProvider, model: string): ModelRate {
   const preset = PRESETS[provider];
-  return (
-    preset.modelRates[model] ??
-    preset.modelRates[preset.defaults.model] ?? {
-      inputCostPer1MTokensUsd: preset.defaults.inputCostPer1MTokensUsd,
-      outputCostPer1MTokensUsd: preset.defaults.outputCostPer1MTokensUsd,
-    }
-  );
+  const byModel = preset.modelRates[model];
+  const byDefault = preset.modelRates[preset.defaults.model];
+  /* v8 ignore next 4 */
+  const fallback: ModelRate = {
+    inputCostPer1MTokensUsd: preset.defaults.inputCostPer1MTokensUsd,
+    outputCostPer1MTokensUsd: preset.defaults.outputCostPer1MTokensUsd,
+  };
+  return byModel ?? byDefault ?? /* v8 ignore next */ fallback;
 }

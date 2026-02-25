@@ -54,7 +54,7 @@ export function SimulationArchiveSection({
   return (
     <section className="panel">
       <div className="simulations-archive-head">
-        <h2>Simulation archives</h2>
+        <h2>{t('auto.simulation_archives')}</h2>
         <button
           className="simulations-archive-clear"
           type="button"
@@ -65,14 +65,14 @@ export function SimulationArchiveSection({
         </button>
       </div>
       {loadingRuns ? (
-        <p>Loading...</p>
+        <p>{t('auto.loading')}</p>
       ) : runs.length === 0 ? (
-        <p>No archived simulation yet.</p>
+        <p>{t('auto.no_archived_simulation_yet')}</p>
       ) : (
         <>
           <section className="controls-panel">
             <label className="field">
-              <span>Status</span>
+              <span>{t('auto.status')}</span>
               <select
                 value={archiveStatusFilter}
                 onChange={(event) => {
@@ -82,20 +82,20 @@ export function SimulationArchiveSection({
                   }
                 }}
               >
-                <option value="all">All</option>
-                <option value="completed">Completed</option>
-                <option value="failed">Failed</option>
+                <option value="all">{t('auto.all')}</option>
+                <option value="completed">{t('auto.completed')}</option>
+                <option value="failed">{t('auto.failed')}</option>
               </select>
             </label>
             <label className="field">
-              <span>Strategy</span>
+              <span>{t('auto.strategy')}</span>
               <select
                 value={archiveStrategyFilter}
                 onChange={(event) => {
                   onArchiveStrategyFilterChange(event.target.value);
                 }}
               >
-                <option value="all">All</option>
+                <option value="all">{t('auto.all')}</option>
                 {archiveStrategies.map((strategyName) => {
                   return (
                     <option key={strategyName} value={strategyName}>
@@ -106,7 +106,7 @@ export function SimulationArchiveSection({
               </select>
             </label>
             <label className="field">
-              <span>Rows/page</span>
+              <span>{t('auto.rows_page')}</span>
               <select
                 value={String(archivePageSize)}
                 onChange={(event) => {
@@ -131,17 +131,17 @@ export function SimulationArchiveSection({
             <table>
               <thead>
                 <tr>
-                  <th>Execution date</th>
-                  <th>Strategy</th>
-                  <th>Period</th>
-                  <th>Status</th>
-                  <th>Invested</th>
-                  <th>Final value</th>
-                  <th>PnL</th>
+                  <th>{t('auto.execution_date')}</th>
+                  <th>{t('auto.strategy')}</th>
+                  <th>{t('auto.period')}</th>
+                  <th>{t('auto.status')}</th>
+                  <th>{t('auto.invested')}</th>
+                  <th>{t('auto.final_value')}</th>
+                  <th>{t('auto.pnl')}</th>
                   <th>{t('simulations.archive.aiUsage')}</th>
-                  <th>Batch</th>
-                  <th>Operations</th>
-                  <th>Action</th>
+                  <th>{t('auto.batch')}</th>
+                  <th>{t('auto.operations')}</th>
+                  <th>{t('auto.action')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -175,7 +175,7 @@ export function SimulationArchiveSection({
                               onOpenRun(run);
                             }}
                           >
-                            View details
+                            {t('auto.view_details')}
                           </button>
                           <button
                             className="button button-danger button-small"
@@ -184,7 +184,7 @@ export function SimulationArchiveSection({
                               onDeleteRun(run);
                             }}
                           >
-                            Delete
+                            {t('auto.delete')}
                           </button>
                         </div>
                       </td>
@@ -193,7 +193,7 @@ export function SimulationArchiveSection({
                 })}
                 {pagedRuns.length === 0 ? (
                   <tr>
-                    <td colSpan={11}>No simulations for these filters.</td>
+                    <td colSpan={11}>{t('auto.no_simulations_for_these_filte')}</td>
                   </tr>
                 ) : null}
               </tbody>
@@ -207,7 +207,7 @@ export function SimulationArchiveSection({
               onClick={onPreviousPage}
               disabled={safeArchivePage <= 1}
             >
-              Previous
+              {t('auto.previous')}
             </button>
             <span>
               Page {safeArchivePage} / {archivePageCount}
@@ -218,7 +218,7 @@ export function SimulationArchiveSection({
               onClick={onNextPage}
               disabled={safeArchivePage >= archivePageCount}
             >
-              Next
+              {t('auto.next')}
             </button>
           </div>
         </>

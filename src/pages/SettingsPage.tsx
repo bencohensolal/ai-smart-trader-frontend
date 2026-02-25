@@ -28,6 +28,7 @@ export function SettingsPage(): JSX.Element {
   useEffect(() => {
     let active = true;
     async function load(): Promise<void> {
+      const { t } = useI18n();
       try {
         const payload = await getUserSettings();
         if (!active) {

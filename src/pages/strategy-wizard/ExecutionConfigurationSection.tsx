@@ -1,6 +1,7 @@
 import { ReactElement, ReactNode } from 'react';
 import styles from '../StrategyWizardPage.module.css';
 import { SafeguardsDefaults, StrategyType } from './types';
+import { useI18n } from '../../i18n/i18n';
 
 type TooltipComponentProps = {
   children: ReactNode;
@@ -23,16 +24,17 @@ export function ExecutionConfigurationSection({
   onSafeguardsChange,
   TooltipComponent,
 }: ExecutionConfigurationSectionProps): ReactElement {
+  const { t } = useI18n();
   return (
     <div className={styles.configSubsection}>
-      <h3>Execution cadence</h3>
+      <h3>{t('auto.execution_cadence')}</h3>
       <div className={styles.safeguardsGrid}>
         <div className={styles.formGroup}>
           <TooltipComponent
             enabled={tooltipsEnabled}
             content="Number of times per day the strategy evaluates whether to buy, sell, or skip. Higher values react faster but can increase churn and fees."
           >
-            <label>Decision checks per day</label>
+            <label>{t('auto.decision_checks_per_day')}</label>
           </TooltipComponent>
           <input
             type="number"

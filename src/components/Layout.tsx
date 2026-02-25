@@ -98,9 +98,11 @@ export function Layout({ title, subtitle, children }: LayoutProps): JSX.Element 
     const timers: number[] = [];
 
     async function connect(): Promise<() => void> {
-      const currentUser = await getCurrentUser().catch(() => ({
-        authenticated: false,
-      }));
+      const currentUser = await getCurrentUser().catch(
+        (): { authenticated: boolean; user?: undefined } => ({
+          authenticated: false,
+        }),
+      );
 
       const ownerId =
         currentUser.authenticated && currentUser.user?.email

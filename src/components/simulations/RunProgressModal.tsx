@@ -1,6 +1,7 @@
 import { ReactElement } from 'react';
 import { HistoricalSimulationRunSession } from '../../api';
 import { formatAmountFromEur } from '../../currency';
+import { useI18n } from '../../i18n/i18n';
 
 const integer = new Intl.NumberFormat('fr-FR');
 
@@ -15,6 +16,7 @@ export function RunProgressModal({
   progress,
   onClose,
 }: RunProgressModalProps): ReactElement | null {
+  const { t } = useI18n();
   if (!open || !progress) {
     return null;
   }
@@ -24,11 +26,15 @@ export function RunProgressModal({
   return (
     <div className="simulation-progress-modal-backdrop">
       <section className="panel simulation-progress-modal">
-        <h2>{progress.status === 'failed' ? 'Simulation stopped' : 'Simulation running'}</h2>
+        <h2>
+          {progress.status === 'failed'
+            ? t('runProgressModal.stopped')
+            : t('runProgressModal.running')}
+        </h2>
         <p>
           {progress.status === 'failed'
-            ? 'Simulation failed. Check the message below.'
-            : 'Backtest running. AI metrics update automatically.'}
+            ? t('runProgressModal.failedMessage')
+            : t('runProgressModal.runningMessage')}
         </p>
         <div className="simulation-progress-track">
           <div className="simulation-progress-fill" style={{ width: `${runProgressPct}%` }} />
@@ -41,40 +47,40 @@ export function RunProgressModal({
         </div>
         <div className="simulation-progress-kpis">
           <article>
-            <span>Executed operations</span>
+            <span>{t('auto.executed_operations')}</span>
             <strong>{integer.format(progress.executedOperations)}</strong>
           </article>
           <article>
-            <span>Total AI calls</span>
+            <span>{t('auto.total_ai_calls')}</span>
             <strong>{integer.format(progress.aiCalls)}</strong>
           </article>
           <article>
-            <span>Successful calls</span>
+            <span>{t('auto.successful_calls')}</span>
             <strong>{integer.format(progress.aiCallsSuccessful)}</strong>
           </article>
           <article>
-            <span>Failed calls</span>
+            <span>{t('auto.failed_calls')}</span>
             <strong>{integer.format(progress.aiCallsFailed)}</strong>
           </article>
           <article>
-            <span>Tokens consumed</span>
+            <span>{t('auto.tokens_consumed')}</span>
             <strong>{integer.format(progress.aiTotalTokens)}</strong>
           </article>
           <article>
-            <span>Prompt tokens</span>
+            <span>{t('auto.prompt_tokens')}</span>
             <strong>{integer.format(progress.aiPromptTokens)}</strong>
           </article>
           <article>
-            <span>Completion tokens</span>
+            <span>{t('auto.completion_tokens')}</span>
             <strong>{integer.format(progress.aiCompletionTokens)}</strong>
           </article>
           <article>
-            <span>Current cost</span>
+            <span>{t('auto.current_cost')}</span>
             <strong>{formatAmountFromEur(progress.aiCostEur)}</strong>
           </article>
         </div>
         <section className="simulation-progress-operations">
-          <h3>Last 5 operations</h3>
+          <h3>{t('auto.last_5_operations')}</h3>
           {progress.lastOperations.length > 0 ? (
             <ul>
               {progress.lastOperations.map((operation) => {
@@ -97,7 +103,7 @@ export function RunProgressModal({
               })}
             </ul>
           ) : (
-            <p>No operations executed yet.</p>
+            <p>{t('auto.no_operations_executed_yet')}</p>
           )}
         </section>
         {progress.status === 'failed' && progress.errorMessage ? (
@@ -106,7 +112,7 @@ export function RunProgressModal({
         {progress.status === 'failed' ? (
           <div className="form-actions">
             <button className="button button-secondary" type="button" onClick={onClose}>
-              Close
+              {t('auto.close')}
             </button>
           </div>
         ) : null}

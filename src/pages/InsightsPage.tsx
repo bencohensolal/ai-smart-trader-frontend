@@ -88,7 +88,7 @@ export function InsightsPage(): JSX.Element {
     >
       <section className="panel controls-panel">
         <label className="field">
-          <span>Analyzed strategy</span>
+          <span>{t('auto.analyzed_strategy')}</span>
           <select
             value={selectedStrategyId}
             onChange={(event) => {
@@ -111,25 +111,25 @@ export function InsightsPage(): JSX.Element {
         <>
           <section className="kpis">
             <article className="kpi">
-              <span>Market regime</span>
+              <span>{t('auto.market_regime')}</span>
               <strong>{insights.marketRegime}</strong>
             </article>
             <article className="kpi">
-              <span>Risk</span>
+              <span>{t('auto.risk')}</span>
               <strong>{insights.riskLevel}</strong>
             </article>
             <article className="kpi">
-              <span>Confidence</span>
+              <span>{t('auto.confidence')}</span>
               <strong>{insights.confidencePct.toFixed(1)}%</strong>
             </article>
             <article className="kpi">
-              <span>30d volatility</span>
+              <span>{t('auto.30d_volatility')}</span>
               <strong>{insights.metrics.volatility30dPct.toFixed(2)}%</strong>
             </article>
           </section>
 
           <section className="panel">
-            <h2>Recommendations</h2>
+            <h2>{t('auto.recommendations')}</h2>
             <ul className="cards-list">
               {insights.recommendations.map((item) => {
                 return (
@@ -144,7 +144,7 @@ export function InsightsPage(): JSX.Element {
           </section>
 
           <section className="panel">
-            <h2>Alerts</h2>
+            <h2>{t('auto.alerts')}</h2>
             <ul className="cards-list">
               {insights.alerts.map((alert) => {
                 return (
@@ -158,7 +158,7 @@ export function InsightsPage(): JSX.Element {
           </section>
         </>
       ) : (
-        <section className="panel">Loading...</section>
+        <section className="panel">{t('auto.loading')}</section>
       )}
     </Layout>
   );

@@ -30,7 +30,6 @@ import {
 } from '../api';
 import { useI18n } from '../i18n/i18n';
 import { Layout } from '../components/Layout';
-import { CryptoPriceTicker } from '../components/CryptoPriceTicker';
 import { formatAmountFromEur } from '../currency';
 import {
   matchesOperationFilters,
@@ -1116,7 +1115,7 @@ export function DashboardPage(): JSX.Element {
                 </select>
               </label>
               <label className="field">
-                <span>Rows/page</span>
+                <span>{t('auto.rows_page')}</span>
                 <select
                   value={String(operationsPageSize)}
                   onChange={(event) => {
@@ -1192,7 +1191,7 @@ export function DashboardPage(): JSX.Element {
                 }}
                 disabled={safeOperationsPage <= 1}
               >
-                Previous
+                {t('auto.previous')}
               </button>
               <span>
                 Page {safeOperationsPage} / {operationsPageCount}
@@ -1205,7 +1204,7 @@ export function DashboardPage(): JSX.Element {
                 }}
                 disabled={safeOperationsPage >= operationsPageCount}
               >
-                Next
+                {t('auto.next')}
               </button>
             </div>
           </section>

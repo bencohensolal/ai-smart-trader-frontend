@@ -636,13 +636,14 @@ async function requestJson<T>(input: RequestInfo | URL, init?: RequestInit): Pro
   }
 
   if (!response.ok) {
-    const message =
+    const rawMessage =
       typeof payload === 'object' &&
       payload !== null &&
       'message' in payload &&
       typeof (payload as ApiErrorPayload).message === 'string'
         ? (payload as ApiErrorPayload).message
-        : `HTTP ${response.status}`;
+        : undefined;
+    const message = rawMessage ?? `HTTP ${response.status}`;
     throw new ApiHttpError(response.status, message);
   }
 

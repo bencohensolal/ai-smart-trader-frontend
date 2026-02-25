@@ -24,6 +24,7 @@ import {
 } from '../api';
 import { Layout } from '../components/Layout';
 import { formatAmountFromEur } from '../currency';
+import { useI18n } from '../i18n/i18n';
 import {
   buildOperationFiltersQueryString,
   matchesOperationFilters,
@@ -161,6 +162,7 @@ function buildAssetPriceCurve(report: HistoricalSimulationReport | null): {
 }
 
 export function SimulationReportPage(): JSX.Element {
+  const { t } = useI18n();
   const navigate = useNavigate();
   const { simulationId = '' } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -416,7 +418,7 @@ export function SimulationReportPage(): JSX.Element {
               navigate('/simulations');
             }}
           >
-            ← Back to simulations
+            {t('auto.back_to_simulations')}
           </button>
           <button
             className="button button-secondary"
@@ -426,7 +428,7 @@ export function SimulationReportPage(): JSX.Element {
             }}
             disabled={!previousRunId}
           >
-            Previous simulation
+            {t('auto.previous_simulation')}
           </button>
           <button
             className="button button-secondary"
@@ -436,66 +438,66 @@ export function SimulationReportPage(): JSX.Element {
             }}
             disabled={!nextRunId}
           >
-            Next simulation
+            {t('auto.next_simulation')}
           </button>
         </div>
       </section>
 
-      {loading ? <section className="panel">Loading...</section> : null}
+      {loading ? <section className="panel">{t('auto.loading')}</section> : null}
       {!loading && error ? <section className="panel status status-error">{error}</section> : null}
 
       {!loading && !error && run && report ? (
         <>
           <section className="kpis">
             <article className="kpi">
-              <span>Total invested</span>
+              <span>{t('auto.total_invested')}</span>
               <strong>{formatAmountFromEur(report.totals.totalInvestedEur)}</strong>
             </article>
             <article className="kpi">
-              <span>Final value</span>
+              <span>{t('auto.final_value')}</span>
               <strong>{formatAmountFromEur(report.totals.finalValueEur)}</strong>
             </article>
             <article className="kpi">
-              <span>Net gain/loss</span>
+              <span>{t('auto.net_gain_loss')}</span>
               <strong>{formatAmountFromEur(report.totals.netProfitEur)}</strong>
             </article>
             <article className="kpi">
-              <span>Return</span>
+              <span>{t('auto.return')}</span>
               <strong>{report.totals.returnPct.toFixed(2)}%</strong>
             </article>
             <article className="kpi">
-              <span>Fees</span>
+              <span>{t('auto.fees')}</span>
               <strong>{formatAmountFromEur(report.totals.totalFeesEur)}</strong>
             </article>
             <article className="kpi">
-              <span>Win rate</span>
+              <span>{t('auto.win_rate')}</span>
               <strong>{report.totals.winRatePct.toFixed(2)}%</strong>
             </article>
             <article className="kpi">
-              <span>AI calls</span>
+              <span>{t('auto.ai_calls')}</span>
               <strong>{aiUsageTotals.totalCalls}</strong>
             </article>
             <article className="kpi">
-              <span>AI calls successful</span>
+              <span>{t('auto.ai_calls_successful')}</span>
               <strong>{aiUsageTotals.successfulCalls}</strong>
             </article>
             <article className="kpi">
-              <span>AI calls failed</span>
+              <span>{t('auto.ai_calls_failed')}</span>
               <strong>{aiUsageTotals.failedCalls}</strong>
             </article>
             <article className="kpi">
-              <span>AI tokens</span>
+              <span>{t('auto.ai_tokens')}</span>
               <strong>{aiUsageTotals.totalTokens}</strong>
             </article>
             <article className="kpi">
-              <span>AI cost</span>
+              <span>{t('auto.ai_cost')}</span>
               <strong>{formatAmountFromEur(aiUsageTotals.estimatedCostEur)}</strong>
             </article>
           </section>
 
           <section className="charts-grid">
             <article className="panel chart-panel chart-panel-wide">
-              <h2>Asset price curves by crypto</h2>
+              <h2>{t('auto.asset_price_curves_by_crypto')}</h2>
               <p className="chart-help">
                 Real crypto price evolution over time (not holdings quantity or owned amount). One
                 chart per crypto.
@@ -567,30 +569,30 @@ export function SimulationReportPage(): JSX.Element {
                   );
                 })
               ) : (
-                <p>No operation data available to build asset price curves.</p>
+                <p>{t('auto.no_operation_data_available_to')}</p>
               )}
               <div className="simulation-marker-legend">
                 <span>
                   <i style={{ background: EVENT_MARKER_COLORS.BUY_FILLED }} />
-                  Buy filled
+                  {t('auto.buy_filled')}
                 </span>
                 <span>
                   <i style={{ background: EVENT_MARKER_COLORS.SELL_FILLED }} />
-                  Sell filled
+                  {t('auto.sell_filled')}
                 </span>
                 <span>
                   <i style={{ background: EVENT_MARKER_COLORS.BUY_REJECTED }} />
-                  Buy rejected
+                  {t('auto.buy_rejected')}
                 </span>
                 <span>
                   <i style={{ background: EVENT_MARKER_COLORS.SELL_REJECTED }} />
-                  Sell rejected
+                  {t('auto.sell_rejected')}
                 </span>
               </div>
             </article>
 
             <article className="panel chart-panel chart-panel-wide">
-              <h2>Portfolio vs invested evolution</h2>
+              <h2>{t('auto.portfolio_vs_invested_evolutio')}</h2>
               <p className="chart-help">
                 Compare portfolio value to invested capital: above means overall gain, below means
                 overall loss.
@@ -633,7 +635,7 @@ export function SimulationReportPage(): JSX.Element {
             </article>
 
             <article className="panel chart-panel chart-panel-wide">
-              <h2>Gain/loss evolution</h2>
+              <h2>{t('auto.gain_loss_evolution')}</h2>
               <p className="chart-help">
                 This chart shows net gain/loss over time: positive means profit, negative means
                 loss.
@@ -668,7 +670,7 @@ export function SimulationReportPage(): JSX.Element {
             </article>
 
             <article className="panel chart-panel chart-panel-wide">
-              <h2>AI usage evolution</h2>
+              <h2>{t('auto.ai_usage_evolution')}</h2>
               <p className="chart-help">
                 Cumulative AI remote calls during the simulation, with successful and failed calls
                 over time.
@@ -714,10 +716,8 @@ export function SimulationReportPage(): JSX.Element {
             </article>
 
             <article className="panel chart-panel chart-panel-wide">
-              <h2>AI recommendation evolution</h2>
-              <p className="chart-help">
-                Cumulative recommendation flow by action type and source.
-              </p>
+              <h2>{t('auto.ai_recommendation_evolution')}</h2>
+              <p className="chart-help">{t('auto.cumulative_recommendation_flow')}</p>
               <div className="chart-wrap">
                 <ResponsiveContainer width="100%" height={280}>
                   <LineChart data={aiRecommendationEvolution}>
@@ -773,10 +773,10 @@ export function SimulationReportPage(): JSX.Element {
           </section>
 
           <section className="panel">
-            <h2>Simulation operations</h2>
+            <h2>{t('auto.simulation_operations')}</h2>
             <section className="controls-panel">
               <label className="field">
-                <span>Side</span>
+                <span>{t('auto.side')}</span>
                 <select
                   value={operationSideFilter}
                   onChange={(event) => {
@@ -790,14 +790,14 @@ export function SimulationReportPage(): JSX.Element {
                     });
                   }}
                 >
-                  <option value="all">All</option>
-                  <option value="buy">Buy</option>
-                  <option value="sell">Sell</option>
+                  <option value="all">{t('auto.all')}</option>
+                  <option value="buy">{t('auto.buy')}</option>
+                  <option value="sell">{t('auto.sell')}</option>
                 </select>
               </label>
 
               <label className="field">
-                <span>Outcome</span>
+                <span>{t('auto.outcome')}</span>
                 <select
                   value={operationOutcomeFilter}
                   onChange={(event) => {
@@ -811,21 +811,21 @@ export function SimulationReportPage(): JSX.Element {
                     });
                   }}
                 >
-                  <option value="successful">Successful</option>
-                  <option value="failed">Failed</option>
-                  <option value="all">All</option>
+                  <option value="successful">{t('auto.successful')}</option>
+                  <option value="failed">{t('auto.failed')}</option>
+                  <option value="all">{t('auto.all')}</option>
                 </select>
               </label>
 
               <label className="field">
-                <span>Asset</span>
+                <span>{t('auto.asset')}</span>
                 <select
                   value={operationSymbolFilter}
                   onChange={(event) => {
                     setOperationSymbolFilter(event.target.value);
                   }}
                 >
-                  <option value="all">All</option>
+                  <option value="all">{t('auto.all')}</option>
                   {symbolOptions.map((symbol) => {
                     return (
                       <option key={symbol} value={symbol}>
@@ -837,7 +837,7 @@ export function SimulationReportPage(): JSX.Element {
               </label>
 
               <label className="field">
-                <span>Rows/page</span>
+                <span>{t('auto.rows_page')}</span>
                 <select
                   value={String(operationsPageSize)}
                   onChange={(event) => {
@@ -863,15 +863,15 @@ export function SimulationReportPage(): JSX.Element {
               <table>
                 <thead>
                   <tr>
-                    <th>Timestamp</th>
-                    <th>Asset</th>
-                    <th>Side</th>
-                    <th>Status</th>
-                    <th>Amount</th>
-                    <th>Price</th>
-                    <th>Fees</th>
-                    <th>Rationale</th>
-                    <th>Detail</th>
+                    <th>{t('auto.timestamp')}</th>
+                    <th>{t('auto.asset')}</th>
+                    <th>{t('auto.side')}</th>
+                    <th>{t('auto.status')}</th>
+                    <th>{t('auto.amount')}</th>
+                    <th>{t('auto.price')}</th>
+                    <th>{t('auto.fees')}</th>
+                    <th>{t('auto.rationale')}</th>
+                    <th>{t('auto.detail')}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -898,13 +898,13 @@ export function SimulationReportPage(): JSX.Element {
                         <td>{formatAmountFromEur(operation.priceEur)}</td>
                         <td>{formatAmountFromEur(operation.feeEur)}</td>
                         <td>{operation.rationale}</td>
-                        <td>Open</td>
+                        <td>{t('auto.open')}</td>
                       </tr>
                     );
                   })}
                   {pagedOperations.length === 0 ? (
                     <tr>
-                      <td colSpan={9}>No operations for these filters.</td>
+                      <td colSpan={9}>{t('auto.no_operations_for_these_filter')}</td>
                     </tr>
                   ) : null}
                 </tbody>
@@ -920,7 +920,7 @@ export function SimulationReportPage(): JSX.Element {
                 }}
                 disabled={safeOperationsPage <= 1}
               >
-                Previous
+                {t('auto.previous')}
               </button>
               <span>
                 Page {safeOperationsPage} / {operationsPageCount}
@@ -933,7 +933,7 @@ export function SimulationReportPage(): JSX.Element {
                 }}
                 disabled={safeOperationsPage >= operationsPageCount}
               >
-                Next
+                {t('auto.next')}
               </button>
             </div>
           </section>

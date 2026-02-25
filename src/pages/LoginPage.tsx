@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getLoginStatus } from '../api';
 import { BrandLogo } from '../components/BrandLogo';
+import { useI18n } from '../i18n/i18n';
 
 type LoginStatus = {
   authDisabled: boolean;
@@ -11,6 +12,7 @@ type LoginStatus = {
 };
 
 export function LoginPage(): JSX.Element {
+  const { t } = useI18n();
   const [status, setStatus] = useState<LoginStatus | null>(null);
 
   useEffect(() => {
@@ -28,7 +30,7 @@ export function LoginPage(): JSX.Element {
   }, []);
 
   if (!status) {
-    return <div className="login-shell">Loading...</div>;
+    return <div className="login-shell">{t('auto.loading')}</div>;
   }
 
   if (status.authenticated) {
@@ -38,12 +40,12 @@ export function LoginPage(): JSX.Element {
           <div className="login-brand">
             <BrandLogo compact />
           </div>
-          <h1>Session active</h1>
+          <h1>{t('auto.session_active')}</h1>
           <p>
             Signed in as {status.user?.displayName ?? 'User'} ({status.user?.email ?? '-'})
           </p>
           <Link className="button" to="/">
-            Open dashboard
+            {t('auto.open_dashboard')}
           </Link>
         </article>
       </div>
@@ -56,7 +58,7 @@ export function LoginPage(): JSX.Element {
         <div className="login-brand">
           <BrandLogo compact />
         </div>
-        <h1>Sign-in required</h1>
+        <h1>{t('auto.sign_in_required')}</h1>
         <p>
           {status.authDisabled
             ? 'AUTH_DISABLE=true is active. The app is accessible without SSO.'
@@ -66,11 +68,11 @@ export function LoginPage(): JSX.Element {
         </p>
         {status.authDisabled ? (
           <Link className="button" to="/">
-            Access dashboard
+            {t('auto.access_dashboard')}
           </Link>
         ) : status.googleSsoConfigured ? (
           <a className="button" href="/auth/google">
-            Sign in with Google
+            {t('auto.sign_in_with_google')}
           </a>
         ) : null}
       </article>

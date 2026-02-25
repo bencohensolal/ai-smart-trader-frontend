@@ -3,6 +3,7 @@ import { AdvancedBacktestingComparisonResult, Strategy } from '../../api';
 import { DatePickerInput } from '../DatePickerInput';
 import { InfoTip } from '../InfoTip';
 import { formatAmountFromEur } from '../../currency';
+import { useI18n } from '../../i18n/i18n';
 
 type AdvancedComparisonSectionProps = {
   strategies: Strategy[];
@@ -35,16 +36,15 @@ export function AdvancedComparisonSection({
   onToggleStrategy,
   onSubmit,
 }: AdvancedComparisonSectionProps): ReactElement {
+  const { t } = useI18n();
   return (
     <>
       <h2>Multi-strategy comparison (same period)</h2>
-      <p>
-        Select 2 to 3 strategies, define one shared period, then run 2-3 simulations in parallel.
-      </p>
+      <p>{t('auto.select_2_to_3_strategies_defin')}</p>
       <form className="strategy-form strategy-form--stacked" onSubmit={onSubmit}>
         <div className="form-grid">
           <label className="field">
-            <span>Period start</span>
+            <span>{t('auto.period_start')}</span>
             <DatePickerInput
               value={periodStart}
               max={periodEnd || undefined}
@@ -52,7 +52,7 @@ export function AdvancedComparisonSection({
             />
           </label>
           <label className="field">
-            <span>Period end</span>
+            <span>{t('auto.period_end')}</span>
             <DatePickerInput
               value={periodEnd}
               min={periodStart || undefined}
@@ -80,7 +80,7 @@ export function AdvancedComparisonSection({
 
         <div className="field checkbox-field">
           <span>
-            Use live AI for these parallel simulations
+            {t('auto.use_live_ai_for_these_parallel')}
             <InfoTip
               label="Live AI (comparison)"
               text="Enables real AI calls during A/B comparison over the selected period."
@@ -144,11 +144,11 @@ export function AdvancedComparisonSection({
         <>
           <section className="kpis">
             <article className="kpi">
-              <span>Best strategy</span>
+              <span>{t('auto.best_strategy')}</span>
               <strong>{result.bestStrategyId}</strong>
             </article>
             <article className="kpi">
-              <span>Comparison period</span>
+              <span>{t('auto.comparison_period')}</span>
               <strong>
                 {result.periodStart} → {result.periodEnd}
               </strong>
@@ -159,14 +159,14 @@ export function AdvancedComparisonSection({
             <table>
               <thead>
                 <tr>
-                  <th>Rank</th>
-                  <th>Strategy</th>
-                  <th>Return</th>
-                  <th>Net profit</th>
-                  <th>Final value</th>
-                  <th>Win rate</th>
-                  <th>Operations</th>
-                  <th>Δ vs best return</th>
+                  <th>{t('auto.rank')}</th>
+                  <th>{t('auto.strategy')}</th>
+                  <th>{t('auto.return')}</th>
+                  <th>{t('auto.net_profit')}</th>
+                  <th>{t('auto.final_value')}</th>
+                  <th>{t('auto.win_rate')}</th>
+                  <th>{t('auto.operations')}</th>
+                  <th>{t('auto.vs_best_return')}</th>
                 </tr>
               </thead>
               <tbody>

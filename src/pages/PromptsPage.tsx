@@ -185,7 +185,7 @@ export function PromptsPage(): JSX.Element {
       <section className="prompts-grid">
         <article className="panel">
           <h2>{editingPromptId ? 'Edit prompt' : 'New prompt'}</h2>
-          <p>You can create multiple prompts per type to compare algorithm behaviors.</p>
+          <p>{t('auto.you_can_create_multiple_prompt')}</p>
           <form
             className="strategy-form strategy-form--stacked"
             onSubmit={(event) => void handleSave(event)}
@@ -193,7 +193,7 @@ export function PromptsPage(): JSX.Element {
             <div className="form-grid">
               <label className="field">
                 <span className="field-label">
-                  Prompt type
+                  {t('auto.prompt_type')}
                   <InfoTip
                     label="Type"
                     text="Each type maps to a different business usage (AI system, AI context, simulation explanation...)."
@@ -206,14 +206,14 @@ export function PromptsPage(): JSX.Element {
                   }}
                   disabled={Boolean(editingPromptId)}
                 >
-                  <option value="ai_advisor_system">AI Advisor - System</option>
-                  <option value="ai_advisor_user">AI Advisor - Context</option>
-                  <option value="simulation_explainer">Simulation - Explanation</option>
+                  <option value="ai_advisor_system">{t('auto.ai_advisor_system')}</option>
+                  <option value="ai_advisor_user">{t('auto.ai_advisor_context')}</option>
+                  <option value="simulation_explainer">{t('auto.simulation_explanation')}</option>
                 </select>
               </label>
 
               <label className="field">
-                <span className="field-label">Name</span>
+                <span className="field-label">{t('auto.name')}</span>
                 <input
                   value={name}
                   onChange={(event) => {
@@ -225,7 +225,7 @@ export function PromptsPage(): JSX.Element {
               </label>
 
               <label className="field">
-                <span className="field-label">Description</span>
+                <span className="field-label">{t('auto.description')}</span>
                 <input
                   value={description}
                   onChange={(event) => {
@@ -239,7 +239,7 @@ export function PromptsPage(): JSX.Element {
 
             <label className="field">
               <span className="field-label">
-                Prompt content
+                {t('auto.prompt_content')}
                 <InfoTip
                   label="Placeholder"
                   text="For AI context prompts, use {{contextJson}} to inject cycle data automatically."
@@ -261,7 +261,7 @@ export function PromptsPage(): JSX.Element {
                 {editingPromptId ? 'Save' : 'Create'}
               </button>
               <button className="button button-secondary" type="button" onClick={resetForm}>
-                Reset form
+                {t('auto.reset_form')}
               </button>
               <button
                 className="button button-secondary"
@@ -270,34 +270,34 @@ export function PromptsPage(): JSX.Element {
                   void handleResetDefaults();
                 }}
               >
-                Restore all defaults
+                {t('auto.restore_all_defaults')}
               </button>
             </div>
           </form>
         </article>
 
         <aside className="panel">
-          <h2>Quick help</h2>
+          <h2>{t('auto.quick_help')}</h2>
           <ul className="cards-list">
             <li>
-              <h3>Multiple variants</h3>
-              <p>Create multiple prompts of the same type for A/B testing.</p>
+              <h3>{t('auto.multiple_variants')}</h3>
+              <p>{t('auto.create_multiple_prompts_of_the')}</p>
             </li>
             <li>
-              <h3>Default version</h3>
-              <p>Prompts shipped with the project remain available and can be restored.</p>
+              <h3>{t('auto.default_version')}</h3>
+              <p>{t('auto.prompts_shipped_with_the_proje')}</p>
             </li>
             <li>
-              <h3>Strategy setup</h3>
-              <p>Each strategy can choose its AI prompts in the Strategies page.</p>
+              <h3>{t('auto.strategy_setup')}</h3>
+              <p>{t('auto.each_strategy_can_choose_its_a')}</p>
             </li>
           </ul>
         </aside>
       </section>
 
       <section className="panel">
-        <h2>Prompt library</h2>
-        {loading ? <p>Loading...</p> : null}
+        <h2>{t('auto.prompt_library')}</h2>
+        {loading ? <p>{t('auto.loading')}</p> : null}
 
         {(['ai_advisor_system', 'ai_advisor_user', 'simulation_explainer'] as const).map(
           (promptType) => {
@@ -320,11 +320,11 @@ export function PromptsPage(): JSX.Element {
                   <table>
                     <thead>
                       <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Default</th>
-                        <th>Actions</th>
+                        <th>{t('auto.id')}</th>
+                        <th>{t('auto.name')}</th>
+                        <th>{t('auto.description')}</th>
+                        <th>{t('auto.default')}</th>
+                        <th>{t('auto.actions')}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -344,7 +344,7 @@ export function PromptsPage(): JSX.Element {
                                     startEdit(prompt);
                                   }}
                                 >
-                                  Edit
+                                  {t('auto.edit')}
                                 </button>
                                 {prompt.templateKey ? (
                                   <button
@@ -354,7 +354,7 @@ export function PromptsPage(): JSX.Element {
                                       void handleResetPrompt(prompt);
                                     }}
                                   >
-                                    Reset to default
+                                    {t('auto.reset_to_default')}
                                   </button>
                                 ) : (
                                   <button
@@ -364,7 +364,7 @@ export function PromptsPage(): JSX.Element {
                                       void handleDelete(prompt);
                                     }}
                                   >
-                                    Delete
+                                    {t('auto.delete')}
                                   </button>
                                 )}
                               </div>

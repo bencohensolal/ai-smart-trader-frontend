@@ -92,7 +92,7 @@ export function SimulationOperationPage(): JSX.Element {
             navigate(parentSimulationUrl);
           }}
         >
-          Back to parent simulation
+          {t('auto.back_to_parent_simulation')}
         </button>
         <button
           className="button button-secondary"
@@ -112,7 +112,7 @@ export function SimulationOperationPage(): JSX.Element {
             );
           }}
         >
-          Previous operation
+          {t('auto.previous_operation')}
         </button>
         <button
           className="button button-secondary"
@@ -132,49 +132,49 @@ export function SimulationOperationPage(): JSX.Element {
             );
           }}
         >
-          Next operation
+          {t('auto.next_operation')}
         </button>
       </section>
 
       {error ? <section className="panel status status-error">{error}</section> : null}
 
       {!details ? (
-        <section className="panel">Loading...</section>
+        <section className="panel">{t('auto.loading')}</section>
       ) : (
         <>
           <section className="kpis">
             <article className="kpi">
-              <span>Spot price at time T</span>
+              <span>{t('auto.spot_price_at_time_t')}</span>
               <strong>{formatAmountFromEur(details.valuationAtOperation.spotPriceEur)}</strong>
             </article>
             <article className="kpi">
-              <span>Portfolio value</span>
+              <span>{t('auto.portfolio_value')}</span>
               <strong>{formatAmountFromEur(details.valuationAtOperation.portfolioValueEur)}</strong>
             </article>
             <article className="kpi">
-              <span>Available cash</span>
+              <span>{t('auto.available_cash')}</span>
               <strong>{formatAmountFromEur(details.valuationAtOperation.cashEur)}</strong>
             </article>
             <article className="kpi">
-              <span>Cumulative invested</span>
+              <span>{t('auto.cumulative_invested')}</span>
               <strong>{formatAmountFromEur(details.valuationAtOperation.investedEur)}</strong>
             </article>
             <article className="kpi">
-              <span>Position before order</span>
+              <span>{t('auto.position_before_order')}</span>
               <strong>
                 {details.valuationAtOperation.symbolQuantityBefore.toFixed(6)}{' '}
                 {details.operation.symbol}
               </strong>
             </article>
             <article className="kpi">
-              <span>Asset weight before order</span>
+              <span>{t('auto.asset_weight_before_order')}</span>
               <strong>{details.valuationAtOperation.symbolWeightBeforePct.toFixed(2)}%</strong>
             </article>
           </section>
 
           <section className="movement-grid">
             <article className="panel">
-              <h2>Execution</h2>
+              <h2>{t('auto.execution')}</h2>
               <p>
                 Amount: {formatAmountFromEur(details.operation.amountEur)} | Price:{' '}
                 {formatAmountFromEur(details.operation.priceEur)}
@@ -191,7 +191,7 @@ export function SimulationOperationPage(): JSX.Element {
             </article>
 
             <article className="panel">
-              <h2>Decision rationale</h2>
+              <h2>{t('auto.decision_rationale')}</h2>
               <p>{details.decision.summary}</p>
               <p>{details.decision.rationale}</p>
               <p>{details.decision.riskContext}</p>
@@ -199,7 +199,7 @@ export function SimulationOperationPage(): JSX.Element {
             </article>
 
             <article className="panel">
-              <h2>Financial impact</h2>
+              <h2>{t('auto.financial_impact')}</h2>
               {details.operation.side === 'SELL' ? (
                 <>
                   <p>Realized gain: {formatNullableCurrency(details.pnl.realizedGainEur)}</p>
