@@ -1,14 +1,9 @@
-#!/bin/sh
+echo "husky - DEPRECATED
 
-# Husky shell helper (copied from Husky's default template)
-if [ -z "$husky_skip_init" ]; then
-  debug () {
-    [ "$HUSKY_DEBUG" = "1" ] && echo "husky (debug) - $*"
-  }
-  readonly hook_name="$(basename "$0")"
-  debug "starting $hook_name..."
-  if [ -z "$HUSKY" ]; then
-    echo "Can't find HUSKY, skipping $hook_name hook"
-    exit 0
-  fi
-fi
+Please remove the following two lines from $0:
+
+#!/usr/bin/env sh
+. \"\$(dirname -- \"\$0\")/_/husky.sh\"
+
+They WILL FAIL in v10.0.0
+"

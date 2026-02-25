@@ -1,5 +1,9 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
 
-npm run quality:check || exit 1
-npm run agents:ack || exit 1
+npm run quality:check
+node scripts/verify-agents-ack.mjs || {
+	echo "\n⛔️ Commit blocked: You must reload AGENTS.md in memory and run 'npm run agents:ack' before committing.\n"
+	echo "Read AGENTS.md carefully, then run: npm run agents:ack"
+	exit 1
+}
