@@ -252,6 +252,10 @@ export const enMessages = {
   'page.strategies.title': 'Strategy Management',
   'page.strategies.subtitle':
     'Configure your strategies entirely through forms, compare them easily, and keep a clear A/B testing approach.',
+  'page.strategiesV2.title': 'Strategies',
+  'page.strategiesV2.subtitle': 'Create and manage your investment strategies.',
+  'page.strategiesV2.emptyState':
+    'This page is under construction. Strategy management features will appear here soon.',
   'page.insights.title': 'Smart Insights',
   'page.insights.subtitle.loading': 'Loading insights...',
   'page.insights.subtitle.loaded': '{strategyName} | Score {insightScore}/100 | {generatedAt}',

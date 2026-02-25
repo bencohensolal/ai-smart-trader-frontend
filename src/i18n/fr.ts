@@ -264,6 +264,10 @@ export const frMessages: TranslationDictionary = {
   'page.strategies.title': 'Gestion des Stratégies',
   'page.strategies.subtitle':
     'Configurez entièrement vos stratégies via des formulaires, comparez-les facilement et gardez une approche de test A/B claire.',
+  'page.strategiesV2.title': 'Stratégies',
+  'page.strategiesV2.subtitle': "Créez et gérez vos stratégies d'investissement.",
+  'page.strategiesV2.emptyState':
+    'Cette page est en construction. Les fonctionnalités de gestion de stratégies apparaîtront bientôt ici.',
   'page.insights.title': 'Analyses Intelligentes',
   'page.insights.subtitle.loading': 'Chargement des analyses...',
   'page.insights.subtitle.loaded': '{strategyName} | Score {insightScore}/100 | {generatedAt}',

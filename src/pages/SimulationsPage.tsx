@@ -9,7 +9,6 @@ import {
   Strategy,
   StrategyOverrideInput,
   StrategyRiskProfile,
-  getStrategies,
   isUnauthorizedError,
   listHistoricalSimulations,
   deleteHistoricalSimulation,
@@ -18,6 +17,8 @@ import {
   startAdvancedBacktestingRunSession,
   startHistoricalSimulationRunSession,
 } from '../api';
+import { useStrategyStore } from './strategies-v2/strategyStore';
+import { toBackendStrategy } from './strategies-v2/strategyMapper';
 import { InfoTip } from '../components/InfoTip';
 import { DatePickerInput } from '../components/DatePickerInput';
 import { AdvancedComparisonSection } from '../components/simulations/AdvancedComparisonSection';
@@ -47,7 +48,8 @@ import { useSimulationSessionTracking } from './simulations/useSimulationSession
 export function SimulationsPage(): ReactElement {
   const { t } = useI18n();
   const navigate = useNavigate();
-  const [strategies, setStrategies] = useState<Strategy[]>([]);
+  const { strategies: v2Strategies } = useStrategyStore();
+  const strategies: Strategy[] = v2Strategies.map(toBackendStrategy);
   const [runs, setRuns] = useState<HistoricalSimulationSummary[]>([]);
   const [selectedStrategyId, setSelectedStrategyId] = useState('');
   const [periodStart, setPeriodStart] = useState(resolveDefaultPeriodStart());
@@ -121,23 +123,25 @@ export function SimulationsPage(): ReactElement {
     navigate('/login', { replace: true });
   });
 
+  // Initialize strategy selection from v2 store
+  useEffect(() => {
+    if (strategies.length > 0 && !selectedStrategyId) {
+      setSelectedStrategyId(strategies[0].id);
+      setAdvancedBacktestStrategyId(strategies[0].id);
+      setAbComparisonStrategyIds(strategies.slice(0, 3).map((s) => s.id));
+    }
+  }, [strategies, selectedStrategyId]);
+
+  // Load simulation archive from backend
   useEffect(() => {
     let active = true;
 
-    async function loadInitialData(): Promise<void> {
+    async function loadSimulations(): Promise<void> {
       try {
-        const [strategyList, simulations] = await Promise.all([
-          getStrategies(),
-          listHistoricalSimulations(),
-        ]);
+        const simulations = await listHistoricalSimulations();
         if (!active) {
           return;
         }
-
-        setStrategies(strategyList);
-        setSelectedStrategyId(strategyList[0]?.id ?? '');
-        setAdvancedBacktestStrategyId(strategyList[0]?.id ?? '');
-        setAbComparisonStrategyIds(strategyList.slice(0, 3).map((strategy) => strategy.id));
         setRuns(simulations);
         setStatus('');
         setLoadingRuns(false);
@@ -155,7 +159,7 @@ export function SimulationsPage(): ReactElement {
       }
     }
 
-    void loadInitialData();
+    void loadSimulations();
     return () => {
       active = false;
     };

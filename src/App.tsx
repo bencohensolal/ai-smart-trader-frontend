@@ -14,9 +14,9 @@ const MovementPage = lazy(async () => {
   const module = await import('./pages/MovementPage');
   return { default: module.MovementPage };
 });
-const StrategyWizardPage = lazy(async () => {
-  const module = await import('./pages/StrategyWizardPage');
-  return { default: module.StrategyWizardPage };
+const StrategiesV2Page = lazy(async () => {
+  const module = await import('./pages/StrategiesV2Page');
+  return { default: module.StrategiesV2Page };
 });
 const LoginPage = lazy(async () => {
   const module = await import('./pages/LoginPage');
@@ -56,7 +56,7 @@ export function App(): JSX.Element {
     <Suspense fallback={<main className="app-shell">Loading...</main>}>
       <Routes>
         <Route path="/" element={<HomeRoute />} />
-        <Route path="/strategies" element={<StrategyWizardPage />} />
+        <Route path="/strategies" element={<StrategiesV2Page />} />
         <Route path="/insights" element={<InsightsPage />} />
         <Route path="/simulations" element={<SimulationsPage />} />
         <Route path="/simulations/:simulationId" element={<SimulationReportPage />} />
