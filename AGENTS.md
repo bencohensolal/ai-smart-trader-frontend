@@ -8,6 +8,7 @@ Build a React TypeScript SPA to help invest intelligently in cryptocurrencies wi
 
 - All code (source, comments, variable names, etc.), documentation, commit messages, and any project communication MUST be written in English only. No French or other languages are allowed in any part of the repository.
 - Exception: translation files in `src/i18n/` (e.g., `en.ts`, `fr.ts`) may contain non-English content for localization purposes only.
+- The application MUST be 100% translated in all supported languages. No hardcoded text is allowed in components or pages; all user-facing strings must use the i18n system.
 
 ## General Guidelines
 
