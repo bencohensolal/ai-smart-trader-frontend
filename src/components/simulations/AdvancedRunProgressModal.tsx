@@ -67,6 +67,11 @@ export function AdvancedRunProgressModal({
             {integer.format(Math.max(progress?.processedItems ?? 0, 0))} /{' '}
             {integer.format(tabCount)}
           </span>
+          {liveAiRequested && (
+            <span>
+              AI req. total: <strong>{integer.format(progress?.aiCallsTotal ?? 0)}</strong>
+            </span>
+          )}
         </div>
         <section className="simulation-progress-tabs" aria-label="Progress tabs">
           {labels.map((label, index) => {
@@ -100,6 +105,14 @@ export function AdvancedRunProgressModal({
           </h3>
           <p>{labels[selectedSafeIndex]}</p>
           <p>Status: {statusText}</p>
+          {progress?.status === 'failed' && progress?.errorMessage && (
+            <p style={{ color: 'red', fontWeight: 600 }}>
+              {progress.errorMessage.includes('ThrottlerException') ||
+              progress.errorMessage.includes('Too Many Requests')
+                ? 'Erreur : Limite de requêtes atteinte (Too Many Requests). Veuillez réessayer plus tard ou réduire le nombre de stratégies.'
+                : `Erreur : ${progress.errorMessage}`}
+            </p>
+          )}
           {liveAiRequested ? (
             <p>
               Live AI calls:{' '}

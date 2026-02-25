@@ -1,3 +1,10 @@
+// Retourne le prix spot EUR d'une crypto (ex: 'BTC')
+export async function getCryptoSpotPrice(symbol: StrategySymbol): Promise<number> {
+  const data = await requestJson<{ priceEur: number }>(
+    `/api/market/spot-price?symbol=${encodeURIComponent(symbol)}`,
+  );
+  return data.priceEur;
+}
 export type StrategyRiskProfile = 'defensive' | 'balanced' | 'aggressive';
 export type StrategyFeePreference = 'taker' | 'maker' | 'hybrid';
 export type StrategyDecisionMode = 'allocation_only' | 'rule_based' | 'ai_assisted';

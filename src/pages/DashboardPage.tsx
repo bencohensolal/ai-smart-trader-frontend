@@ -30,6 +30,7 @@ import {
 } from '../api';
 import { useI18n } from '../i18n/i18n';
 import { Layout } from '../components/Layout';
+import { CryptoPriceTicker } from '../components/CryptoPriceTicker';
 import { formatAmountFromEur } from '../currency';
 import {
   matchesOperationFilters,
@@ -262,8 +263,6 @@ export function DashboardPage(): JSX.Element {
 
   const riskReturnMetricLabelByKey = useMemo(() => {
     return {
-      drawdown: t('dashboard.charts.riskReturn.drawdown'),
-      return: t('dashboard.charts.riskReturn.return'),
       score: t('dashboard.charts.riskReturn.score'),
     } as Record<string, string>;
   }, [t]);
@@ -286,9 +285,10 @@ export function DashboardPage(): JSX.Element {
       const totalPnlEur = point.value - investedEur;
       const realizedPnlEur = totalPnlEur * realizedWeight;
       const unrealizedPnlEur = totalPnlEur - realizedPnlEur;
-
       return {
-        label: point.label,
+        ...point,
+        investedEur,
+        totalPnlEur,
         realizedPnlEur,
         unrealizedPnlEur,
       };
