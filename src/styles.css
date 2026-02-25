@@ -258,6 +258,38 @@ a {
   border-color: rgba(0, 195, 137, 0.45);
 }
 
+/* Market Source Badge */
+.market-source-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  cursor: default;
+  transition: opacity 0.2s;
+}
+
+.market-source-badge:hover {
+  opacity: 0.85;
+}
+
+.market-source-badge--kraken {
+  background: rgba(114, 78, 206, 0.18);
+  border-color: rgba(114, 78, 206, 0.45);
+  color: #b49eff;
+}
+
+.market-source-badge--coingecko {
+  background: rgba(138, 204, 57, 0.18);
+  border-color: rgba(138, 204, 57, 0.45);
+  color: #a8e063;
+}
+
 .user-menu {
   position: relative;
 }

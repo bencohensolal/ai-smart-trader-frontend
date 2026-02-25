@@ -1,4 +1,14 @@
-// Retourne le prix spot EUR d'une crypto (ex: 'BTC')
+export type MarketDataSource = 'kraken' | 'coingecko';
+
+export type MarketStatus = {
+  source: MarketDataSource;
+  fetchedAt: string;
+};
+
+export async function getMarketStatus(): Promise<MarketStatus> {
+  return requestJson<MarketStatus>('/api/market/status');
+}
+
 export async function getCryptoSpotPrice(symbol: StrategySymbol): Promise<number> {
   const data = await requestJson<{ priceEur: number }>(
     `/api/market/spot-price?symbol=${encodeURIComponent(symbol)}`,

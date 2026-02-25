@@ -11,6 +11,7 @@ import {
   getStoredTheme,
 } from '../theme';
 import { BrandLogo } from './BrandLogo';
+import { MarketSourceBadge } from './MarketSourceBadge';
 import { UserMenu } from './UserMenu';
 
 type LayoutProps = {
@@ -184,6 +185,7 @@ export function Layout({ title, subtitle, children }: LayoutProps): JSX.Element 
             {t('layout.nav.simulations')}
           </NavLink>
         </nav>
+        <MarketSourceBadge />
         <UserMenu />
       </header>
 
