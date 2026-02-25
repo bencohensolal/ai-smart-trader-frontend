@@ -4,20 +4,15 @@ server {
     root   /usr/share/nginx/html;
     index  index.html;
 
-    location /debug-env/ {
-        default_type text/plain;
-        return 200 "PROXY_API_URL: ${PROXY_API_URL}\nPROXY_API_HOST: ${PROXY_API_HOST}\n";
-    }
-
     location / {
         try_files $uri $uri/ /index.html;
     }
 
     location /api/ {
-        proxy_pass ${PROXY_API_URL};
+        proxy_pass $VITE_API_URL;
         proxy_http_version 1.1;
         proxy_set_header Connection "";
-        proxy_set_header Host ${PROXY_API_HOST};
+        proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
@@ -26,10 +21,10 @@ server {
     }
 
     location /auth/ {
-        proxy_pass ${PROXY_API_URL};
+        proxy_pass $VITE_API_URL;
         proxy_http_version 1.1;
         proxy_set_header Connection "";
-        proxy_set_header Host ${PROXY_API_HOST};
+        proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
