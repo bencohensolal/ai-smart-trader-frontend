@@ -4,6 +4,11 @@ server {
     root   /usr/share/nginx/html;
     index  index.html;
 
+    location /debug-env/ {
+        default_type text/plain;
+        return 200 "PROXY_API_URL: ${PROXY_API_URL}\nPROXY_API_HOST: ${PROXY_API_HOST}\n";
+    }
+
     location / {
         try_files $uri $uri/ /index.html;
     }
